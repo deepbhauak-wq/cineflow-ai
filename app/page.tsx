@@ -24,12 +24,10 @@ import {
   Radio,
   SlidersHorizontal,
   Bookmark,
-  Check,
-  Flame
+  Check
 } from "lucide-react";
 
 export default function CineFlowProStudio() {
-  // Core States
   const [prompt, setPrompt] = useState(
     "यीशु तूफान के बीच नाव में शिष्यों के साथ हैं। शांत और सामर्थी मुद्रा, रात का भयानक समुद्री तूफ़ान, बिजली की चमक और विशाल लहरें।"
   );
@@ -45,14 +43,10 @@ export default function CineFlowProStudio() {
   const [visualLang, setVisualLang] = useState("English");
   const [voiceEmotion, setVoiceEmotion] = useState("Deep Ultra-Slow");
   
-  // Consistency Matrix Toggles
   const [lockChar, setLockChar] = useState(true);
   const [lockCostume, setLockCostume] = useState(true);
   const [lockLocation, setLockLocation] = useState(true);
-  const [cinematicAudio, setCinematicAudio] = useState(true);
-  const [akMinistryPreset, setAkMinistryPreset] = useState(true);
 
-  // Preset Handlers
   const handlePresetSelect = (type: string) => {
     if (type === "ak_60") {
       setDuration("60m");
@@ -60,13 +54,12 @@ export default function CineFlowProStudio() {
       setVoiceEmotion("Deep Ultra-Slow");
       setAudioLang("Hindi");
       setCameraMotion("Cinematic");
-      setAkMinistryPreset(true);
     }
   };
 
   return (
     <div className="min-h-screen bg-[#060911] text-slate-100 font-sans selection:bg-cyan-500 selection:text-white pb-24">
-      {/* Top Professional App Header */}
+      {/* Header */}
       <header className="border-b border-slate-800/80 bg-[#090f1d]/90 backdrop-blur-md px-6 py-3.5 flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-tr from-cyan-600 to-indigo-600 rounded-xl shadow-lg shadow-cyan-500/20">
@@ -86,12 +79,12 @@ export default function CineFlowProStudio() {
             <span className="font-semibold">Unlimited Pro Credits</span>
           </div>
           <div className="px-3 py-1 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/40 rounded-full text-amber-300 text-xs font-semibold flex items-center gap-1.5">
-            <Flame className="w-3.5 h-3.5 text-amber-400" /> AK Engine
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" /> AK Engine
           </div>
         </div>
       </header>
 
-      {/* Hero Studio Banner */}
+      {/* Hero */}
       <div className="max-w-5xl mx-auto px-4 pt-8 pb-4 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-medium mb-3">
           <Sparkles className="w-3 h-3 text-cyan-400" />
@@ -105,10 +98,10 @@ export default function CineFlowProStudio() {
         </h1>
       </div>
 
-      {/* Main Workspace Console */}
+      {/* Main Console */}
       <main className="max-w-5xl mx-auto px-4 space-y-6">
 
-        {/* AK Ministry Preset Ribbon */}
+        {/* AK Preset Ribbon */}
         <div className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-indigo-950/40 border border-amber-500/30 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-center gap-3">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/30">
@@ -127,7 +120,7 @@ export default function CineFlowProStudio() {
           </button>
         </div>
 
-        {/* 1. Master Scene Screenplay Input (Characters Count Removed) */}
+        {/* Prompt */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
@@ -141,21 +134,13 @@ export default function CineFlowProStudio() {
             rows={5}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="पूरी कहानी या घटनाक्रम का विवरण यहाँ लिखें... AI इसे स्वचालित रूप से 360 शॉट्स, डायलॉग और विजुअल्स में विभाजित करेगा।"
+            placeholder="पूरी कहानी यहाँ लिखें..."
             className="w-full bg-[#070c18] border border-slate-800 rounded-xl p-3.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 leading-relaxed placeholder:text-slate-600"
           />
-
-          <div className="flex justify-end items-center">
-            <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-900/40 to-indigo-900/40 border border-purple-500/30 hover:border-purple-400 text-purple-300 text-xs font-medium transition">
-              <Sparkles className="w-3.5 h-3.5 text-purple-400" /> AI Story Expansion Engine
-            </button>
-          </div>
         </div>
 
-        {/* 2. Aspect Ratio & Duration Row */}
+        {/* Aspect & Duration */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Aspect Ratio */}
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
               <Tv className="w-4 h-4 text-cyan-400" /> 2. Aspect Ratio
@@ -185,7 +170,6 @@ export default function CineFlowProStudio() {
             </div>
           </div>
 
-          {/* Duration & AI Long Video Mode */}
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
               <Layers className="w-4 h-4 text-indigo-400" /> 3. Timeline & Long Video Mode
@@ -214,13 +198,10 @@ export default function CineFlowProStudio() {
               ))}
             </div>
           </div>
-
         </div>
 
-        {/* 3. Story Model & Video Model Dual-Engine Matrix */}
+        {/* Models Matrix */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Story Model */}
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
               <Brain className="w-4 h-4 text-purple-400" /> 4. Story Engine Model
@@ -242,7 +223,6 @@ export default function CineFlowProStudio() {
             </div>
           </div>
 
-          {/* Video Model Engine */}
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
               <Video className="w-4 h-4 text-cyan-400" /> 5. Video Generation Model
@@ -263,10 +243,9 @@ export default function CineFlowProStudio() {
               ))}
             </div>
           </div>
-
         </div>
 
-        {/* 4. Visual Art Styles */}
+        {/* Styles */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
           <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
             <Film className="w-4 h-4 text-amber-400" /> 6. Visual Atmosphere & Style
@@ -292,10 +271,8 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 5. Camera Motion & Consistency Matrix */}
+        {/* Camera & Consistency */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Camera Controls */}
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
               <Camera className="w-4 h-4 text-sky-400" /> 7. Camera Rig & Motion
@@ -335,7 +312,6 @@ export default function CineFlowProStudio() {
             </div>
           </div>
 
-          {/* Character & Environment Consistency */}
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
               <Shield className="w-4 h-4 text-emerald-400" /> 8. Character & Scene Consistency Lock
@@ -364,16 +340,15 @@ export default function CineFlowProStudio() {
               </div>
             </div>
           </div>
-
         </div>
 
-        {/* 6. Language & Audio Studio */}
+        {/* Audio & Lang */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-4">
           <div className="flex items-center gap-2">
             <Volume2 className="w-4 h-4 text-cyan-400" />
             <div>
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">9. Audio, Dubbing & Language Engine</h3>
-              <p className="text-[11px] text-slate-400">Voice narration, 1.5s matrix pause, and beat-synced ambient soundscape.</p>
+              <p className="text-[11px] text-slate-400">Voice narration, 1.5s matrix pause, and ambient soundscape.</p>
             </div>
           </div>
 
@@ -389,7 +364,6 @@ export default function CineFlowProStudio() {
                 <option>English</option>
                 <option>Spanish</option>
                 <option>Arabic</option>
-                <option>French</option>
               </select>
             </div>
 
@@ -413,7 +387,26 @@ export default function CineFlowProStudio() {
                 onChange={(e) => setVoiceEmotion(e.target.value)}
                 className="w-full bg-[#070c18] border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200"
               >
-                <option>Deep Ultra-Slow (1.5s Sentence Pause)</option>
+                <option>Deep Ultra-Slow (1.5s Pause)</option>
                 <option>Dramatic Narrative</option>
                 <option>Warm Documentarian</option>
-                <option>Fast
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Generate Button */}
+        <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <button className="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-semibold py-3.5 rounded-xl text-xs flex items-center justify-center gap-2 transition">
+            <SlidersHorizontal className="w-4 h-4 text-slate-400" /> Advanced Shot-by-Shot Timeline
+          </button>
+
+          <button className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:opacity-95 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 text-xs transition">
+            <Play className="w-4 h-4 fill-white" /> 🚀 Generate {duration} Full Film ({duration === "60m" ? 360 : 18} Scenes)
+          </button>
+        </div>
+
+      </main>
+    </div>
+  );
+}
