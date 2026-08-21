@@ -1,12 +1,10 @@
-
-"use client";
 "use client";
 
 import React, { useState } from "react";
 
 export default function CineFlowProStudio() {
   const [prompt, setPrompt] = useState(
-    "प्रभु हनुमान के बीच गाय के बछड़े के साथ हैं! शांत और मनमोहक दृश्य, जहां एक भयानक समुद्री तूफान उनके चारों ओर मंडरा रहा है..."
+    "प्रभु हनुमान शांत और मनमोहक दृश्य में, चारों ओर भयानक समुद्री तूफान मंडरा रहा है..."
   );
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("60m");
@@ -29,9 +27,14 @@ export default function CineFlowProStudio() {
       price: "$19",
       period: "/month",
       credits: "300 Credits / mo",
-      features: ["720p HD Video Output", "Image + Audio Auto-Sync", "Standard Queue Processing"],
-      imgUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
-      popular: false,
+      features: [
+        "720p HD Video Output",
+        "Image + Audio Auto-Sync",
+        "Standard Queue Processing"
+      ],
+      imgUrl:
+        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
+      popular: false
     },
     {
       id: "pro",
@@ -39,9 +42,14 @@ export default function CineFlowProStudio() {
       price: "$49",
       period: "/month",
       credits: "1,500 Credits / mo",
-      features: ["4K Ultra Cinema Engine", "Full Multimodal Mix (Image + Motion)", "Priority Fast-Track Queue"],
-      imgUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80",
-      popular: true,
+      features: [
+        "4K Ultra Cinema Engine",
+        "Full Multimodal Mix (Image + Motion)",
+        "Priority Fast-Track Queue"
+      ],
+      imgUrl:
+        "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80",
+      popular: true
     },
     {
       id: "studio",
@@ -49,10 +57,15 @@ export default function CineFlowProStudio() {
       price: "$99",
       period: "/month",
       credits: "Unlimited Pro Credits",
-      features: ["60 Min Full-Feature Movies (360 Shots)", "Deep Hindi TTS Voice Engine", "Commercial Licensing Rights"],
-      imgUrl: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
-      popular: false,
-    },
+      features: [
+        "60 Min Full-Feature Movies (360 Shots)",
+        "Deep Hindi TTS Voice Engine",
+        "Commercial Licensing Rights"
+      ],
+      imgUrl:
+        "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+      popular: false
+    }
   ];
 
   return (
@@ -67,14 +80,18 @@ export default function CineFlowProStudio() {
             <span className="text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
               CineFlow <span className="text-cyan-400">AI Studio</span>
             </span>
-            <p className="text-[10px] text-slate-400 font-medium">Autonomous Multimodal Video Engine</p>
+            <p className="text-[10px] text-slate-400 font-medium">
+              Autonomous Multimodal Video Engine
+            </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
           <div className="bg-[#0e172a] border border-cyan-500/30 px-3.5 py-1.5 rounded-full flex items-center gap-2 shadow-inner">
             <span className="font-bold text-cyan-400 text-xs">PRO</span>
-            <span className="font-semibold text-xs text-slate-200">Unlimited Credits</span>
+            <span className="font-semibold text-xs text-slate-200">
+              Unlimited Credits
+            </span>
           </div>
         </div>
       </header>
@@ -108,7 +125,9 @@ export default function CineFlowProStudio() {
             <div className="p-6 rounded-2xl bg-[#0b1222] border border-slate-800 shadow-xl space-y-4">
               <label className="text-sm font-bold text-slate-200 flex items-center justify-between">
                 <span>1. Cinema Master Prompt / Story Idea</span>
-                <span className="text-[11px] font-normal text-slate-400">Hindi / Multilingual Supported</span>
+                <span className="text-[11px] font-normal text-slate-400">
+                  Hindi / Multilingual Supported
+                </span>
               </label>
               <textarea
                 value={prompt}
@@ -120,11 +139,15 @@ export default function CineFlowProStudio() {
 
             {/* Model & Ratio Configuration */}
             <div className="p-6 rounded-2xl bg-[#0b1222] border border-slate-800 shadow-xl space-y-6">
-              <h3 className="text-sm font-bold text-slate-200">2. Generation & Camera Dimensions</h3>
-              
+              <h3 className="text-sm font-bold text-slate-200">
+                2. Generation & Camera Dimensions
+              </h3>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-semibold text-slate-400 block mb-2">Aspect Ratio</label>
+                  <label className="text-xs font-semibold text-slate-400 block mb-2">
+                    Aspect Ratio
+                  </label>
                   <div className="grid grid-cols-3 gap-2">
                     {["16:9", "9:16", "1:1"].map((ratio) => (
                       <button
@@ -144,7 +167,9 @@ export default function CineFlowProStudio() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold text-slate-400 block mb-2">Duration / Shots Output</label>
+                  <label className="text-xs font-semibold text-slate-400 block mb-2">
+                    Duration / Shots Output
+                  </label>
                   <select
                     value={duration}
                     onChange={(e) => setDuration(e.target.value)}
@@ -160,7 +185,9 @@ export default function CineFlowProStudio() {
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                 <div>
-                  <label className="text-xs font-semibold text-slate-400 block mb-2">Art Style</label>
+                  <label className="text-xs font-semibold text-slate-400 block mb-2">
+                    Art Style
+                  </label>
                   <select
                     value={artStyle}
                     onChange={(e) => setArtStyle(e.target.value)}
@@ -174,7 +201,9 @@ export default function CineFlowProStudio() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold text-slate-400 block mb-2">Story Engine</label>
+                  <label className="text-xs font-semibold text-slate-400 block mb-2">
+                    Story Engine
+                  </label>
                   <select
                     value={storyModel}
                     onChange={(e) => setStoryModel(e.target.value)}
@@ -187,7 +216,9 @@ export default function CineFlowProStudio() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold text-slate-400 block mb-2">Video Engine</label>
+                  <label className="text-xs font-semibold text-slate-400 block mb-2">
+                    Video Engine
+                  </label>
                   <select
                     value={videoModel}
                     onChange={(e) => setVideoModel(e.target.value)}
@@ -212,8 +243,10 @@ export default function CineFlowProStudio() {
 
           {/* Subscription Plans (Right Column) */}
           <div className="lg:col-span-4 space-y-4">
-            <h3 className="text-sm font-bold text-slate-200 mb-2">Choose Studio Membership</h3>
-            
+            <h3 className="text-sm font-bold text-slate-200 mb-2">
+              Choose Studio Membership
+            </h3>
+
             {subscriptionPlans.map((plan) => (
               <div
                 key={plan.id}
@@ -244,16 +277,25 @@ export default function CineFlowProStudio() {
                   <div className="flex items-baseline justify-between">
                     <h4 className="font-bold text-sm text-white">{plan.name}</h4>
                     <div className="text-right">
-                      <span className="text-lg font-black text-cyan-400">{plan.price}</span>
-                      <span className="text-[10px] text-slate-400">{plan.period}</span>
+                      <span className="text-lg font-black text-cyan-400">
+                        {plan.price}
+                      </span>
+                      <span className="text-[10px] text-slate-400">
+                        {plan.period}
+                      </span>
                     </div>
                   </div>
 
-                  <p className="text-xs font-semibold text-indigo-300">{plan.credits}</p>
+                  <p className="text-xs font-semibold text-indigo-300">
+                    {plan.credits}
+                  </p>
 
                   <ul className="space-y-1.5 pt-2 border-t border-slate-800">
                     {plan.features.map((feat, idx) => (
-                      <li key={idx} className="text-[11px] text-slate-300 flex items-center gap-1.5">
+                      <li
+                        key={idx}
+                        className="text-[11px] text-slate-300 flex items-center gap-1.5"
+                      >
                         <span className="text-cyan-400 font-bold">✓</span> {feat}
                       </li>
                     ))}
@@ -266,4 +308,4 @@ export default function CineFlowProStudio() {
       </main>
     </div>
   );
-                    }
+}
