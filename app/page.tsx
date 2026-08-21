@@ -19,25 +19,6 @@ import {
   ChevronDown
 } from "lucide-react";
 
-"use client";
-
-import {
-  Clapperboard,
-  Sparkles,
-  Play,
-  Tv,
-  Smartphone,
-  Layers,
-  Sliders,
-  Volume2,
-  Film,
-  Zap,
-  CheckCircle2,
-  Shield,
-  Video,
-  Image as ImageIcon,
-  ChevronDown
-} from "lucide-react";
 
 
 
