@@ -111,8 +111,9 @@ export default function CineFlowProStudio() {
             </p>
           </div>
           <button
+            type="button"
             onClick={handlePresetSelect}
-            className="whitespace-nowrap px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25 active:scale-95 transition-all"
+            className="whitespace-nowrap px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25 active:scale-95 transition-all cursor-pointer"
           >
             Apply Preset ✨
           </button>
@@ -154,7 +155,7 @@ export default function CineFlowProStudio() {
                         key={ratio}
                         type="button"
                         onClick={() => setAspectRatio(ratio)}
-                        className={`py-2.5 text-xs font-bold rounded-lg border transition-all ${
+                        className={`py-2.5 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
                           aspectRatio === ratio
                             ? "bg-cyan-500/10 border-cyan-500 text-cyan-400 shadow-md shadow-cyan-500/10"
                             : "bg-[#060a14] border-slate-800 text-slate-400 hover:border-slate-700"
@@ -235,7 +236,7 @@ export default function CineFlowProStudio() {
             {/* Master Action Button */}
             <button
               type="button"
-              className="w-full py-4 rounded-2xl font-black text-base bg-gradient-to-r from-cyan-500 via-indigo-600 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-xl shadow-cyan-500/20 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+              className="w-full py-4 rounded-2xl font-black text-base bg-gradient-to-r from-cyan-500 via-indigo-600 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-xl shadow-cyan-500/20 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>⚡ Generate Full Movie & Multimodal Scene Package</span>
             </button>
@@ -257,7 +258,6 @@ export default function CineFlowProStudio() {
                     : "border-slate-800 bg-[#0b1222]/80 hover:border-slate-700"
                 }`}
               >
-                {/* Visual Image Banner */}
                 <div className="h-28 w-full relative overflow-hidden">
                   <img
                     src={plan.imgUrl}
@@ -272,7 +272,6 @@ export default function CineFlowProStudio() {
                   )}
                 </div>
 
-                {/* Plan Content */}
                 <div className="p-4 pt-1 space-y-2">
                   <div className="flex items-baseline justify-between">
                     <h4 className="font-bold text-sm text-white">{plan.name}</h4>
@@ -308,4 +307,4 @@ export default function CineFlowProStudio() {
       </main>
     </div>
   );
-}
+      }
