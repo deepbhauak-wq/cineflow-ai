@@ -7,7 +7,7 @@ import {
   Play,
   Tv,
   Layers,
-  Sliders,
+  SlidersHorizontal,
   Film,
   Zap,
   Check,
@@ -131,7 +131,7 @@ export default function CineFlowProStudio() {
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <Sliders className="w-4 h-4 text-cyan-400" />
+              <SlidersHorizontal className="w-4 h-4 text-cyan-400" />
               <h2 className="text-sm font-bold text-white">1. Master Story / Screenplay Input</h2>
             </div>
             <span className="text-[10px] bg-cyan-950 border border-cyan-700/50 text-cyan-300 px-2 py-0.5 rounded">All-In-One (Video + Voice + SFX)</span>
@@ -278,7 +278,7 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 5. Subscription Plans Section with Visual Cards */}
+        {/* 5. Subscription Plans */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -299,7 +299,6 @@ export default function CineFlowProStudio() {
                     : "border-slate-800 bg-[#070c18] hover:border-slate-700"
                 }`}
               >
-                {/* Plan Image Header */}
                 <div 
                   className="h-28 w-full relative bg-cover bg-center"
                   style={{ backgroundImage: `url(${plan.imgUrl})` }}
@@ -313,7 +312,6 @@ export default function CineFlowProStudio() {
                   )}
                 </div>
 
-                {/* Plan Details */}
                 <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                   <div>
                     <h3 className="text-xs font-bold text-white">{plan.name}</h3>
@@ -358,5 +356,4 @@ export default function CineFlowProStudio() {
       </main>
     </div>
   );
-            }
-            
+}
