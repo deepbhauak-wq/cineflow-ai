@@ -1,5 +1,0 @@
-import { 
-  Clapperboard, Camera, UserCheck, Music, Sparkles, 
-  Layers, Clock, Play, Cpu, Film, ShieldCheck, RotateCcw, RotateCw 
-} from "lucide-react";
-
