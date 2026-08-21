@@ -19,6 +19,7 @@ import {
   ChevronDown
 } from "lucide-react";
 
+
 export default function CineFlowOriginal() {
   const [prompt, setPrompt] = useState(
     "A lone astronaut drifts through the neon-lit ruins of a floating city at dusk, searching for a signal. Wide establishing shots, volumetric fog, warm rim light against deep cyan shadows, slow dolly moves."
