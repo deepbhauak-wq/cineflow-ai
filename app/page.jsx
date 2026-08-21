@@ -70,7 +70,6 @@ export default function CineFlowProStudio() {
 
   return (
     <div className="min-h-screen bg-[#060911] text-slate-100 font-sans pb-24 selection:bg-cyan-500 selection:text-white">
-      {/* Header */}
       <header className="border-b border-slate-800/80 bg-[#090f1d]/90 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex items-center justify-between shadow-xl">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 via-indigo-600 to-blue-500 flex items-center justify-center font-black text-white text-base shadow-lg shadow-cyan-500/20">
@@ -97,7 +96,6 @@ export default function CineFlowProStudio() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 pt-8">
-        {/* Top Banner Preset */}
         <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-blue-950/60 via-indigo-950/40 to-slate-900/80 border border-cyan-500/40 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wide uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 mb-2">
@@ -120,9 +118,7 @@ export default function CineFlowProStudio() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Main Controls (Left Column) */}
           <div className="lg:col-span-8 space-y-6">
-            {/* Prompt Area */}
             <div className="p-6 rounded-2xl bg-[#0b1222] border border-slate-800 shadow-xl space-y-4">
               <label className="text-sm font-bold text-slate-200 flex items-center justify-between">
                 <span>1. Cinema Master Prompt / Story Idea</span>
@@ -138,7 +134,6 @@ export default function CineFlowProStudio() {
               />
             </div>
 
-            {/* Model & Ratio Configuration */}
             <div className="p-6 rounded-2xl bg-[#0b1222] border border-slate-800 shadow-xl space-y-6">
               <h3 className="text-sm font-bold text-slate-200">
                 2. Generation & Camera Dimensions
@@ -233,7 +228,6 @@ export default function CineFlowProStudio() {
               </div>
             </div>
 
-            {/* Master Action Button */}
             <button
               type="button"
               className="w-full py-4 rounded-2xl font-black text-base bg-gradient-to-r from-cyan-500 via-indigo-600 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-xl shadow-cyan-500/20 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
@@ -242,7 +236,6 @@ export default function CineFlowProStudio() {
             </button>
           </div>
 
-          {/* Subscription Plans (Right Column) */}
           <div className="lg:col-span-4 space-y-4">
             <h3 className="text-sm font-bold text-slate-200 mb-2">
               Choose Studio Membership
@@ -307,4 +300,4 @@ export default function CineFlowProStudio() {
       </main>
     </div>
   );
-      }
+}
