@@ -1,3 +1,23 @@
+"use client";
+
+import React, { useState } from "react";
+import {
+  Clapperboard,
+  Sparkles,
+  Play,
+  Tv,
+  Smartphone,
+  Layers,
+  Sliders,
+  Volume2,
+  Film,
+  Zap,
+  CheckCircle2,
+  Shield,
+  Video,
+  Image as ImageIcon,
+  ChevronDown
+} from "lucide-react";
 
 "use client";
 
