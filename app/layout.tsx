@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CineFlow AI - Pro Studio",
-  description: "Autonomous AI Filmmaking Engine",
+  title: "CineFlow AI Pro Studio",
+  description: "AI Multimodal Film Generation Studio",
 };
 
 export default function RootLayout({
@@ -12,14 +12,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <head>
-        <script src="https://cdn.tailwindcss.com"></script>
-      </head>
-      <body className="bg-slate-950 text-slate-100 antialiased min-h-screen">
+    <html lang="en">
+      <body className="bg-[#060911] text-slate-100 antialiased">
         {children}
       </body>
     </html>
   );
 }
-
