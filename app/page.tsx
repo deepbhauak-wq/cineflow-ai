@@ -1,20 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Clapperboard,
-  Sparkles,
-  Play,
-  Tv,
-  Layers,
-  SlidersHorizontal,
-  Film,
-  Zap,
-  Check,
-  Video,
-  Bookmark,
-  CheckCircle2
-} from "lucide-react";
 
 export default function CineFlowProStudio() {
   const [prompt, setPrompt] = useState(
@@ -69,10 +55,11 @@ export default function CineFlowProStudio() {
 
   return (
     <div className="min-h-screen bg-[#060911] text-slate-100 font-sans selection:bg-cyan-500 selection:text-white pb-24">
+      {/* Top Header */}
       <header className="border-b border-slate-800/80 bg-[#090f1d]/90 backdrop-blur-md px-6 py-3.5 flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-gradient-to-tr from-cyan-600 to-indigo-600 rounded-xl shadow-lg shadow-cyan-500/20">
-            <Clapperboard className="w-5 h-5 text-white" />
+          <div className="p-2 bg-gradient-to-tr from-cyan-600 to-indigo-600 rounded-xl shadow-lg shadow-cyan-500/20 text-white font-bold text-base">
+            🎬
           </div>
           <div>
             <span className="text-base font-bold tracking-tight text-white flex items-center gap-1.5">
@@ -84,15 +71,16 @@ export default function CineFlowProStudio() {
 
         <div className="flex items-center gap-3">
           <div className="bg-[#0e172a] border border-cyan-500/30 px-3 py-1.5 rounded-full flex items-center gap-2 text-xs text-cyan-300">
-            <Zap className="w-3.5 h-3.5 text-cyan-400 fill-cyan-400" />
+            <span>⚡</span>
             <span className="font-semibold">Unlimited Credits</span>
           </div>
         </div>
       </header>
 
+      {/* Hero Banner */}
       <div className="max-w-5xl mx-auto px-4 pt-8 pb-4 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-medium mb-3">
-          <Sparkles className="w-3 h-3 text-cyan-400" />
+          <span>✨</span>
           Auto Multimodal Sync: Image + Video + Ultra-Real Voice
         </div>
         <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-white max-w-2xl mx-auto leading-snug">
@@ -103,14 +91,17 @@ export default function CineFlowProStudio() {
         </h1>
       </div>
 
+      {/* Main Console */}
       <main className="max-w-5xl mx-auto px-4 space-y-6">
+
+        {/* AK Ministry Preset */}
         <div className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-indigo-950/40 border border-amber-500/30 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-center gap-3">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/30">
-              <Bookmark className="w-4 h-4" />
+            <div className="p-2 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/30 text-base">
+              ⭐
             </div>
             <div>
-              <div className="text-xs font-bold text-amber-200">⭐ AK MINISTRY 60-MIN MASTER PRESET</div>
+              <div className="text-xs font-bold text-amber-200">AK MINISTRY 60-MIN MASTER PRESET</div>
               <div className="text-[11px] text-slate-400">360 Scenes (10s each) • Auto Sync Video + Background Voice + Music</div>
             </div>
           </div>
@@ -122,10 +113,11 @@ export default function CineFlowProStudio() {
           </button>
         </div>
 
+        {/* 1. Master Story Input */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <SlidersHorizontal className="w-4 h-4 text-cyan-400" />
+              <span className="text-cyan-400">⚙️</span>
               <h2 className="text-sm font-bold text-white">1. Master Story / Screenplay Input</h2>
             </div>
             <span className="text-[10px] bg-cyan-950 border border-cyan-700/50 text-cyan-300 px-2 py-0.5 rounded">All-In-One (Video + Voice + SFX)</span>
@@ -140,10 +132,11 @@ export default function CineFlowProStudio() {
           />
         </div>
 
+        {/* 2. Aspect Ratio & Duration */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <Tv className="w-4 h-4 text-cyan-400" /> 2. Aspect Ratio
+              <span className="text-cyan-400">📺</span> 2. Aspect Ratio
             </label>
             <div className="grid grid-cols-3 gap-2">
               {[
@@ -172,7 +165,7 @@ export default function CineFlowProStudio() {
 
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <Layers className="w-4 h-4 text-indigo-400" /> 3. Timeline & Duration
+              <span className="text-indigo-400">⏱️</span> 3. Timeline & Duration
             </label>
             <div className="grid grid-cols-3 gap-2">
               {[
@@ -200,6 +193,7 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
+        {/* 3. Dual Engine Models */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider">
@@ -224,7 +218,7 @@ export default function CineFlowProStudio() {
 
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <Video className="w-4 h-4 text-cyan-400" /> 5. Video Generation Model
+              <span className="text-cyan-400">🎥</span> 5. Video Generation Model
             </label>
             <div className="grid grid-cols-3 gap-2">
               {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Auto"].map((vm) => (
@@ -244,9 +238,10 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
+        {/* 4. Visual Atmosphere & Style */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
           <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-            <Film className="w-4 h-4 text-amber-400" /> 6. Visual Atmosphere & Style
+            <span className="text-amber-400">🎨</span> 6. Visual Atmosphere & Style
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             {[
@@ -263,16 +258,17 @@ export default function CineFlowProStudio() {
                 }`}
               >
                 <span className="text-xs font-medium">{st}</span>
-                {artStyle === st && <Check className="w-3.5 h-3.5 text-amber-400" />}
+                {artStyle === st && <span className="text-amber-400 font-bold">✓</span>}
               </button>
             ))}
           </div>
         </div>
 
+        {/* 5. Subscription Plans Section */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Zap className="w-5 h-5 text-amber-400 fill-amber-400" />
+              <span className="text-amber-400 text-base">👑</span>
               <h2 className="text-sm font-bold text-white uppercase tracking-wider">Choose Subscription Plan</h2>
             </div>
             <span className="text-[11px] text-cyan-400 bg-cyan-950 px-2.5 py-0.5 rounded-full border border-cyan-700/50">Instant Access</span>
@@ -314,7 +310,7 @@ export default function CineFlowProStudio() {
                     <ul className="mt-3 space-y-1.5 border-t border-slate-800/80 pt-2.5">
                       {plan.features.map((feat, idx) => (
                         <li key={idx} className="flex items-center gap-1.5 text-[10px] text-slate-300">
-                          <CheckCircle2 className="w-3 h-3 text-cyan-400 shrink-0" />
+                          <span className="text-cyan-400">✓</span>
                           <span>{feat}</span>
                         </li>
                       ))}
@@ -336,13 +332,13 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
+        {/* 6. Unified Multimodal Generate Action */}
         <div className="pt-2">
           <button className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:opacity-95 text-white font-bold py-4 rounded-xl shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 text-sm transition active:scale-[0.99]">
-            <Play className="w-4 h-4 fill-white" /> 🚀 Generate Full Film (Image + Video + Voice Sync Mixed)
+            <span>▶</span> 🚀 Generate Full Film (Image + Video + Voice Sync Mixed)
           </button>
         </div>
       </main>
     </div>
   );
-                 }
-                  
+}
