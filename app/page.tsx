@@ -1,4 +1,19 @@
-"use client";
+{/* Quick Action Bar */}
+<div className="flex items-center gap-2 px-6 pb-4 border-b border-slate-800">
+  <button className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg text-xs font-semibold border border-slate-700 transition">
+    <Play className="w-3.5 h-3.5" /> Live Preview
+  </button>
+  <button className="flex items-center gap-2 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 px-4 py-2 rounded-lg text-xs font-semibold border border-emerald-500/30 transition">
+    <Cpu className="w-3.5 h-3.5" /> Render Project
+  </button>
+  <button className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg text-xs font-semibold border border-slate-700 transition">
+    <UserCheck className="w-3.5 h-3.5" /> Save Draft
+  </button>
+  <div className="ml-auto text-[10px] text-slate-500 bg-slate-900 px-3 py-2 rounded border border-slate-800">
+    Last saved: Just now
+  </div>
+</div>
+  "use client";
 
 import React, { useState } from "react";
 import { 
