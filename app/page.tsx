@@ -69,7 +69,6 @@ export default function CineFlowProStudio() {
 
   return (
     <div className="min-h-screen bg-[#060911] text-slate-100 font-sans selection:bg-cyan-500 selection:text-white pb-24">
-      {/* Top Header */}
       <header className="border-b border-slate-800/80 bg-[#090f1d]/90 backdrop-blur-md px-6 py-3.5 flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-tr from-cyan-600 to-indigo-600 rounded-xl shadow-lg shadow-cyan-500/20">
@@ -91,7 +90,6 @@ export default function CineFlowProStudio() {
         </div>
       </header>
 
-      {/* Hero Banner */}
       <div className="max-w-5xl mx-auto px-4 pt-8 pb-4 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-medium mb-3">
           <Sparkles className="w-3 h-3 text-cyan-400" />
@@ -105,10 +103,7 @@ export default function CineFlowProStudio() {
         </h1>
       </div>
 
-      {/* Main Console */}
       <main className="max-w-5xl mx-auto px-4 space-y-6">
-
-        {/* AK Ministry Preset */}
         <div className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-indigo-950/40 border border-amber-500/30 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-center gap-3">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/30">
@@ -127,7 +122,6 @@ export default function CineFlowProStudio() {
           </button>
         </div>
 
-        {/* 1. Master Story Input */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
@@ -146,7 +140,6 @@ export default function CineFlowProStudio() {
           />
         </div>
 
-        {/* 2. Aspect Ratio & Duration */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
@@ -207,7 +200,6 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 3. Dual Engine Models */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider">
@@ -252,7 +244,6 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 4. Visual Atmosphere & Style */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
           <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
             <Film className="w-4 h-4 text-amber-400" /> 6. Visual Atmosphere & Style
@@ -278,7 +269,6 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 5. Subscription Plans */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -346,14 +336,13 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 6. Unified Multimodal Generate Action */}
         <div className="pt-2">
           <button className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:opacity-95 text-white font-bold py-4 rounded-xl shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 text-sm transition active:scale-[0.99]">
             <Play className="w-4 h-4 fill-white" /> 🚀 Generate Full Film (Image + Video + Voice Sync Mixed)
           </button>
         </div>
-
       </main>
     </div>
   );
-}
+                 }
+                  
