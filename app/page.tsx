@@ -6,60 +6,71 @@ import {
   Sparkles,
   Play,
   Tv,
-  Smartphone,
   Layers,
   Sliders,
-  Volume2,
   Film,
   Zap,
-  CheckCircle2,
-  Shield,
+  Check,
   Video,
-  Image as ImageIcon,
-  ChevronDown,
-  Camera,
-  UserCheck,
-  Globe,
-  Brain,
-  Radio,
-  SlidersHorizontal,
   Bookmark,
-  Check
+  Crown,
+  CheckCircle2
 } from "lucide-react";
 
 export default function CineFlowProStudio() {
   const [prompt, setPrompt] = useState(
     "यीशु तूफान के बीच नाव में शिष्यों के साथ हैं। शांत और सामर्थी मुद्रा, रात का भयानक समुद्री तूफ़ान, बिजली की चमक और विशाल लहरें।"
   );
-  const [outputMode, setOutputMode] = useState<"image" | "video">("video");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("60m");
   const [storyModel, setStoryModel] = useState("Auto");
   const [videoModel, setVideoModel] = useState("Veo");
   const [artStyle, setArtStyle] = useState("Bible Art");
-  const [cameraMotion, setCameraMotion] = useState("Slow Dolly In");
-  const [cameraStrength, setCameraStrength] = useState("Medium");
-  const [audioLang, setAudioLang] = useState("Hindi");
-  const [visualLang, setVisualLang] = useState("English");
-  const [voiceEmotion, setVoiceEmotion] = useState("Deep Ultra-Slow");
-  
-  const [lockChar, setLockChar] = useState(true);
-  const [lockCostume, setLockCostume] = useState(true);
-  const [lockLocation, setLockLocation] = useState(true);
+  const [selectedPlan, setSelectedPlan] = useState("pro");
 
-  const handlePresetSelect = (type: string) => {
-    if (type === "ak_60") {
-      setDuration("60m");
-      setArtStyle("Bible Art");
-      setVoiceEmotion("Deep Ultra-Slow");
-      setAudioLang("Hindi");
-      setCameraMotion("Cinematic");
-    }
+  const handlePresetSelect = () => {
+    setDuration("60m");
+    setArtStyle("Bible Art");
+    setStoryModel("Auto");
+    setVideoModel("Veo");
   };
+
+  const subscriptionPlans = [
+    {
+      id: "starter",
+      name: "Starter Creator",
+      price: "$19",
+      period: "/month",
+      credits: "300 Credits / mo",
+      features: ["720p HD Video Output", "Image + Audio Auto-Sync", "Standard Render Speed", "Up to 5 Min Films"],
+      imgUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60",
+      popular: false,
+    },
+    {
+      id: "pro",
+      name: "Pro Studio Director",
+      price: "$49",
+      period: "/month",
+      credits: "1,500 Credits / mo",
+      features: ["4K Ultra Cinema Engine", "Full Multimodal Mix (Image + Video + Voice)", "Ultra-Fast Priority Queue", "Up to 30 Min Full Films", "Character Lock Matrix"],
+      imgUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60",
+      popular: true,
+    },
+    {
+      id: "studio",
+      name: "Master Studio (AK)",
+      price: "$99",
+      period: "/month",
+      credits: "Unlimited Pro Credits",
+      features: ["60 Min Full-Feature Movies (360 Shots)", "Deep Hindi 1.5s Voice Engine", "Veo + Kling + Sora Models", "Full Commercial License", "24/7 Dedicated Server"],
+      imgUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60",
+      popular: false,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-[#060911] text-slate-100 font-sans selection:bg-cyan-500 selection:text-white pb-24">
-      {/* Header */}
+      {/* Top Header */}
       <header className="border-b border-slate-800/80 bg-[#090f1d]/90 backdrop-blur-md px-6 py-3.5 flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gradient-to-tr from-cyan-600 to-indigo-600 rounded-xl shadow-lg shadow-cyan-500/20">
@@ -67,33 +78,30 @@ export default function CineFlowProStudio() {
           </div>
           <div>
             <span className="text-base font-bold tracking-tight text-white flex items-center gap-1.5">
-              CineFlow <span className="text-cyan-400">AI Pro Studio</span>
+              CineFlow <span className="text-cyan-400">AI Studio</span>
             </span>
-            <p className="text-[10px] text-slate-400">Google Flow-Grade Autonomous Cinema Engine</p>
+            <p className="text-[10px] text-slate-400">Autonomous Multimodal Film Pipeline (Image + Video + Voice)</p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="hidden sm:flex bg-[#0e172a] border border-cyan-500/30 px-3 py-1.5 rounded-full items-center gap-2 text-xs text-cyan-300">
+          <div className="bg-[#0e172a] border border-cyan-500/30 px-3 py-1.5 rounded-full flex items-center gap-2 text-xs text-cyan-300">
             <Zap className="w-3.5 h-3.5 text-cyan-400 fill-cyan-400" />
-            <span className="font-semibold">Unlimited Pro Credits</span>
-          </div>
-          <div className="px-3 py-1 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/40 rounded-full text-amber-300 text-xs font-semibold flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" /> AK Engine
+            <span className="font-semibold">Unlimited Credits</span>
           </div>
         </div>
       </header>
 
-      {/* Hero */}
+      {/* Hero Banner */}
       <div className="max-w-5xl mx-auto px-4 pt-8 pb-4 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-medium mb-3">
           <Sparkles className="w-3 h-3 text-cyan-400" />
-          Multi-Agent Autonomous Film Pipeline
+          Auto Multimodal Sync: Image + Video + Ultra-Real Voice
         </div>
         <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-white max-w-2xl mx-auto leading-snug">
-          Turn a Single Idea into a{" "}
+          Turn One Prompt into a{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
-            Full-Feature Cinematic Film
+            Complete Audio-Visual Film
           </span>
         </h1>
       </div>
@@ -101,46 +109,47 @@ export default function CineFlowProStudio() {
       {/* Main Console */}
       <main className="max-w-5xl mx-auto px-4 space-y-6">
 
-        {/* AK Preset Ribbon */}
+        {/* AK Ministry Preset */}
         <div className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-indigo-950/40 border border-amber-500/30 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-center gap-3">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-amber-500/20 text-amber-400 rounded-xl border border-amber-500/30">
               <Bookmark className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-xs font-bold text-amber-200">⭐ AK MINISTRY MASTER PRESET</div>
-              <div className="text-[11px] text-slate-400">60 Min (360 Scenes) • Ultra-Slow Deep Hindi Narration (1.5s Pause) • Character Locked</div>
+              <div className="text-xs font-bold text-amber-200">⭐ AK MINISTRY 60-MIN MASTER PRESET</div>
+              <div className="text-[11px] text-slate-400">360 Scenes (10s each) • Auto Sync Video + Background Voice + Music</div>
             </div>
           </div>
           <button 
-            onClick={() => handlePresetSelect("ak_60")}
+            onClick={handlePresetSelect}
             className="w-full sm:w-auto px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition"
           >
             Apply Preset
           </button>
         </div>
 
-        {/* Prompt */}
+        {/* 1. Master Story Input */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
               <Sliders className="w-4 h-4 text-cyan-400" />
               <h2 className="text-sm font-bold text-white">1. Master Story / Screenplay Input</h2>
             </div>
-            <span className="text-[10px] bg-cyan-950 border border-cyan-700/50 text-cyan-300 px-2 py-0.5 rounded">Auto-Scene Decomposition On</span>
+            <span className="text-[10px] bg-cyan-950 border border-cyan-700/50 text-cyan-300 px-2 py-0.5 rounded">All-In-One (Video + Voice + SFX)</span>
           </div>
 
           <textarea
-            rows={5}
+            rows={4}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="पूरी कहानी यहाँ लिखें..."
+            placeholder="पूरी कहानी यहाँ लिखें... AI दृश्य, बैकग्राउंड आवाज़ और सिनेमैटिक म्यूज़िक तीनों को एक साथ मिलाकर वीडियो बनाएगा।"
             className="w-full bg-[#070c18] border border-slate-800 rounded-xl p-3.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 leading-relaxed placeholder:text-slate-600"
           />
         </div>
 
-        {/* Aspect & Duration */}
+        {/* 2. Aspect Ratio & Duration */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Aspect Ratio */}
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
               <Tv className="w-4 h-4 text-cyan-400" /> 2. Aspect Ratio
@@ -170,9 +179,10 @@ export default function CineFlowProStudio() {
             </div>
           </div>
 
+          {/* Duration */}
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <Layers className="w-4 h-4 text-indigo-400" /> 3. Timeline & Long Video Mode
+              <Layers className="w-4 h-4 text-indigo-400" /> 3. Timeline & Duration
             </label>
             <div className="grid grid-cols-3 gap-2">
               {[
@@ -200,11 +210,11 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* Models Matrix */}
+        {/* 3. Dual Engine Models */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <Brain className="w-4 h-4 text-purple-400" /> 4. Story Engine Model
+            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+              4. Story & Dialogue Engine
             </label>
             <div className="grid grid-cols-3 gap-2">
               {["Auto", "GPT", "Gemini", "Claude", "Fast AI", "Pro AI"].map((m) => (
@@ -245,7 +255,7 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* Styles */}
+        {/* 4. Visual Atmosphere & Style */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
           <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
             <Film className="w-4 h-4 text-amber-400" /> 6. Visual Atmosphere & Style
@@ -271,142 +281,86 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* Camera & Consistency */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <Camera className="w-4 h-4 text-sky-400" /> 7. Camera Rig & Motion
-            </label>
-            <div className="space-y-3">
-              <select
-                value={cameraMotion}
-                onChange={(e) => setCameraMotion(e.target.value)}
-                className="w-full bg-[#070c18] border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
-              >
-                <option>Slow Dolly In (Focus/Reverence)</option>
-                <option>Orbit 360° Epic</option>
-                <option>Dynamic Tracking Shot</option>
-                <option>Aerial / Drone Shot</option>
-                <option>Low Angle Majesty</option>
-                <option>Eye-Level Static</option>
-              </select>
+        {/* 5. Subscription Plans Section with Top Images */}
+        <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Crown className="w-5 h-5 text-amber-400" />
+              <h2 className="text-sm font-bold text-white uppercase tracking-wider">Choose Subscription Plan</h2>
+            </div>
+            <span className="text-[11px] text-cyan-400 bg-cyan-950 px-2.5 py-0.5 rounded-full border border-cyan-700/50">Instant Access</span>
+          </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-400 pt-1">
-                <span>Motion Strength:</span>
-                <div className="flex gap-2">
-                  {["Low", "Medium", "High"].map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => setCameraStrength(s)}
-                      className={`px-3 py-1 rounded-lg border text-[11px] ${
-                        cameraStrength === s
-                          ? "bg-sky-500/20 border-sky-500 text-sky-300 font-bold"
-                          : "border-slate-800 text-slate-500"
-                      }`}
-                    >
-                      {s}
-                    </button>
-                  ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+            {subscriptionPlans.map((plan) => (
+              <div
+                key={plan.id}
+                onClick={() => setSelectedPlan(plan.id)}
+                className={`relative rounded-2xl border overflow-hidden cursor-pointer transition-all duration-300 flex flex-col ${
+                  selectedPlan === plan.id
+                    ? "border-cyan-500 bg-[#0e1933] shadow-lg shadow-cyan-950/80 scale-[1.02]"
+                    : "border-slate-800 bg-[#070c18] hover:border-slate-700"
+                }`}
+              >
+                {/* Plan Card Image */}
+                <div className="h-28 w-full relative overflow-hidden bg-slate-900">
+                  <img
+                    src={plan.imgUrl}
+                    alt={plan.name}
+                    className="w-full h-full object-cover opacity-60 hover:scale-105 transition duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b1325] via-transparent to-transparent"></div>
+                  {plan.popular && (
+                    <span className="absolute top-2 right-2 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
+                      MOST POPULAR
+                    </span>
+                  )}
+                </div>
+
+                {/* Plan Details */}
+                <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                  <div>
+                    <h3 className="text-xs font-bold text-white">{plan.name}</h3>
+                    <div className="flex items-baseline gap-1 mt-1">
+                      <span className="text-xl font-extrabold text-cyan-300">{plan.price}</span>
+                      <span className="text-[10px] text-slate-500">{plan.period}</span>
+                    </div>
+                    <div className="text-[11px] font-semibold text-emerald-400 mt-1">{plan.credits}</div>
+
+                    <ul className="mt-3 space-y-1.5 border-t border-slate-800/80 pt-2.5">
+                      {plan.features.map((feat, idx) => (
+                        <li key={idx} className="flex items-center gap-1.5 text-[10px] text-slate-300">
+                          <CheckCircle2 className="w-3 h-3 text-cyan-400 shrink-0" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <button
+                    className={`w-full py-2 rounded-xl text-xs font-bold transition mt-2 ${
+                      selectedPlan === plan.id
+                        ? "bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-md shadow-cyan-500/20"
+                        : "bg-slate-800 hover:bg-slate-700 text-slate-300"
+                    }`}
+                  >
+                    {selectedPlan === plan.id ? "Selected Plan" : "Select Plan"}
+                  </button>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
-            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-              <Shield className="w-4 h-4 text-emerald-400" /> 8. Character & Scene Consistency Lock
-            </label>
-            <div className="space-y-2 text-xs">
-              <div 
-                onClick={() => setLockChar(!lockChar)}
-                className="flex items-center justify-between p-2.5 bg-[#070c18] rounded-xl border border-slate-800 cursor-pointer"
-              >
-                <span className="text-slate-300">Face & Character ID Lock (Scene 1-360)</span>
-                <span className={lockChar ? "text-emerald-400 font-bold" : "text-slate-600"}>{lockChar ? "LOCKED" : "OFF"}</span>
-              </div>
-              <div 
-                onClick={() => setLockCostume(!lockCostume)}
-                className="flex items-center justify-between p-2.5 bg-[#070c18] rounded-xl border border-slate-800 cursor-pointer"
-              >
-                <span className="text-slate-300">Costume & Fabric Match</span>
-                <span className={lockCostume ? "text-emerald-400 font-bold" : "text-slate-600"}>{lockCostume ? "LOCKED" : "OFF"}</span>
-              </div>
-              <div 
-                onClick={() => setLockLocation(!lockLocation)}
-                className="flex items-center justify-between p-2.5 bg-[#070c18] rounded-xl border border-slate-800 cursor-pointer"
-              >
-                <span className="text-slate-300">Location & Environment Continuity</span>
-                <span className={lockLocation ? "text-emerald-400 font-bold" : "text-slate-600"}>{lockLocation ? "LOCKED" : "OFF"}</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Audio & Lang */}
-        <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-4">
-          <div className="flex items-center gap-2">
-            <Volume2 className="w-4 h-4 text-cyan-400" />
-            <div>
-              <h3 className="text-xs font-bold text-white uppercase tracking-wider">9. Audio, Dubbing & Language Engine</h3>
-              <p className="text-[11px] text-slate-400">Voice narration, 1.5s matrix pause, and ambient soundscape.</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div>
-              <label className="text-[11px] text-slate-400 block mb-1">Voice Language</label>
-              <select 
-                value={audioLang} 
-                onChange={(e) => setAudioLang(e.target.value)}
-                className="w-full bg-[#070c18] border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200"
-              >
-                <option>Hindi</option>
-                <option>English</option>
-                <option>Spanish</option>
-                <option>Arabic</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="text-[11px] text-slate-400 block mb-1">Visual On-Screen Lang</label>
-              <select 
-                value={visualLang} 
-                onChange={(e) => setVisualLang(e.target.value)}
-                className="w-full bg-[#070c18] border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200"
-              >
-                <option>English (Visual Prompts)</option>
-                <option>Hindi</option>
-                <option>None (Pure Visual)</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="text-[11px] text-slate-400 block mb-1">Voice Delivery & Pause</label>
-              <select 
-                value={voiceEmotion} 
-                onChange={(e) => setVoiceEmotion(e.target.value)}
-                className="w-full bg-[#070c18] border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200"
-              >
-                <option>Deep Ultra-Slow (1.5s Pause)</option>
-                <option>Dramatic Narrative</option>
-                <option>Warm Documentarian</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Generate Button */}
-        <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <button className="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-semibold py-3.5 rounded-xl text-xs flex items-center justify-center gap-2 transition">
-            <SlidersHorizontal className="w-4 h-4 text-slate-400" /> Advanced Shot-by-Shot Timeline
-          </button>
-
-          <button className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:opacity-95 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 text-xs transition">
-            <Play className="w-4 h-4 fill-white" /> 🚀 Generate {duration} Full Film ({duration === "60m" ? 360 : 18} Scenes)
+        {/* 6. Unified Multimodal Generate Action */}
+        <div className="pt-2">
+          <button className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:opacity-95 text-white font-bold py-4 rounded-xl shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 text-sm transition active:scale-[0.99]">
+            <Play className="w-4 h-4 fill-white" /> 🚀 Generate Full Film (Image + Video + Voice Sync Mixed)
           </button>
         </div>
 
       </main>
     </div>
   );
-}
+                 }
+                                               
