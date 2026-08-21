@@ -13,7 +13,6 @@ import {
   Check,
   Video,
   Bookmark,
-  Crown,
   CheckCircle2
 } from "lucide-react";
 
@@ -52,8 +51,8 @@ export default function CineFlowProStudio() {
       price: "$49",
       period: "/month",
       credits: "1,500 Credits / mo",
-      features: ["4K Ultra Cinema Engine", "Full Multimodal Mix (Image + Video + Voice)", "Ultra-Fast Priority Queue", "Up to 30 Min Full Films", "Character Lock Matrix"],
-      imgUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60",
+      features: ["4K Ultra Cinema Engine", "Full Multimodal Mix (Image + Video + Voice)", "Ultra-Fast Priority Queue", "Up to 30 Min Full Films"],
+      imgUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500&auto=format&fit=crop&q=60",
       popular: true,
     },
     {
@@ -62,8 +61,8 @@ export default function CineFlowProStudio() {
       price: "$99",
       period: "/month",
       credits: "Unlimited Pro Credits",
-      features: ["60 Min Full-Feature Movies (360 Shots)", "Deep Hindi 1.5s Voice Engine", "Veo + Kling + Sora Models", "Full Commercial License", "24/7 Dedicated Server"],
-      imgUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60",
+      features: ["60 Min Full-Feature Movies (360 Shots)", "Deep Hindi 1.5s Voice Engine", "Veo + Kling + Sora Models", "Full Commercial License"],
+      imgUrl: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500&auto=format&fit=crop&q=60",
       popular: false,
     },
   ];
@@ -149,7 +148,6 @@ export default function CineFlowProStudio() {
 
         {/* 2. Aspect Ratio & Duration */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Aspect Ratio */}
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
               <Tv className="w-4 h-4 text-cyan-400" /> 2. Aspect Ratio
@@ -179,7 +177,6 @@ export default function CineFlowProStudio() {
             </div>
           </div>
 
-          {/* Duration */}
           <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-3">
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
               <Layers className="w-4 h-4 text-indigo-400" /> 3. Timeline & Duration
@@ -281,11 +278,11 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 5. Subscription Plans Section with Top Images */}
+        {/* 5. Subscription Plans Section with Visual Cards */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Crown className="w-5 h-5 text-amber-400" />
+              <Zap className="w-5 h-5 text-amber-400 fill-amber-400" />
               <h2 className="text-sm font-bold text-white uppercase tracking-wider">Choose Subscription Plan</h2>
             </div>
             <span className="text-[11px] text-cyan-400 bg-cyan-950 px-2.5 py-0.5 rounded-full border border-cyan-700/50">Instant Access</span>
@@ -302,13 +299,12 @@ export default function CineFlowProStudio() {
                     : "border-slate-800 bg-[#070c18] hover:border-slate-700"
                 }`}
               >
-                {/* Plan Card Image */}
-                <div className="h-28 w-full relative overflow-hidden bg-slate-900">
-                  <img
-                    src={plan.imgUrl}
-                    alt={plan.name}
-                    className="w-full h-full object-cover opacity-60 hover:scale-105 transition duration-500"
-                  />
+                {/* Plan Image Header */}
+                <div 
+                  className="h-28 w-full relative bg-cover bg-center"
+                  style={{ backgroundImage: `url(${plan.imgUrl})` }}
+                >
+                  <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]"></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0b1325] via-transparent to-transparent"></div>
                   {plan.popular && (
                     <span className="absolute top-2 right-2 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
@@ -362,5 +358,5 @@ export default function CineFlowProStudio() {
       </main>
     </div>
   );
-                 }
-                                               
+            }
+            
