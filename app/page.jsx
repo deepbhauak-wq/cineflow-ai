@@ -37,7 +37,6 @@ export default function CineFlowProStudio() {
 
   return (
     <div className="min-h-screen bg-[#060911] text-slate-100 font-sans pb-24">
-      {/* Header */}
       <header className="border-b border-slate-800 bg-[#090f1d] px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-cyan-600 flex items-center justify-center font-bold text-white">CF</div>
@@ -47,7 +46,6 @@ export default function CineFlowProStudio() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 pt-10 space-y-12">
-        {/* Prompt Section */}
         <div className="bg-[#0b1222] p-6 rounded-xl border border-slate-800">
           <label className="text-sm font-bold block mb-3 text-slate-300">1. Master Prompt</label>
           <textarea
@@ -58,7 +56,6 @@ export default function CineFlowProStudio() {
           />
         </div>
 
-        {/* Dimensions Section */}
         <div className="bg-[#0b1222] p-6 rounded-xl border border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="text-xs font-bold text-slate-400 mb-3 block">Aspect Ratio</label>
@@ -77,7 +74,6 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* Pricing Section */}
         <section>
           <h3 className="text-xl font-black mb-6 text-center">Studio Membership</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
