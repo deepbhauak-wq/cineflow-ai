@@ -8,9 +8,6 @@ export default function CineFlowProStudio() {
   );
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("60m");
-  const [storyModel, setStoryModel] = useState("Auto");
-  const [videoModel, setVideoModel] = useState("Veo");
-  const [artStyle, setArtStyle] = useState("Bible Art");
   const [selectedPlan, setSelectedPlan] = useState("pro");
 
   const subscriptionPlans = [
@@ -40,6 +37,7 @@ export default function CineFlowProStudio() {
 
   return (
     <div className="min-h-screen bg-[#060911] text-slate-100 font-sans pb-24">
+      {/* Header */}
       <header className="border-b border-slate-800 bg-[#090f1d] px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-cyan-600 flex items-center justify-center font-bold text-white">CF</div>
@@ -79,7 +77,7 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* Pricing Section - Professional Look */}
+        {/* Pricing Section */}
         <section>
           <h3 className="text-xl font-black mb-6 text-center">Studio Membership</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
