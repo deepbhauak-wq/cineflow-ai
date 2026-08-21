@@ -1,7 +1,6 @@
 
 "use client";
 
-import React, { useState } from "react";
 import {
   Clapperboard,
   Sparkles,
@@ -19,6 +18,7 @@ import {
   Image as ImageIcon,
   ChevronDown
 } from "lucide-react";
+
 
 
 
