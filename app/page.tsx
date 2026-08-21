@@ -106,6 +106,7 @@ export default function CineFlowProStudio() {
             </div>
           </div>
           <button 
+            type="button"
             onClick={handlePresetSelect}
             className="w-full sm:w-auto px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition"
           >
@@ -149,6 +150,7 @@ export default function CineFlowProStudio() {
               ].map((r) => (
                 <button
                   key={r.id}
+                  type="button"
                   onClick={() => setAspectRatio(r.id)}
                   className={`p-2.5 rounded-xl border text-left transition ${
                     aspectRatio === r.id
@@ -178,6 +180,7 @@ export default function CineFlowProStudio() {
               ].map((d) => (
                 <button
                   key={d.id}
+                  type="button"
                   onClick={() => setDuration(d.id)}
                   className={`p-2.5 rounded-xl border text-left transition ${
                     duration === d.id
@@ -203,6 +206,7 @@ export default function CineFlowProStudio() {
               {["Auto", "GPT", "Gemini", "Claude", "Fast AI", "Pro AI"].map((m) => (
                 <button
                   key={m}
+                  type="button"
                   onClick={() => setStoryModel(m)}
                   className={`p-2.5 rounded-xl border text-center text-xs font-semibold transition ${
                     storyModel === m
@@ -224,6 +228,7 @@ export default function CineFlowProStudio() {
               {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Auto"].map((vm) => (
                 <button
                   key={vm}
+                  type="button"
                   onClick={() => setVideoModel(vm)}
                   className={`p-2.5 rounded-xl border text-center text-xs font-semibold transition ${
                     videoModel === vm
@@ -250,6 +255,7 @@ export default function CineFlowProStudio() {
             ].map((st) => (
               <button
                 key={st}
+                type="button"
                 onClick={() => setArtStyle(st)}
                 className={`p-3 rounded-xl border text-left flex justify-between items-center transition ${
                   artStyle === st
@@ -264,7 +270,7 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 5. Subscription Plans Section */}
+        {/* 5. Subscription Plans */}
         <div className="bg-[#0b1325]/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -318,6 +324,7 @@ export default function CineFlowProStudio() {
                   </div>
 
                   <button
+                    type="button"
                     className={`w-full py-2 rounded-xl text-xs font-bold transition mt-2 ${
                       selectedPlan === plan.id
                         ? "bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-md shadow-cyan-500/20"
@@ -334,11 +341,15 @@ export default function CineFlowProStudio() {
 
         {/* 6. Unified Multimodal Generate Action */}
         <div className="pt-2">
-          <button className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:opacity-95 text-white font-bold py-4 rounded-xl shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 text-sm transition active:scale-[0.99]">
+          <button 
+            type="button"
+            className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:opacity-95 text-white font-bold py-4 rounded-xl shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 text-sm transition active:scale-[0.99]"
+          >
             <span>▶</span> 🚀 Generate Full Film (Image + Video + Voice Sync Mixed)
           </button>
         </div>
       </main>
     </div>
   );
-}
+                }
+                    
