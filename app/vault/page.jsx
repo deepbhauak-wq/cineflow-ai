@@ -26,10 +26,10 @@ export default function VaultPage() {
       id: "Free",
       name: "Free Tier",
       price: "₹0",
-      period: "Daily Auto-Refill",
+      period: "Daily Refill",
       credits: "50 Credits / Day",
       quality: "720p HD",
-      badge: "Active by Default"
+      badge: "Active"
     },
     {
       id: "Starter",
@@ -111,130 +111,197 @@ export default function VaultPage() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 p-4 pb-28 max-w-md mx-auto space-y-4 font-sans text-xs">
-      <header className="flex justify-between items-center border-b border-slate-800 pb-2.5 sticky top-0 bg-[#070b14]/90 backdrop-blur-md z-40">
+    <div className="min-h-screen bg-[#060913] text-slate-100 p-4 pb-28 max-w-md mx-auto space-y-4 font-sans text-xs">
+      {/* Top Header */}
+      <header className="flex justify-between items-center border-b border-slate-800/80 pb-2.5 sticky top-0 bg-[#060913]/95 backdrop-blur-md z-40">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-sm font-black shadow-md">
             📂
           </div>
           <div>
             <h1 className="text-xs font-black text-purple-400">
-              CineFlow <span className="text-white">Vault & Editor</span>
+              CineFlow <span className="text-white">Post-Production Vault</span>
             </h1>
-            <p className="text-[8px] text-slate-500">Autonomous Multi-Track Controls</p>
+            <p className="text-[8px] text-slate-500">Autonomous Multi-Track Editor</p>
           </div>
         </div>
         <Link
           href="/"
-          className="px-3 py-1.5 rounded-xl font-black text-[10px] bg-cyan-600 hover:bg-cyan-500 text-white transition flex items-center gap-1 shadow-md"
+          className="px-3 py-1.5 rounded-xl font-black text-[10px] bg-[#0ea5e9] hover:bg-[#0284c7] text-white transition flex items-center gap-1 shadow-md"
         >
           🎬 Studio
         </Link>
       </header>
 
       {statusMsg && (
-        <div className="bg-cyan-950 border border-cyan-500 text-cyan-300 p-2 rounded-xl text-center font-bold text-xs">
+        <div className="bg-cyan-950/90 border border-cyan-500 text-cyan-300 p-2 rounded-xl text-center font-bold text-xs shadow-lg">
           {statusMsg}
         </div>
       )}
 
-      {/* Plan Status Banner */}
-      <div className="bg-[#0b1222] border border-purple-500/40 p-3 rounded-2xl flex justify-between items-center">
+      {/* Plan Status Banner (50 Credits Updated) */}
+      <div className="bg-gradient-to-r from-emerald-950/40 via-cyan-950/40 to-slate-900 border border-emerald-500/40 p-3.5 rounded-2xl flex justify-between items-center">
         <div>
-          <span className="text-[9px] font-black text-purple-400 block uppercase">
-            Active: {userPlan} Tier
+          <span className="text-[9px] font-black text-emerald-400 block uppercase">
+            ⚡ FREE PLAN ({credits}/50 CREDITS LEFT)
           </span>
-          <h3 className="text-xs font-black text-white">
-            {userPlan === "Free" ? `⚡ Daily Free: ${credits}/50 Credits` : `👑 ${userPlan}: Unlimited Active`}
-          </h3>
+          <h3 className="text-xs font-black text-white">4K UHD Master (100% Watermark Free)</h3>
         </div>
-        <span className="bg-emerald-950 text-emerald-300 text-[8px] font-bold px-2 py-1 rounded border border-emerald-500">
-          No Watermark
-        </span>
+        <button
+          onClick={() => {
+            const el = document.getElementById("sub-plans");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 font-black px-2.5 py-1 rounded-lg text-[9px] uppercase shadow-lg"
+        >
+          Upgrade ₹199+
+        </button>
       </div>
 
-      {/* Master Director Controls */}
-      <div className="bg-[#0b1222] border border-slate-800 p-3 rounded-2xl space-y-2">
-        <span className="font-bold text-cyan-400 text-[10px] block uppercase">🎛️ MASTER CONTROLS</span>
+      {/* Master Production Controls */}
+      <div className="bg-[#0a101f] border border-slate-800/80 p-3.5 rounded-2xl space-y-2">
+        <span className="font-black text-cyan-400 text-[10px] block uppercase">🎛️ Master Production Controls</span>
         <div className="grid grid-cols-2 gap-1.5">
-          <button onClick={() => setCharacterLock(!characterLock)} className={`p-2 rounded-xl border text-left text-[9px] font-bold flex justify-between ${characterLock ? "bg-cyan-950 border-cyan-500 text-cyan-200" : "bg-[#060a14] border-slate-800 text-slate-500"}`}>
-            <span>👤 Character Lock</span><span>{characterLock ? "ON" : "OFF"}</span>
+          <button
+            onClick={() => setCharacterLock(!characterLock)}
+            className={`p-2 rounded-xl border text-left font-bold text-[9px] flex justify-between items-center ${
+              characterLock ? "bg-cyan-950/80 border-cyan-500 text-cyan-200" : "bg-[#050811] border-slate-800 text-slate-500"
+            }`}
+          >
+            <span>👤 Character Lock</span>
+            <span>{characterLock ? "ON" : "OFF"}</span>
           </button>
-          <button onClick={() => setVoiceClone(!voiceClone)} className={`p-2 rounded-xl border text-left text-[9px] font-bold flex justify-between ${voiceClone ? "bg-purple-950 border-purple-500 text-purple-200" : "bg-[#060a14] border-slate-800 text-slate-500"}`}>
-            <span>🎙️ Voice Clone</span><span>{voiceClone ? "ON" : "OFF"}</span>
+
+          <button
+            onClick={() => setVoiceClone(!voiceClone)}
+            className={`p-2 rounded-xl border text-left font-bold text-[9px] flex justify-between items-center ${
+              voiceClone ? "bg-purple-950/80 border-purple-500 text-purple-200" : "bg-[#050811] border-slate-800 text-slate-500"
+            }`}
+          >
+            <span>🎙️ Voice Clone</span>
+            <span>{voiceClone ? "ON" : "OFF"}</span>
           </button>
-          <button onClick={() => setAutoFoley(!autoFoley)} className={`p-2 rounded-xl border text-left text-[9px] font-bold flex justify-between ${autoFoley ? "bg-amber-950 border-amber-500 text-amber-200" : "bg-[#060a14] border-slate-800 text-slate-500"}`}>
-            <span>🎧 3D Foley</span><span>{autoFoley ? "ON" : "OFF"}</span>
+
+          <button
+            onClick={() => setAutoFoley(!autoFoley)}
+            className={`p-2 rounded-xl border text-left font-bold text-[9px] flex justify-between items-center ${
+              autoFoley ? "bg-amber-950/80 border-amber-500 text-amber-200" : "bg-[#050811] border-slate-800 text-slate-500"
+            }`}
+          >
+            <span>🎧 3D Sound Foley</span>
+            <span>{autoFoley ? "ON" : "OFF"}</span>
           </button>
-          <button onClick={() => setHdrGrade(!hdrGrade)} className={`p-2 rounded-xl border text-left text-[9px] font-bold flex justify-between ${hdrGrade ? "bg-emerald-950 border-emerald-500 text-emerald-200" : "bg-[#060a14] border-slate-800 text-slate-500"}`}>
-            <span>🎨 HDR Grade</span><span>{hdrGrade ? "ON" : "OFF"}</span>
+
+          <button
+            onClick={() => setHdrGrade(!hdrGrade)}
+            className={`p-2 rounded-xl border text-left font-bold text-[9px] flex justify-between items-center ${
+              hdrGrade ? "bg-emerald-950/80 border-emerald-500 text-emerald-200" : "bg-[#050811] border-slate-800 text-slate-500"
+            }`}
+          >
+            <span>🎨 HDR Color LUT</span>
+            <span>{hdrGrade ? "ON" : "OFF"}</span>
           </button>
-          <button onClick={() => setAnim3D(!anim3D)} className={`p-2 rounded-xl border text-left text-[9px] font-bold flex justify-between ${anim3D ? "bg-indigo-950 border-indigo-500 text-indigo-200" : "bg-[#060a14] border-slate-800 text-slate-500"}`}>
-            <span>✨ 3D Particles</span><span>{anim3D ? "ON" : "OFF"}</span>
+
+          <button
+            onClick={() => setAnim3D(!anim3D)}
+            className={`p-2 rounded-xl border text-left font-bold text-[9px] flex justify-between items-center ${
+              anim3D ? "bg-indigo-950/80 border-indigo-500 text-indigo-200" : "bg-[#050811] border-slate-800 text-slate-500"
+            }`}
+          >
+            <span>✨ 3D FX Particles</span>
+            <span>{anim3D ? "ON" : "OFF"}</span>
           </button>
-          <button onClick={() => setAutoSubtitles(!autoSubtitles)} className={`p-2 rounded-xl border text-left text-[9px] font-bold flex justify-between ${autoSubtitles ? "bg-blue-950 border-blue-500 text-blue-200" : "bg-[#060a14] border-slate-800 text-slate-500"}`}>
-            <span>📝 Subtitles</span><span>{autoSubtitles ? "ON" : "OFF"}</span>
+
+          <button
+            onClick={() => setAutoSubtitles(!autoSubtitles)}
+            className={`p-2 rounded-xl border text-left font-bold text-[9px] flex justify-between items-center ${
+              autoSubtitles ? "bg-blue-950/80 border-blue-500 text-blue-200" : "bg-[#050811] border-slate-800 text-slate-500"
+            }`}
+          >
+            <span>📝 Auto Subtitles</span>
+            <span>{autoSubtitles ? "ON" : "OFF"}</span>
           </button>
         </div>
       </div>
 
-      {/* 4 Subscription Plans */}
-      <div className="bg-[#0b1222] border border-slate-800 p-3 rounded-2xl space-y-2">
-        <span className="font-bold text-amber-400 text-[10px] block uppercase">💎 4 SUBSCRIPTION PLANS</span>
+      {/* 4 Subscription Plans Section */}
+      <div id="sub-plans" className="bg-[#0a101f] border border-slate-800/80 p-3.5 rounded-2xl space-y-2">
+        <span className="font-black text-amber-400 text-[10px] block uppercase">💎 4 Subscription Plans</span>
         <div className="grid grid-cols-2 gap-1.5">
           {plans.map((p) => (
-            <div key={p.id} className={`p-2 rounded-xl border flex flex-col justify-between ${userPlan === p.id ? "bg-purple-950 border-purple-500" : "bg-[#060a14] border-slate-800"}`}>
+            <div
+              key={p.id}
+              className={`p-2.5 rounded-2xl border flex flex-col justify-between ${
+                userPlan === p.id ? "bg-purple-950/80 border-purple-500" : "bg-[#050811] border-slate-800"
+              }`}
+            >
               <div>
-                <div className="font-bold text-[10px] text-white">{p.name}</div>
-                <div className="text-amber-300 font-bold text-xs">{p.price} <span className="text-[7px] text-slate-400">{p.period}</span></div>
-                <div className="text-cyan-400 font-bold text-[8px]">{p.credits}</div>
+                <span className="font-bold text-[10px] text-white block">{p.name}</span>
+                <span className="text-amber-300 font-bold text-xs">{p.price} <span className="text-[7px] text-slate-400">{p.period}</span></span>
+                <span className="text-cyan-400 font-bold text-[8px] block">{p.credits}</span>
               </div>
               <button
                 onClick={() => handlePlanPurchase(p)}
                 disabled={userPlan === p.id}
-                className={`w-full mt-2 py-1 rounded-lg font-bold text-[8px] uppercase ${userPlan === p.id ? "bg-slate-800 text-slate-500" : "bg-amber-500 text-slate-950"}`}
+                className={`w-full mt-2 py-1 rounded-lg font-bold text-[8px] uppercase ${
+                  userPlan === p.id ? "bg-slate-800 text-slate-500" : "bg-amber-500 text-slate-950 shadow"
+                }`}
               >
-                {userPlan === p.id ? "Active" : "Select"}
+                {userPlan === p.id ? "Active" : `Select ${p.price}`}
               </button>
             </div>
           ))}
         </div>
       </div>
 
-      {/* 6 Multi-Track Scene Editing Buttons */}
-      <div className="bg-[#0b1222] border border-slate-800 p-3 rounded-2xl space-y-2">
-        <span className="font-bold text-cyan-400 text-[10px] block uppercase">🎬 MULTI-TRACK SCENE EDITORS</span>
-        <div className="grid grid-cols-3 gap-1 text-[9px]">
-          <button onClick={() => notify("🖼️ Image Editor Opened")} className="p-2 bg-[#060a14] border border-slate-800 rounded font-bold text-cyan-300">🖼️ Image</button>
-          <button onClick={() => notify("🎙️ Audio Editor Opened")} className="p-2 bg-[#060a14] border border-slate-800 rounded font-bold text-purple-300">🎙️ Audio</button>
-          <button onClick={() => notify("🎥 Video Editor Opened")} className="p-2 bg-[#060a14] border border-slate-800 rounded font-bold text-amber-300">🎥 Video</button>
-          <button onClick={() => notify("✨ Animation Editor Opened")} className="p-2 bg-[#060a14] border border-slate-800 rounded font-bold text-indigo-300">✨ Anim</button>
-          <button onClick={() => notify("📝 Subtitles Editor Opened")} className="p-2 bg-[#060a14] border border-slate-800 rounded font-bold text-blue-300">📝 Text</button>
-          <button onClick={() => notify("⚡ 4K Clean Re-Rendered")} className="p-2 bg-emerald-950 border border-emerald-500 rounded font-bold text-emerald-300">⚡ 4K ReRoll</button>
-        </div>
+      {/* Vault Empty State */}
+      <div className="bg-[#0a101f] border border-slate-800/80 p-8 rounded-3xl text-center space-y-3 shadow-xl">
+        <div className="text-4xl">📁</div>
+        <h3 className="text-sm font-bold text-slate-200">वॉल्ट खाली है</h3>
+        <p className="text-[11px] text-slate-400">Studio में अपनी फिल्म जनरेट करें, वह यहाँ आर्काइव होगी।</p>
+        <Link
+          href="/"
+          className="inline-block py-2.5 px-5 bg-cyan-600 rounded-xl text-xs font-bold text-white uppercase shadow-lg"
+        >
+          Go to Studio
+        </Link>
       </div>
 
-      {/* In-App Payment Modal */}
+      {/* Payment Modal */}
       {showPaymentModal && selectedPlanToBuy && (
         <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0b1222] border border-slate-800 w-full max-w-sm rounded-3xl p-4 space-y-3">
+          <div className="bg-[#0a101f] border border-slate-800 w-full max-w-sm rounded-3xl p-4 space-y-3">
             <div className="flex justify-between items-center border-b border-slate-800 pb-2">
               <h3 className="font-bold text-white text-xs">{selectedPlanToBuy.name} ({selectedPlanToBuy.price})</h3>
               <button onClick={() => setShowPaymentModal(false)} className="text-slate-400 font-bold">✕</button>
             </div>
             <div className="grid grid-cols-3 gap-1">
               {[{ id: "upi", label: "📱 UPI" }, { id: "card", label: "💳 Cards" }, { id: "net", label: "🏦 Bank" }].map((m) => (
-                <button key={m.id} onClick={() => setPayMethod(m.id)} className={`py-1 rounded-lg text-[9px] font-bold ${payMethod === m.id ? "bg-cyan-600 text-white" : "bg-[#060a14] text-slate-400 border border-slate-800"}`}>{m.label}</button>
+                <button
+                  key={m.id}
+                  onClick={() => setPayMethod(m.id)}
+                  className={`py-1 rounded-lg text-[9px] font-bold ${payMethod === m.id ? "bg-cyan-600 text-white" : "bg-[#050811] text-slate-400 border border-slate-800"}`}
+                >
+                  {m.label}
+                </button>
               ))}
             </div>
             {payMethod === "upi" && (
-              <input type="text" placeholder="Enter UPI ID (e.g. user@okhdfcbank)" className="w-full bg-[#060a14] p-2 rounded-lg border border-slate-800 text-xs text-white outline-none" />
+              <input
+                type="text"
+                placeholder="Enter UPI ID (e.g. user@okhdfcbank)"
+                className="w-full bg-[#050811] p-2 rounded-lg border border-slate-800 text-xs text-white outline-none"
+              />
             )}
-            <button onClick={completePayment} className="w-full py-2.5 bg-amber-500 text-slate-950 font-black text-xs rounded-xl uppercase">Pay {selectedPlanToBuy.price} Securely</button>
+            <button
+              onClick={completePayment}
+              className="w-full py-2.5 bg-amber-500 text-slate-950 font-black text-xs rounded-xl uppercase"
+            >
+              Pay {selectedPlanToBuy.price} Securely
+            </button>
           </div>
         </div>
       )}
     </div>
   );
-      }
-                                                                                  
+}
