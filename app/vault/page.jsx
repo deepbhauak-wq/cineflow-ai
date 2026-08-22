@@ -54,7 +54,7 @@ export default function SubscriptionPlansPage() {
       <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
         <div className="flex items-center gap-3">
           <Link href="/" className="text-base text-slate-400 hover:text-white">
-            &larr;
+            {"<"} Back
           </Link>
           <h1 className="text-sm font-bold text-white">Subscription Plans</h1>
         </div>
@@ -124,10 +124,10 @@ export default function SubscriptionPlansPage() {
       {/* Payment Security Info */}
       <div className="bg-[#0b1222] border border-slate-800/80 rounded-2xl p-3 text-center space-y-1">
         <div className="text-[10px] text-slate-400 font-medium">
-          Instant activation with UPI, Cards, NetBanking &amp; Wallet
+          Instant activation with UPI, Cards, NetBanking and Wallet
         </div>
         <div className="text-[9px] text-slate-400 font-bold">
-          100% Safe &amp; Encrypted Checkout
+          100% Safe and Encrypted Checkout
         </div>
       </div>
     </div>
