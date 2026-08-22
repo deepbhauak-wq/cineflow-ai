@@ -120,6 +120,7 @@ export default function CineFlowApp() {
 
   return (
     <div className="min-h-screen bg-[#070b14] text-slate-100 p-4 pb-24 max-w-md mx-auto space-y-4 font-sans text-xs">
+      {/* Top Header - AK Engine Badge Removed */}
       <header className="flex justify-between items-center border-b border-slate-800 pb-2.5 sticky top-0 bg-[#070b14]/90 backdrop-blur-md z-40">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-sm font-black shadow-md">
@@ -135,7 +136,7 @@ export default function CineFlowApp() {
         <div className="flex items-center gap-1.5">
           <Link
             href="/vault"
-            className="px-2.5 py-1 rounded-lg font-bold text-[10px] bg-purple-950 text-purple-300 border border-purple-800 hover:bg-purple-900 transition"
+            className="px-2.5 py-1 rounded-lg font-bold text-[10px] bg-purple-950 text-purple-300 border border-purple-800 hover:bg-purple-900 transition flex items-center gap-1"
           >
             Vault 📂
           </Link>
@@ -154,6 +155,7 @@ export default function CineFlowApp() {
         </div>
       )}
 
+      {/* Main Studio Options */}
       <div className="space-y-4">
         <div className="text-center space-y-1 pt-1">
           <span className="text-[9px] bg-[#0c1e29] border border-cyan-500/30 text-cyan-400 px-3 py-0.5 rounded-full font-bold inline-block">
@@ -164,7 +166,7 @@ export default function CineFlowApp() {
           </h2>
         </div>
 
-        {/* 1. Master Story Input */}
+        {/* 1. Master Story / Screenplay Input */}
         <div className="bg-[#0b1222] border border-slate-800 p-3 rounded-2xl space-y-1.5">
           <div className="flex justify-between items-center">
             <span className="font-bold text-cyan-400 text-[10px]">🎛️ 1. MASTER STORY / SCREENPLAY INPUT</span>
@@ -296,6 +298,7 @@ export default function CineFlowApp() {
           </div>
         </div>
 
+        {/* Action Button */}
         <button
           onClick={() => notify("🚀 Film Generation Pipeline Triggered!")}
           className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl font-black text-xs uppercase text-white shadow-xl active:scale-95 transition"
