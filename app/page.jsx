@@ -10,7 +10,7 @@ export default function CineFlowProStudio() {
   const [fullName, setFullName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // 6-Point Engine States (Universal & Neutral Defaults)
+  // 6-Point Engine States
   const [prompt, setPrompt] = useState(
     "एक प्राचीन योद्धा घने जंगल में रहस्यमयी मंदिर की खोज कर रहा है। रात का समय, तेज बारिश, सिनेमाई लाइटिंग और 8K रियलिस्टिक विजुअल्स।"
   );
@@ -24,7 +24,12 @@ export default function CineFlowProStudio() {
   const [statusMsg, setStatusMsg] = useState("");
 
   // Pipeline Execution States
-  const [pipelineState, setPipelineState] = useState("idle"); // idle | generating | completed
+  const [pipelineState, setPipelineState] = useState("idle");
+  const [editingSceneId, setEditingSceneId] = useState(null);
+  const [editPromptText, setEditPromptText] = useState("");
+  const [editVoiceText, setEditVoiceText] = useState("");
+  const [editCameraText, setEditCameraText] = useState("");
+
   const [scenes, setScenes] = useState([]);
 
   const handleAuthSubmit = (e) => {
@@ -57,7 +62,6 @@ export default function CineFlowProStudio() {
     setPipelineState("generating");
     setStatusMsg("🚀 ऑटोमैटिक AI फिल्म पाइपलाइन शुरू हो रही है...");
 
-    // Auto Scene Breakdown Simulation
     setTimeout(() => {
       setCredits((prev) => prev - 10);
       setScenes([
@@ -89,12 +93,40 @@ export default function CineFlowProStudio() {
       setPipelineState("completed");
       setStatusMsg("✅ पूरी फिल्म और सीन्स ऑटो-जनरेट हो चुके हैं!");
       setTimeout(() => setStatusMsg(""), 4000);
-    }, 2500);
+    }, 2000);
   };
 
-  // Individual Scene Regenerate Trigger
+  // Open Inline Scene Editor
+  const handleOpenEdit = (sc) => {
+    setEditingSceneId(sc.id);
+    setEditPromptText(sc.desc);
+    setEditVoiceText(sc.voice);
+    setEditCameraText(sc.camera);
+  };
+
+  // Save Scene Changes & Re-render
+  const handleSaveScene = (id) => {
+    setScenes((prev) =>
+      prev.map((sc) =>
+        sc.id === id
+          ? {
+              ...sc,
+              desc: editPromptText,
+              voice: editVoiceText,
+              camera: editCameraText,
+              status: "Updated & Ready",
+            }
+          : sc
+      )
+    );
+    setEditingSceneId(null);
+    setStatusMsg(`✅ Scene 0${id} अपडेट और रेंडर हो गया!`);
+    setTimeout(() => setStatusMsg(""), 3000);
+  };
+
+  // 1-Click Fast Regenerate Single Scene
   const handleRegenerateScene = (id) => {
-    setStatusMsg(`🔄 Scene 0${id} को दोबारा रेंडर किया जा रहा है...`);
+    setStatusMsg(`🔄 Scene 0${id} को दोबारा री-रोल किया जा रहा है...`);
     setScenes((prev) =>
       prev.map((sc) => (sc.id === id ? { ...sc, status: "Regenerating..." } : sc))
     );
@@ -102,16 +134,16 @@ export default function CineFlowProStudio() {
       setScenes((prev) =>
         prev.map((sc) =>
           sc.id === id
-            ? { ...sc, desc: `${sc.desc} (अपडेटेड एंगल और नया फेस सिंक)`, status: "Ready" }
+            ? { ...sc, desc: `${sc.desc} (Fresh AI Variation)`, status: "Ready" }
             : sc
         )
       );
-      setStatusMsg(`✅ Scene 0${id} सफलतापूर्वक नया बन गया!`);
+      setStatusMsg(`✅ Scene 0${id} नया बन चुका है!`);
       setTimeout(() => setStatusMsg(""), 3000);
     }, 1500);
   };
 
-  // 1. Initial Login Screen
+  // 1. Initial Login Gate
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-[#070b14] text-slate-100 flex items-center justify-center p-4">
@@ -200,9 +232,9 @@ export default function CineFlowProStudio() {
     );
   }
 
-  // 2. Main Studio & Scene Breakdown Screen
+  // 2. 6-Point Studio + Live Scene Regenerator
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 font-sans pb-24 selection:bg-cyan-500 selection:text-white">
+    <div className="min-h-screen bg-[#070b14] text-slate-100 font-sans pb-28 selection:bg-cyan-500 selection:text-white">
       <header className="px-4 py-3 border-b border-slate-800 bg-[#090f1d] sticky top-0 z-50 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-black text-sm">
@@ -225,7 +257,7 @@ export default function CineFlowProStudio() {
       </header>
 
       {statusMsg && (
-        <div className="fixed top-14 left-1/2 -translate-x-1/2 z-50 bg-cyan-950 border border-cyan-500 text-cyan-300 text-xs font-bold px-4 py-1.5 rounded-full shadow-2xl animate-pulse">
+        <div className="fixed top-14 left-1/2 -translate-x-1/2 z-50 bg-cyan-950 border border-cyan-500 text-cyan-300 text-xs font-bold px-4 py-1.5 rounded-full shadow-2xl">
           {statusMsg}
         </div>
       )}
@@ -397,7 +429,7 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* Master 1-Click Action Button */}
+        {/* Master 1-Click Generate Button */}
         <button
           onClick={handleGenerate}
           disabled={pipelineState === "generating"}
@@ -412,7 +444,7 @@ export default function CineFlowProStudio() {
             : "🚀 Generate Cinema Video Package"}
         </button>
 
-        {/* Individual Scene Regenerator & Fine-Tuner Screen */}
+        {/* Live Scene Studio with Real Editing Box */}
         {pipelineState === "completed" && scenes.length > 0 && (
           <div className="mt-8 pt-6 border-t border-slate-800 space-y-4">
             <div className="flex items-center justify-between">
@@ -421,10 +453,10 @@ export default function CineFlowProStudio() {
                   🎬 Generated Film Timeline
                 </h3>
                 <p className="text-[10px] text-slate-400">
-                  Full Video Auto-Synced. You can re-render any specific scene below:
+                  Select any scene below to edit prompt or re-render:
                 </p>
               </div>
-              <button className="bg-emerald-950 border border-emerald-500 text-emerald-300 text-[10px] font-bold px-3 py-1.5 rounded-lg">
+              <button className="bg-emerald-950 border border-emerald-500 text-emerald-300 text-[10px] font-bold px-3 py-1.5 rounded-lg active:scale-95">
                 ⬇️ Export Full MP4
               </button>
             </div>
@@ -442,35 +474,12 @@ export default function CineFlowProStudio() {
                     </span>
                   </div>
 
-                  <p className="text-xs text-slate-300 bg-[#060a14] p-2.5 rounded-xl border border-slate-800">
-                    <span className="text-slate-500 font-bold block text-[9px] uppercase">Visual Prompt:</span>
-                    {sc.desc}
-                  </p>
-
-                  <p className="text-xs text-slate-400 italic">
-                    🎙️ Voiceover: "{sc.voice}"
-                  </p>
-
-                  <div className="flex gap-2 pt-1">
-                    <button
-                      onClick={() => handleRegenerateScene(sc.id)}
-                      className="flex-1 py-2 rounded-xl bg-cyan-950 border border-cyan-500 text-cyan-300 text-[10px] font-bold flex items-center justify-center gap-1 active:scale-95 cursor-pointer"
-                    >
-                      🔄 Regenerate This Scene
-                    </button>
-                    <button
-                      onClick={() => setStatusMsg(`✏️ Scene 0${sc.id} Prompt Editor Opened`)}
-                      className="px-3 py-2 rounded-xl bg-slate-800 text-slate-300 text-[10px] font-bold active:scale-95 cursor-pointer"
-                    >
-                      ✏️ Edit Prompt
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
-  );
-}
+                  {/* If Scene is being Edited */}
+                  {editingSceneId === sc.id ? (
+                    <div className="space-y-2 bg-[#060a14] p-3 rounded-xl border border-cyan-500/50">
+                      <label className="text-[9px] text-cyan-400 font-bold uppercase block">
+                        Edit Scene Visual Prompt:
+                      </label>
+                      <textarea
+                        value={editPromptText}
+              
