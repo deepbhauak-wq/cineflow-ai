@@ -82,8 +82,7 @@ export default function CineFlowProStudio() {
           <div className="grid grid-cols-2 gap-1">{["Veo", "Kling", "Runway", "Hailuo"].map(v => <button key={v} onClick={() => setVideo(v)} className={`py-1 rounded text-[10px] font-bold ${video === v ? "bg-cyan-950 text-cyan-300" : "bg-[#060a14]"}`}>{v}</button>)}</div>
         </div>
       </div>
-
-      <div className="p-3 bg-[#0b1222] border border-slate-800 rounded-xl space-y-1">
+            <div className="p-3 bg-[#0b1222] border border-slate-800 rounded-xl space-y-1">
         <label className="text-[10px] font-bold text-amber-400">🎞️ 6. Style</label>
         <div className="grid grid-cols-2 gap-1">{["Cinematic Epic", "Realistic 8K", "3D Animation", "Dark Cyberpunk"].map(s => <button key={s} onClick={() => setStyle(s)} className={`p-1.5 rounded text-xs font-bold text-left ${style === s ? "bg-[#1f1910] border border-amber-500 text-amber-300" : "bg-[#060a14]"}`}>{s}</button>)}</div>
       </div>
