@@ -1,12 +1,13 @@
+
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function GoogleFlowApp() {
   const [mounted, setMounted] = useState(false);
-  const [view, setView] = useState("home"); // "home" or "project_detail"
+  const [view, setView] = useState("home");
   const [prompt, setPrompt] = useState("");
-  const [mode, setMode] = useState("Video"); // "Image" or "Video"
+  const [mode, setMode] = useState("Video");
   const [ratio, setRatio] = useState("9:16");
   const [multiplier, setMultiplier] = useState("x1");
   const [duration, setDuration] = useState("8s");
@@ -44,7 +45,7 @@ export default function GoogleFlowApp() {
   return (
     <div className="min-h-screen bg-black text-white font-sans text-xs flex flex-col justify-between max-w-md mx-auto relative select-none">
       
-      {/* 1. TOP BAR */}
+      {/* 1. TOP HEADER */}
       {view === "home" ? (
         <div className="p-4 flex justify-between items-center z-20">
           <h1 className="text-xl font-bold tracking-tight text-white">Google Flow</h1>
@@ -84,7 +85,6 @@ export default function GoogleFlowApp() {
       {/* 2. BODY CONTENT */}
       {view === "home" ? (
         <div className="px-4 py-1 space-y-6 flex-1">
-          {/* Action Carousel */}
           <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
             {actionCards.map((item, idx) => (
               <div
@@ -103,7 +103,6 @@ export default function GoogleFlowApp() {
             ))}
           </div>
 
-          {/* Projects Section */}
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <h2 className="text-base font-bold text-white">Projects</h2>
@@ -120,7 +119,6 @@ export default function GoogleFlowApp() {
           </div>
         </div>
       ) : (
-        /* Empty Project Detail Canvas */
         <div className="flex-1 flex flex-col items-center justify-center space-y-3 text-center px-4 py-8">
           <div className="text-slate-400 text-xs font-normal space-y-1">
             <p className="font-semibold text-slate-300">No assets yet.</p>
@@ -133,9 +131,8 @@ export default function GoogleFlowApp() {
         </div>
       )}
 
-      {/* 3. BOTTOM FLOATING CREATION SHEET */}
+      {/* 3. BOTTOM SHEET */}
       <div className="bg-[#12141a] border-t border-slate-800/90 rounded-t-[32px] p-4 space-y-3 shadow-2xl z-30">
-        {/* Prompt Input Row */}
         <div className="flex items-center gap-2 bg-transparent pb-1">
           <input
             type="text"
@@ -162,12 +159,10 @@ export default function GoogleFlowApp() {
           </div>
         </div>
 
-        {/* Credit Counter */}
         <div className="text-center text-[11px] text-slate-400 font-medium">
           Generating will use <span className="text-white underline font-bold">{mode === "Video" ? "12 AI credits" : "0 AI credits"}</span>
         </div>
 
-        {/* Image / Video Mode Switcher */}
         <div className="grid grid-cols-2 gap-2 bg-[#1b1e28] p-1 rounded-2xl">
           <button
             onClick={() => setMode("Image")}
@@ -187,7 +182,6 @@ export default function GoogleFlowApp() {
           </button>
         </div>
 
-        {/* Aspect Ratio Selector */}
         <div className="grid grid-cols-5 gap-1.5 bg-[#1b1e28] p-1.5 rounded-2xl text-center">
           {["16:9", "4:3", "1:1", "3:4", "9:16"].map((r) => (
             <button
@@ -203,7 +197,6 @@ export default function GoogleFlowApp() {
           ))}
         </div>
 
-        {/* Batch Multiplier */}
         <div className="grid grid-cols-4 gap-1.5 bg-[#1b1e28] p-1.5 rounded-2xl text-center">
           {["x1", "x2", "x3", "x4"].map((m) => (
             <button
@@ -218,7 +211,6 @@ export default function GoogleFlowApp() {
           ))}
         </div>
 
-        {/* Duration (Only in Video Mode) */}
         {mode === "Video" && (
           <div className="grid grid-cols-4 gap-1.5 bg-[#1b1e28] p-1.5 rounded-2xl text-center">
             {["4s", "6s", "8s", "10s"].map((d) => (
@@ -235,7 +227,6 @@ export default function GoogleFlowApp() {
           </div>
         )}
 
-        {/* AI Model Selector */}
         <div className="relative">
           <select
             value={model}
