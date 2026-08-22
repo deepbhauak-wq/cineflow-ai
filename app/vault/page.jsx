@@ -22,13 +22,19 @@ export default function Vault() {
         <h1 className="text-xl font-bold text-purple-400">VAULT</h1>
         <Link href="/" className="bg-gray-800 px-3 py-1 rounded text-sm">Back</Link>
       </div>
-      <div className="space-y-3">
-        {data.map((i) => (
-          <div key={i.id} className="bg-gray-900 p-4 rounded border border-gray-700">
-            <p className="text-sm">{i.text}</p>
-          </div>
-        ))}
-      </div>
+      
+      {/* अगर डेटा खाली है तो यह मैसेज दिखेगा */}
+      {data.length === 0 ? (
+        <p className="text-gray-500 text-center mt-10">No projects saved yet. Go to Studio and save one!</p>
+      ) : (
+        <div className="space-y-3">
+          {data.map((i) => (
+            <div key={i.id} className="bg-gray-900 p-4 rounded border border-gray-700">
+              <p className="text-sm">{i.text}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
