@@ -3,49 +3,40 @@
 import React, { useState } from "react";
 
 export default function CineFlowProStudio() {
-  const [active, setActive] = useState(true); // AK Ministry Mode
-  
-  const settings = [
-    { label: "Story AI", val: "Auto (Gemini)" }, { label: "Video AI", val: "Veo (Cinema)" },
-    { label: "Ratio", val: "16:9 Cinema" }, { label: "Language", val: "Hindi / Eng" },
-    { label: "Camera", val: "Tracking 360" }, { label: "Style", val: "Bible Art" }
-  ];
+  const [bg, setBg] = useState("पृष्ठभूमि: शांत दृश्य, समुद्री तूफान, 4K स्टाइल।");
+  const [scene, setScene] = useState("प्रभु हनुमान, दिव्य प्रकाश के साथ।");
 
   return (
-    <div className="min-h-screen bg-[#060911] text-slate-200 font-sans p-4 max-w-2xl mx-auto space-y-4">
+    <div className="min-h-screen bg-[#060911] text-slate-100 font-sans p-4 max-w-xl mx-auto space-y-3">
       {/* Header */}
-      <div className="flex justify-between items-center border-b border-slate-800 pb-3">
-        <h1 className="font-black text-sm text-cyan-400 uppercase tracking-widest">CineFlow Pro Studio</h1>
-        <div className={`cursor-pointer px-3 py-1 rounded text-[9px] font-bold ${active ? 'bg-cyan-950 text-cyan-300' : 'bg-slate-800'}`} onClick={() => setActive(!active)}>AK MINISTRY: {active ? 'ON' : 'OFF'}</div>
+      <div className="flex justify-between items-center pb-2 border-b border-slate-800">
+        <h1 className="font-black text-xs text-cyan-400 uppercase tracking-wider">CineFlow Pro</h1>
+        <span className="text-[9px] bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800 font-bold">AK MINISTRY: ON</span>
       </div>
 
-      {/* Prompts */}
-      <div className="bg-[#0b1222] p-3 rounded-lg border border-slate-800 text-[10px]">
-        <label className="text-slate-400 uppercase font-bold">Story Trace</label>
-        <textarea className="w-full bg-transparent mt-1 outline-none font-mono" rows="2">प्रभु हनुमान, समुद्री तूफान, दिव्य प्रकाश...</textarea>
+      {/* Prompts Section */}
+      <div className="bg-[#0b1222] p-3 rounded-lg border border-slate-800 space-y-2">
+        <textarea value={bg} onChange={(e) => setBg(e.target.value)} className="w-full bg-[#060a14] border border-slate-800 rounded p-2 text-[10px] text-slate-400 outline-none" rows="2" />
+        <textarea value={scene} onChange={(e) => setScene(e.target.value)} className="w-full bg-[#060a14] border border-cyan-500/30 rounded p-2 text-[10px] text-white outline-none" rows="2" />
       </div>
 
-      {/* Grid Settings */}
+      {/* Compact Settings Grid */}
       <div className="grid grid-cols-2 gap-2">
-        {settings.map(s => (
-          <div key={s.label} className="bg-[#0b1222] p-2.5 rounded-lg border border-slate-800">
-            <span className="text-[9px] font-bold text-slate-500 uppercase">{s.label}</span>
-            <select className="w-full bg-transparent text-[11px] font-bold outline-none cursor-pointer"><option>{s.val}</option><option>Edit</option></select>
+        {[
+          { l: "Story AI", v: "Auto" }, { l: "Video", v: "Veo" },
+          { l: "Ratio", v: "16:9" }, { l: "Style", v: "Bible Art" }
+        ].map(item => (
+          <div key={item.l} className="bg-[#0b1222] p-2 rounded-lg border border-slate-800">
+            <span className="text-[8px] font-bold text-slate-500 uppercase block">{item.l}</span>
+            <select className="w-full bg-transparent text-[10px] font-bold outline-none cursor-pointer"><option>{item.v}</option></select>
           </div>
         ))}
       </div>
 
-      {/* Advanced Pro Tools (Compact) */}
-      <div className="flex gap-2 text-[9px] font-bold uppercase text-slate-400">
-        <button className="flex-1 p-2 bg-[#0b1222] rounded border border-slate-800">Consistency: ID-01</button>
-        <button className="flex-1 p-2 bg-[#0b1222] rounded border border-slate-800">Audio: Cinematic</button>
-      </div>
-
-      {/* Actions */}
-      <div className="flex gap-2">
-        <button className="flex-1 py-3 bg-slate-800 rounded-lg text-[11px] font-bold uppercase">Advanced</button>
-        <button className="flex-1 py-3 bg-cyan-600 rounded-lg text-[11px] font-black uppercase tracking-widest hover:bg-cyan-500">🚀 Generate</button>
-      </div>
+      {/* Action */}
+      <button className="w-full py-3 bg-gradient-to-r from-cyan-600 to-indigo-600 rounded-lg font-black text-[10px] uppercase tracking-widest hover:scale-[1.01] transition-all">
+        🚀 Generate Video Engine Package
+      </button>
     </div>
   );
 }
