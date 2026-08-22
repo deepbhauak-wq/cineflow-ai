@@ -10,18 +10,22 @@ export default function CineFlowProStudio() {
   const [fullName, setFullName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // 6-Point Cinema Engine States
+  // 6-Point Engine States (Universal & Neutral Defaults)
   const [prompt, setPrompt] = useState(
-    "यीशु तूफान के बीच नाव में शिष्यों के साथ हैं। शांत और सामर्थी मुद्रा, रात का भयानक समुद्री तूफ़ान, बिजली की चमक और विशाल लहरें।"
+    "एक प्राचीन योद्धा घने जंगल में रहस्यमयी मंदिर की खोज कर रहा है। रात का समय, तेज बारिश, सिनेमाई लाइटिंग और 8K रियलिस्टिक विजुअल्स।"
   );
   const [ratio, setRatio] = useState("16:9");
-  const [duration, setDuration] = useState("60 Min");
+  const [duration, setDuration] = useState("3 Min");
   const [storyModel, setStoryModel] = useState("Auto");
   const [videoModel, setVideoModel] = useState("Veo");
-  const [style, setStyle] = useState("Bible Art");
+  const [style, setStyle] = useState("Cinematic Epic");
   const [plan, setPlan] = useState("free");
   const [credits, setCredits] = useState(50);
   const [statusMsg, setStatusMsg] = useState("");
+
+  // Pipeline Execution States
+  const [pipelineState, setPipelineState] = useState("idle"); // idle | generating | completed
+  const [scenes, setScenes] = useState([]);
 
   const handleAuthSubmit = (e) => {
     e.preventDefault();
@@ -43,18 +47,71 @@ export default function CineFlowProStudio() {
     setTimeout(() => setStatusMsg(""), 3000);
   };
 
+  // 1-Click Autonomous Pipeline Trigger
   const handleGenerate = () => {
     if (credits < 10) {
       setStatusMsg("⚠️ क्रेडिट्स समाप्त हो चुके हैं! प्लान अपग्रेड करें।");
       setTimeout(() => setStatusMsg(""), 3000);
       return;
     }
-    setCredits((prev) => prev - 10);
-    setStatusMsg("🚀 वीडियो पैकेज रेंडर होना शुरू हो गया है! (10 क्रेडिट्स डिडक्ट)");
-    setTimeout(() => setStatusMsg(""), 4000);
+    setPipelineState("generating");
+    setStatusMsg("🚀 ऑटोमैटिक AI फिल्म पाइपलाइन शुरू हो रही है...");
+
+    // Auto Scene Breakdown Simulation
+    setTimeout(() => {
+      setCredits((prev) => prev - 10);
+      setScenes([
+        {
+          id: 1,
+          title: "Scene 01: The Storm Begins",
+          desc: "योद्धा घने जंगल में प्रवेश करता है, बिजली चमकती है।",
+          camera: "Wide Drone Shot",
+          voice: "रात बहुत अंधेरी थी और हवाएं तेज...",
+          status: "Ready",
+        },
+        {
+          id: 2,
+          title: "Scene 02: Discovery of the Temple",
+          desc: "प्राचीन मंदिर के दरवाजे पर रहस्यमयी रोशनी का दिखना।",
+          camera: "Tracking Dolly In",
+          voice: "सामने सदियों पुराना दरवाजा दिखाई दिया...",
+          status: "Ready",
+        },
+        {
+          id: 3,
+          title: "Scene 03: The Awakening",
+          desc: "दरवाजा धीरे-धीरे खुलता है और दिव्य ऊर्जा निकलती है।",
+          camera: "Low Angle Dramatic",
+          voice: "जैसे ही कदम आगे बढ़ाए, सब कुछ बदल गया...",
+          status: "Ready",
+        },
+      ]);
+      setPipelineState("completed");
+      setStatusMsg("✅ पूरी फिल्म और सीन्स ऑटो-जनरेट हो चुके हैं!");
+      setTimeout(() => setStatusMsg(""), 4000);
+    }, 2500);
   };
 
-  // 1. Initial Login & Sign-up Screen
+  // Individual Scene Regenerate Trigger
+  const handleRegenerateScene = (id) => {
+    setStatusMsg(`🔄 Scene 0${id} को दोबारा रेंडर किया जा रहा है...`);
+    setScenes((prev) =>
+      prev.map((sc) => (sc.id === id ? { ...sc, status: "Regenerating..." } : sc))
+    );
+    setTimeout(() => {
+      setScenes((prev) =>
+        prev.map((sc) =>
+          sc.id === id
+            ? { ...sc, desc: `${sc.desc} (अपडेटेड एंगल और नया फेस सिंक)`, status: "Ready" }
+            : sc
+        )
+      );
+      setStatusMsg(`✅ Scene 0${id} सफलतापूर्वक नया बन गया!`);
+      setTimeout(() => setStatusMsg(""), 3000);
+    }, 1500);
+  };
+
+  // 1. Initial Login Screen
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-[#070b14] text-slate-100 flex items-center justify-center p-4">
@@ -66,34 +123,26 @@ export default function CineFlowProStudio() {
             <h2 className="text-lg font-black text-white">
               {authMode === "login" ? "Studio Login" : "Create Studio Account"}
             </h2>
-            <p className="text-[11px] text-slate-400">Google Flow-Grade AI Filmmaking</p>
+            <p className="text-[11px] text-slate-400">Autonomous Cinema AI Engine</p>
           </div>
 
-          {/* Social Logins */}
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => handleSocialLogin("Google")}
               type="button"
-              className="py-2.5 px-3 rounded-xl bg-white text-slate-900 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+              className="py-2.5 px-3 rounded-xl bg-white text-slate-900 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
             >
               <span>🌐</span> Google
             </button>
             <button
               onClick={() => handleSocialLogin("Facebook")}
               type="button"
-              className="py-2.5 px-3 rounded-xl bg-[#1877F2] text-white font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+              className="py-2.5 px-3 rounded-xl bg-[#1877F2] text-white font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
             >
               <span>🔵</span> Facebook
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="h-[1px] bg-slate-800 flex-1"></div>
-            <span className="text-[10px] text-slate-500 font-bold uppercase">या ईमेल से</span>
-            <div className="h-[1px] bg-slate-800 flex-1"></div>
-          </div>
-
-          {/* Form */}
           <form onSubmit={handleAuthSubmit} className="space-y-3">
             {authMode === "signup" && (
               <input
@@ -113,8 +162,6 @@ export default function CineFlowProStudio() {
               placeholder="Email Address"
               className="w-full bg-[#060a14] border border-slate-700 rounded-xl p-3 text-xs text-white outline-none focus:border-cyan-500"
             />
-
-            {/* Password Input with Show/Hide Eye Toggle */}
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -132,10 +179,9 @@ export default function CineFlowProStudio() {
                 {showPassword ? "HIDE" : "SHOW"}
               </button>
             </div>
-
             <button
               type="submit"
-              className="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl font-black text-xs uppercase tracking-wider text-white active:scale-95 transition-all cursor-pointer"
+              className="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl font-black text-xs uppercase tracking-wider text-white active:scale-95 cursor-pointer"
             >
               {authMode === "login" ? "Enter Studio" : "Register Account"}
             </button>
@@ -146,9 +192,7 @@ export default function CineFlowProStudio() {
               onClick={() => setAuthMode(authMode === "login" ? "signup" : "login")}
               className="text-[11px] text-slate-400 hover:text-cyan-400 cursor-pointer"
             >
-              {authMode === "login"
-                ? "नया अकाउंट बनाना है? Sign Up"
-                : "पहले से अकाउंट है? Login"}
+              {authMode === "login" ? "नया अकाउंट? Sign Up" : "अकाउंट मौजूद है? Login"}
             </button>
           </div>
         </div>
@@ -156,10 +200,9 @@ export default function CineFlowProStudio() {
     );
   }
 
-  // 2. Main 6-Point Studio Dashboard + Subscription Plans
+  // 2. Main Studio & Scene Breakdown Screen
   return (
     <div className="min-h-screen bg-[#070b14] text-slate-100 font-sans pb-24 selection:bg-cyan-500 selection:text-white">
-      {/* Top Header */}
       <header className="px-4 py-3 border-b border-slate-800 bg-[#090f1d] sticky top-0 z-50 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-black text-sm">
@@ -170,18 +213,19 @@ export default function CineFlowProStudio() {
             <p className="text-[9px] text-cyan-400 font-bold">{credits} Active Credits</p>
           </div>
         </div>
-
         <button
-          onClick={() => setIsLoggedIn(false)}
-          className="text-[10px] bg-red-950 text-red-400 border border-red-800 px-3 py-1 rounded-lg font-bold cursor-pointer active:scale-95 transition-all"
+          onClick={() => {
+            setIsLoggedIn(false);
+            setPipelineState("idle");
+          }}
+          className="text-[10px] bg-red-950 text-red-400 border border-red-800 px-3 py-1 rounded-lg font-bold cursor-pointer"
         >
           Logout
         </button>
       </header>
 
-      {/* Status Bar */}
       {statusMsg && (
-        <div className="fixed top-14 left-1/2 -translate-x-1/2 z-50 bg-cyan-950 border border-cyan-500 text-cyan-300 text-xs font-bold px-4 py-1.5 rounded-full shadow-2xl">
+        <div className="fixed top-14 left-1/2 -translate-x-1/2 z-50 bg-cyan-950 border border-cyan-500 text-cyan-300 text-xs font-bold px-4 py-1.5 rounded-full shadow-2xl animate-pulse">
           {statusMsg}
         </div>
       )}
@@ -217,7 +261,7 @@ export default function CineFlowProStudio() {
                 onClick={() => setRatio(r.id)}
                 className={`p-2 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                   ratio === r.id
-                    ? "bg-cyan-950 border-cyan-500 text-cyan-300 shadow-md shadow-cyan-500/10"
+                    ? "bg-cyan-950 border-cyan-500 text-cyan-300"
                     : "bg-[#060a14] border-slate-800 text-slate-400"
                 }`}
               >
@@ -227,10 +271,10 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 3. Timeline & Long Video Mode */}
+        {/* 3. Timeline */}
         <div className="p-4 rounded-2xl bg-[#0b1222] border border-slate-800 space-y-2">
           <label className="text-[10px] font-black uppercase text-indigo-400">
-            📚 3. Timeline & Long Video Mode
+            📚 3. Timeline Mode
           </label>
           <div className="grid grid-cols-3 gap-2">
             {["3 Min", "15 Min", "20 Min", "30 Min", "60 Min", "Custom"].map((d) => (
@@ -239,7 +283,7 @@ export default function CineFlowProStudio() {
                 onClick={() => setDuration(d)}
                 className={`p-2 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                   duration === d
-                    ? "bg-indigo-950 border-indigo-500 text-indigo-300 shadow-md shadow-indigo-500/10"
+                    ? "bg-indigo-950 border-indigo-500 text-indigo-300"
                     : "bg-[#060a14] border-slate-800 text-slate-400"
                 }`}
               >
@@ -249,43 +293,44 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 4. Story Engine Model */}
-        <div className="p-4 rounded-2xl bg-[#0b1222] border border-slate-800 space-y-2">
-          <label className="text-[10px] font-black uppercase text-purple-400">🧠 4. Story Engine Model</label>
-          <div className="grid grid-cols-3 gap-2">
-            {["Auto", "GPT", "Gemini", "Claude", "Fast AI", "Pro AI"].map((m) => (
-              <button
-                key={m}
-                onClick={() => setStoryModel(m)}
-                className={`py-2 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
-                  storyModel === m
-                    ? "bg-purple-950 border-purple-500 text-purple-200"
-                    : "bg-[#060a14] border-slate-800 text-slate-400"
-                }`}
-              >
-                {m}
-              </button>
-            ))}
+        {/* 4 & 5. Models */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="p-3.5 rounded-2xl bg-[#0b1222] border border-slate-800 space-y-1.5">
+            <label className="text-[9px] font-black uppercase text-purple-400">🧠 4. Story Engine</label>
+            <div className="grid grid-cols-2 gap-1.5">
+              {["Auto", "GPT", "Gemini", "Claude"].map((m) => (
+                <button
+                  key={m}
+                  onClick={() => setStoryModel(m)}
+                  className={`py-1.5 text-[11px] font-bold rounded-lg border transition-all cursor-pointer ${
+                    storyModel === m
+                      ? "bg-purple-950 border-purple-500 text-purple-200"
+                      : "bg-[#060a14] border-slate-800 text-slate-400"
+                  }`}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* 5. Video Generation Model */}
-        <div className="p-4 rounded-2xl bg-[#0b1222] border border-slate-800 space-y-2">
-          <label className="text-[10px] font-black uppercase text-cyan-400">📹 5. Video Generation Model</label>
-          <div className="grid grid-cols-3 gap-2">
-            {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Auto"].map((vm) => (
-              <button
-                key={vm}
-                onClick={() => setVideoModel(vm)}
-                className={`py-2 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
-                  videoModel === vm
-                    ? "bg-cyan-950 border-cyan-500 text-cyan-200"
-                    : "bg-[#060a14] border-slate-800 text-slate-400"
-                }`}
-              >
-                {vm}
-              </button>
-            ))}
+          <div className="p-3.5 rounded-2xl bg-[#0b1222] border border-slate-800 space-y-1.5">
+            <label className="text-[9px] font-black uppercase text-cyan-400">📹 5. Video Model</label>
+            <div className="grid grid-cols-2 gap-1.5">
+              {["Veo", "Kling", "Runway", "Hailuo"].map((vm) => (
+                <button
+                  key={vm}
+                  onClick={() => setVideoModel(vm)}
+                  className={`py-1.5 text-[11px] font-bold rounded-lg border transition-all cursor-pointer ${
+                    videoModel === vm
+                      ? "bg-cyan-950 border-cyan-500 text-cyan-200"
+                      : "bg-[#060a14] border-slate-800 text-slate-400"
+                  }`}
+                >
+                  {vm}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -296,7 +341,6 @@ export default function CineFlowProStudio() {
           </label>
           <div className="grid grid-cols-2 gap-2">
             {[
-              { id: "Bible Art", icon: "📜" },
               { id: "Cinematic Epic", icon: "⚔️" },
               { id: "Realistic 8K", icon: "📸" },
               { id: "Historical", icon: "🏛️" },
@@ -304,13 +348,14 @@ export default function CineFlowProStudio() {
               { id: "3D Animation", icon: "🧊" },
               { id: "Anime 2D", icon: "✨" },
               { id: "Documentary", icon: "🎥" },
+              { id: "Sci-Fi Space", icon: "🚀" },
             ].map((st) => (
               <button
                 key={st.id}
                 onClick={() => setStyle(st.id)}
                 className={`p-2.5 rounded-xl border text-xs font-bold flex items-center justify-between transition-all cursor-pointer ${
                   style === st.id
-                    ? "bg-[#1f1910] border-amber-500 text-amber-300 shadow-md shadow-amber-500/10"
+                    ? "bg-[#1f1910] border-amber-500 text-amber-300"
                     : "bg-[#060a14] border-slate-800 text-slate-400"
                 }`}
               >
@@ -324,7 +369,7 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* 7. Subscription Plans ($ USD) */}
+        {/* 7. Subscription Plans */}
         <div className="p-4 rounded-2xl bg-[#0b1222] border border-slate-800 space-y-3">
           <label className="text-[10px] font-black uppercase text-emerald-400 flex items-center gap-1.5">
             <span>💳</span> Subscription Plans (US Dollar)
@@ -333,15 +378,15 @@ export default function CineFlowProStudio() {
             {[
               { id: "free", name: "Free Tier", price: "$0", cr: 50 },
               { id: "pro", name: "Pro Studio", price: "$49", cr: 1500 },
-              { id: "master", name: "Master AK", price: "$99", cr: 5000 },
+              { id: "master", name: "Master Studio", price: "$99", cr: 5000 },
             ].map((p) => (
               <button
                 key={p.id}
                 onClick={() => handlePlanSelect(p.id, p.cr)}
                 className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
                   plan === p.id
-                    ? "border-emerald-500 bg-emerald-950/30 shadow-lg shadow-emerald-500/10 scale-[1.02]"
-                    : "border-slate-800 bg-[#060a14] text-slate-400 hover:border-slate-700"
+                    ? "border-emerald-500 bg-emerald-950/30 scale-[1.02]"
+                    : "border-slate-800 bg-[#060a14] text-slate-400"
                 }`}
               >
                 <div className="text-[9px] font-bold uppercase text-slate-400">{p.name}</div>
@@ -352,14 +397,80 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
-        {/* Master Action Button */}
+        {/* Master 1-Click Action Button */}
         <button
           onClick={handleGenerate}
-          className="w-full py-4 bg-gradient-to-r from-cyan-500 via-indigo-600 to-blue-600 rounded-2xl font-black text-xs uppercase tracking-widest text-white shadow-xl shadow-cyan-500/20 active:scale-[0.99] transition-all cursor-pointer"
+          disabled={pipelineState === "generating"}
+          className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-white shadow-xl transition-all cursor-pointer ${
+            pipelineState === "generating"
+              ? "bg-slate-800 text-slate-500 cursor-not-allowed"
+              : "bg-gradient-to-r from-cyan-500 via-indigo-600 to-blue-600 active:scale-[0.99]"
+          }`}
         >
-          🚀 Generate Cinema Video Package
+          {pipelineState === "generating"
+            ? "⚡ Rendering Complete Video & Audio..."
+            : "🚀 Generate Cinema Video Package"}
         </button>
+
+        {/* Individual Scene Regenerator & Fine-Tuner Screen */}
+        {pipelineState === "completed" && scenes.length > 0 && (
+          <div className="mt-8 pt-6 border-t border-slate-800 space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-black text-white uppercase tracking-wider">
+                  🎬 Generated Film Timeline
+                </h3>
+                <p className="text-[10px] text-slate-400">
+                  Full Video Auto-Synced. You can re-render any specific scene below:
+                </p>
+              </div>
+              <button className="bg-emerald-950 border border-emerald-500 text-emerald-300 text-[10px] font-bold px-3 py-1.5 rounded-lg">
+                ⬇️ Export Full MP4
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {scenes.map((sc) => (
+                <div
+                  key={sc.id}
+                  className="bg-[#0b1222] border border-slate-800 rounded-2xl p-4 space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-cyan-400">{sc.title}</span>
+                    <span className="text-[9px] px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-300">
+                      {sc.camera}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-slate-300 bg-[#060a14] p-2.5 rounded-xl border border-slate-800">
+                    <span className="text-slate-500 font-bold block text-[9px] uppercase">Visual Prompt:</span>
+                    {sc.desc}
+                  </p>
+
+                  <p className="text-xs text-slate-400 italic">
+                    🎙️ Voiceover: "{sc.voice}"
+                  </p>
+
+                  <div className="flex gap-2 pt-1">
+                    <button
+                      onClick={() => handleRegenerateScene(sc.id)}
+                      className="flex-1 py-2 rounded-xl bg-cyan-950 border border-cyan-500 text-cyan-300 text-[10px] font-bold flex items-center justify-center gap-1 active:scale-95 cursor-pointer"
+                    >
+                      🔄 Regenerate This Scene
+                    </button>
+                    <button
+                      onClick={() => setStatusMsg(`✏️ Scene 0${sc.id} Prompt Editor Opened`)}
+                      className="px-3 py-2 rounded-xl bg-slate-800 text-slate-300 text-[10px] font-bold active:scale-95 cursor-pointer"
+                    >
+                      ✏️ Edit Prompt
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
-      }
+}
