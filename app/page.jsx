@@ -133,9 +133,6 @@ export default function CineFlowApp() {
           </div>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="bg-[#1f190e] border border-amber-500/40 text-amber-300 text-[9px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
-            ✨ AK Engine
-          </span>
           <Link
             href="/vault"
             className="px-2.5 py-1 rounded-lg font-bold text-[10px] bg-purple-950 text-purple-300 border border-purple-800 hover:bg-purple-900 transition"
@@ -165,29 +162,6 @@ export default function CineFlowApp() {
           <h2 className="text-sm font-black text-white leading-snug">
             Turn a Single Idea into a <span className="text-cyan-400">Full-Feature Cinematic Film</span>
           </h2>
-        </div>
-
-        {/* Master Preset */}
-        <div className="bg-gradient-to-b from-[#141209] to-[#0b1222] border border-amber-500/30 p-3 rounded-2xl space-y-2">
-          <div className="flex items-start gap-2">
-            <span className="text-amber-400 text-sm">🔖</span>
-            <div>
-              <h3 className="font-bold text-amber-300 text-[10px]">⭐ AK MINISTRY MASTER PRESET</h3>
-              <p className="text-[8px] text-slate-400">
-                60 Min (360 Scenes) • Ultra-Slow Deep Hindi Narration (1.5s Pause) • Character Locked
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={() => {
-              setTimeline("60 Min");
-              setStyle("Bible Art");
-              notify("⭐ AK Master Preset Applied!");
-            }}
-            className="w-full py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[10px] rounded-xl uppercase tracking-wider"
-          >
-            Apply Preset
-          </button>
         </div>
 
         {/* 1. Master Story Input */}
