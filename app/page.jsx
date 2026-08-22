@@ -19,6 +19,7 @@ export default function CineFlowProStudio() {
   const [storyModel, setStoryModel] = useState("Auto");
   const [videoModel, setVideoModel] = useState("Veo");
   const [style, setStyle] = useState("Bible Art");
+  const [plan, setPlan] = useState("free");
   const [credits, setCredits] = useState(50);
   const [statusMsg, setStatusMsg] = useState("");
 
@@ -35,9 +36,16 @@ export default function CineFlowProStudio() {
     setTimeout(() => setStatusMsg(""), 3000);
   };
 
+  const handlePlanSelect = (planId, crAmount) => {
+    setPlan(planId);
+    setCredits(crAmount);
+    setStatusMsg(`Plan Activated: ${planId.toUpperCase()} (${crAmount} Credits)`);
+    setTimeout(() => setStatusMsg(""), 3000);
+  };
+
   const handleGenerate = () => {
     if (credits < 10) {
-      setStatusMsg("⚠️ क्रेडिट्स समाप्त हो चुके हैं!");
+      setStatusMsg("⚠️ क्रेडिट्स समाप्त हो चुके हैं! प्लान अपग्रेड करें।");
       setTimeout(() => setStatusMsg(""), 3000);
       return;
     }
@@ -148,9 +156,9 @@ export default function CineFlowProStudio() {
     );
   }
 
-  // 2. Main 6-Point Studio Dashboard
+  // 2. Main 6-Point Studio Dashboard + Subscription Plans
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 font-sans pb-20 selection:bg-cyan-500 selection:text-white">
+    <div className="min-h-screen bg-[#070b14] text-slate-100 font-sans pb-24 selection:bg-cyan-500 selection:text-white">
       {/* Top Header */}
       <header className="px-4 py-3 border-b border-slate-800 bg-[#090f1d] sticky top-0 z-50 flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -159,7 +167,7 @@ export default function CineFlowProStudio() {
           </div>
           <div>
             <h1 className="text-xs font-black uppercase tracking-wider">CineFlow Pro</h1>
-            <p className="text-[9px] text-cyan-400 font-bold">{credits} Free Credits</p>
+            <p className="text-[9px] text-cyan-400 font-bold">{credits} Active Credits</p>
           </div>
         </div>
 
@@ -316,6 +324,34 @@ export default function CineFlowProStudio() {
           </div>
         </div>
 
+        {/* 7. Subscription Plans ($ USD) */}
+        <div className="p-4 rounded-2xl bg-[#0b1222] border border-slate-800 space-y-3">
+          <label className="text-[10px] font-black uppercase text-emerald-400 flex items-center gap-1.5">
+            <span>💳</span> Subscription Plans (US Dollar)
+          </label>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { id: "free", name: "Free Tier", price: "$0", cr: 50 },
+              { id: "pro", name: "Pro Studio", price: "$49", cr: 1500 },
+              { id: "master", name: "Master AK", price: "$99", cr: 5000 },
+            ].map((p) => (
+              <button
+                key={p.id}
+                onClick={() => handlePlanSelect(p.id, p.cr)}
+                className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
+                  plan === p.id
+                    ? "border-emerald-500 bg-emerald-950/30 shadow-lg shadow-emerald-500/10 scale-[1.02]"
+                    : "border-slate-800 bg-[#060a14] text-slate-400 hover:border-slate-700"
+                }`}
+              >
+                <div className="text-[9px] font-bold uppercase text-slate-400">{p.name}</div>
+                <div className="text-sm font-black text-white my-0.5">{p.price}</div>
+                <div className="text-[9px] text-emerald-400 font-semibold">{p.cr} Credits</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Master Action Button */}
         <button
           onClick={handleGenerate}
@@ -326,4 +362,4 @@ export default function CineFlowProStudio() {
       </main>
     </div>
   );
-}
+      }
