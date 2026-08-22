@@ -50,11 +50,10 @@ export default function SubscriptionPlansPage() {
 
   return (
     <div className="min-h-screen bg-[#070b14] text-white font-sans text-xs p-4 pb-12 max-w-md mx-auto space-y-4 select-none">
-      {/* Header */}
       <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
         <div className="flex items-center gap-3">
           <Link href="/" className="text-base text-slate-400 hover:text-white">
-            {"<"} Back
+            <span>Back</span>
           </Link>
           <h1 className="text-sm font-bold text-white">Subscription Plans</h1>
         </div>
@@ -62,14 +61,13 @@ export default function SubscriptionPlansPage() {
           href="/"
           className="text-[10px] bg-gradient-to-r from-cyan-500 to-blue-600 px-3 py-1 rounded-lg font-bold shadow-md"
         >
-          Studio
+          <span>Studio</span>
         </Link>
       </div>
 
-      {/* Current Active Plan Banner */}
       <div className="bg-[#0b1222] border border-cyan-500/40 rounded-2xl p-3.5 space-y-1 shadow-lg shadow-cyan-500/10">
-        <div className="text-[10px] text-cyan-400 font-bold flex items-center gap-1.5">
-          <span>CURRENT BALANCE: 50 / 50 CREDITS LEFT</span>
+        <div className="text-[10px] text-cyan-400 font-bold">
+          CURRENT BALANCE: 50 / 50 CREDITS LEFT
         </div>
         <div className="text-xs font-black text-white">
           4K UHD Master Engine (Watermark Free Ready)
@@ -80,7 +78,6 @@ export default function SubscriptionPlansPage() {
         Choose Your Production Plan
       </div>
 
-      {/* 4 Subscription Plans Grid */}
       <div className="grid grid-cols-2 gap-2.5">
         {plans.map((p) => (
           <div
@@ -121,7 +118,6 @@ export default function SubscriptionPlansPage() {
         ))}
       </div>
 
-      {/* Payment Security Info */}
       <div className="bg-[#0b1222] border border-slate-800/80 rounded-2xl p-3 text-center space-y-1">
         <div className="text-[10px] text-slate-400 font-medium">
           Instant activation with UPI, Cards, NetBanking and Wallet
