@@ -1,32 +1,26 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
-export default function Vault() {
-  const [data, setData] = useState([]);
+export default function Studio() {
+  const [prompt, setPrompt] = useState("");
 
-  useEffect(() => {
-    const saved = localStorage.getItem("my_vault");
-    if (saved) setData(JSON.parse(saved));
-  }, []);
+  const save = () => {
+    if (!prompt) return;
+    const items = JSON.parse(localStorage.getItem("vault") || "[]");
+    localStorage.setItem("vault", JSON.stringify([{ id: Date.now(), text: prompt }, ...items]));
+    setPrompt("");
+    alert("Saved!");
+  };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-white p-6 max-w-lg mx-auto space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-black text-purple-400">PROJECT VAULT</h1>
-        <Link href="/" className="text-xs bg-slate-800 px-4 py-2 rounded-lg font-bold">← Back to Studio</Link>
+    <div className="min-h-screen bg-black text-white p-5">
+      <div className="flex justify-between mb-4">
+        <h1 className="text-xl font-bold">STUDIO</h1>
+        <Link href="/vault" className="bg-blue-600 px-3 py-1 rounded">Vault</Link>
       </div>
-      
-      <div className="space-y-4">
-        {data.length === 0 && <p className="text-slate-500 text-sm">No projects saved yet.</p>}
-        {data.map((item) => (
-          <div key={item.id} className="bg-[#0b1222] p-4 rounded-xl border border-slate-800">
-            <p className="text-xs text-slate-300">{item.text}</p>
-            <p className="text-[10px] text-slate-500 mt-2">{item.date}</p>
-          </div>
-        ))}
-      </div>
+      <textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} className="w-full h-32 bg-gray-900 p-2 text-sm" placeholder="Write story..." />
+      <button onClick={save} className="w-full mt-4 py-2 bg-green-600 font-bold">SAVE</button>
     </div>
   );
 }
-
