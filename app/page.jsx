@@ -1,68 +1,51 @@
+
 "use client";
 import React, { useState } from "react";
 
-export default function CineFlowMiniStudio() {
-  const [bgPrompt, setBgPrompt] = useState("पृष्ठभूमि: शांत दृश्य, समुद्री तूफान, 4K रियलिस्टिक स्टाइल।");
-  const [activePrompt, setActivePrompt] = useState("प्रभु हनुमान शांत मुद्रा में, दिव्य प्रकाश के साथ।");
+export default function CineFlowProStudio() {
+  const [active, setActive] = useState(true); // AK Ministry Mode
+  
+  const settings = [
+    { label: "Story AI", val: "Auto (Gemini)" }, { label: "Video AI", val: "Veo (Cinema)" },
+    { label: "Ratio", val: "16:9 Cinema" }, { label: "Language", val: "Hindi / Eng" },
+    { label: "Camera", val: "Tracking 360" }, { label: "Style", val: "Bible Art" }
+  ];
 
   return (
-    <div className="min-h-screen bg-[#060911] text-slate-200 font-sans p-4 max-w-xl mx-auto space-y-4">
+    <div className="min-h-screen bg-[#060911] text-slate-200 font-sans p-4 max-w-2xl mx-auto space-y-4">
       {/* Header */}
-      <div className="flex justify-between items-center pb-2 border-b border-slate-800">
-        <span className="text-sm font-black text-cyan-400 tracking-wider uppercase">CineFlow Pro</span>
-        <span className="text-[10px] bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800 font-bold">LIVE</span>
+      <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h1 className="font-black text-sm text-cyan-400 uppercase tracking-widest">CineFlow Pro Studio</h1>
+        <div className={`cursor-pointer px-3 py-1 rounded text-[9px] font-bold ${active ? 'bg-cyan-950 text-cyan-300' : 'bg-slate-800'}`} onClick={() => setActive(!active)}>AK MINISTRY: {active ? 'ON' : 'OFF'}</div>
       </div>
 
-      {/* 1. Background Engine Prompt (Read/Sync) */}
-      <div className="bg-[#0b1222] p-3 rounded-lg border border-slate-800 space-y-1">
-        <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
-          <span>⚙️ Background Story Trace</span>
-          <span className="text-cyan-400">Sync ON</span>
-        </div>
-        <textarea
-          value={bgPrompt}
-          onChange={(e) => setBgPrompt(e.target.value)}
-          className="w-full bg-[#060a14] border border-slate-800 rounded p-2 text-xs text-slate-300 outline-none resize-none font-mono"
-          rows={2}
-        />
+      {/* Prompts */}
+      <div className="bg-[#0b1222] p-3 rounded-lg border border-slate-800 text-[10px]">
+        <label className="text-slate-400 uppercase font-bold">Story Trace</label>
+        <textarea className="w-full bg-transparent mt-1 outline-none font-mono" rows="2">प्रभु हनुमान, समुद्री तूफान, दिव्य प्रकाश...</textarea>
       </div>
 
-      {/* 2. Active Scene Prompt (Read/Edit) */}
-      <div className="bg-[#0b1222] p-3 rounded-lg border border-cyan-500/30 space-y-1">
-        <div className="flex justify-between text-[10px] font-bold text-cyan-400 uppercase">
-          <span>🎬 Active Scene Prompt</span>
-          <span className="text-slate-400">Shot 01/360</span>
-        </div>
-        <textarea
-          value={activePrompt}
-          onChange={(e) => setActivePrompt(e.target.value)}
-          className="w-full bg-[#060a14] border border-slate-700 rounded p-2 text-xs text-white outline-none resize-none"
-          rows={2}
-        />
-      </div>
-
-      {/* 3. Compact Settings Grid */}
+      {/* Grid Settings */}
       <div className="grid grid-cols-2 gap-2">
-        {[
-          { label: "Story AI", val: "Auto (GPT/Gemini)" },
-          { label: "Video Model", val: "Veo Cinema HD" },
-          { label: "Ratio", val: "16:9 Cinema" },
-          { label: "Voice Engine", val: "Deep Hindi TTS" }
-        ].map((item) => (
-          <div key={item.label} className="bg-[#0b1222] p-2.5 rounded-lg border border-slate-800">
-            <span className="text-[9px] font-bold text-slate-400 uppercase block mb-1">{item.label}</span>
-            <select className="w-full bg-transparent text-xs font-semibold text-slate-200 outline-none cursor-pointer">
-              <option>{item.val}</option>
-              <option>Custom</option>
-            </select>
+        {settings.map(s => (
+          <div key={s.label} className="bg-[#0b1222] p-2.5 rounded-lg border border-slate-800">
+            <span className="text-[9px] font-bold text-slate-500 uppercase">{s.label}</span>
+            <select className="w-full bg-transparent text-[11px] font-bold outline-none cursor-pointer"><option>{s.val}</option><option>Edit</option></select>
           </div>
         ))}
       </div>
 
-      {/* Action Button */}
-      <button className="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 rounded-lg text-xs font-bold uppercase tracking-wider text-white shadow-md active:scale-[0.99] transition-all">
-        ⚡ Render Video Scene
-      </button>
+      {/* Advanced Pro Tools (Compact) */}
+      <div className="flex gap-2 text-[9px] font-bold uppercase text-slate-400">
+        <button className="flex-1 p-2 bg-[#0b1222] rounded border border-slate-800">Consistency: ID-01</button>
+        <button className="flex-1 p-2 bg-[#0b1222] rounded border border-slate-800">Audio: Cinematic</button>
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-2">
+        <button className="flex-1 py-3 bg-slate-800 rounded-lg text-[11px] font-bold uppercase">Advanced</button>
+        <button className="flex-1 py-3 bg-cyan-600 rounded-lg text-[11px] font-black uppercase tracking-widest hover:bg-cyan-500">🚀 Generate</button>
+      </div>
     </div>
   );
 }
