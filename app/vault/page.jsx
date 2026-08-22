@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 export default function SubscriptionPlansPage() {
-  const [selectedPlan, setSelectedPlan] = useState("Free");
+  const [selectedPlan, setSelectedPlan] = useState("Free Tier");
 
   const plans = [
     {
@@ -54,7 +54,7 @@ export default function SubscriptionPlansPage() {
       <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
         <div className="flex items-center gap-3">
           <Link href="/" className="text-base text-slate-400 hover:text-white">
-            ←
+            &larr;
           </Link>
           <h1 className="text-sm font-bold text-white">Subscription Plans</h1>
         </div>
@@ -62,14 +62,14 @@ export default function SubscriptionPlansPage() {
           href="/"
           className="text-[10px] bg-gradient-to-r from-cyan-500 to-blue-600 px-3 py-1 rounded-lg font-bold shadow-md"
         >
-          🎬 Studio
+          Studio
         </Link>
       </div>
 
-      {/* Current Active Plan Top Banner */}
+      {/* Current Active Plan Banner */}
       <div className="bg-[#0b1222] border border-cyan-500/40 rounded-2xl p-3.5 space-y-1 shadow-lg shadow-cyan-500/10">
         <div className="text-[10px] text-cyan-400 font-bold flex items-center gap-1.5">
-          <span>⚡</span> CURRENT BALANCE: 50 / 50 CREDITS LEFT
+          <span>CURRENT BALANCE: 50 / 50 CREDITS LEFT</span>
         </div>
         <div className="text-xs font-black text-white">
           4K UHD Master Engine (Watermark Free Ready)
@@ -77,7 +77,7 @@ export default function SubscriptionPlansPage() {
       </div>
 
       <div className="text-[10px] font-bold text-cyan-400 tracking-wider uppercase">
-        💎 Choose Your Production Plan
+        Choose Your Production Plan
       </div>
 
       {/* 4 Subscription Plans Grid */}
@@ -121,13 +121,13 @@ export default function SubscriptionPlansPage() {
         ))}
       </div>
 
-      {/* Payment Methods Info Footer */}
+      {/* Payment Security Info */}
       <div className="bg-[#0b1222] border border-slate-800/80 rounded-2xl p-3 text-center space-y-1">
         <div className="text-[10px] text-slate-400 font-medium">
-          Instant activation with UPI, Cards, NetBanking & Wallet
+          Instant activation with UPI, Cards, NetBanking &amp; Wallet
         </div>
         <div className="text-[9px] text-slate-400 font-bold">
-          🔒 100% Safe & Encrypted Checkout
+          100% Safe &amp; Encrypted Checkout
         </div>
       </div>
     </div>
