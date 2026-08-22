@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 
 export default function CineFlowStudio() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -26,10 +27,9 @@ export default function CineFlowStudio() {
     if (credits < 10) return notify("⚠️ अपर्याप्त क्रेडिट्स!");
     setPipelineState("generating");
     notify("🚀 AI ऑटो-रेंडरिंग शुरू...");
-    
+
     setTimeout(() => {
-      setCredits((prev) => prev - 10);
-      setScenes([
+      const generatedScenes = [
         {
           id: 1,
           title: "Scene 01: The Storm Begins",
@@ -48,9 +48,23 @@ export default function CineFlowStudio() {
           bgm: "Ancient Chants & Mystery",
           img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=500&q=80"
         }
-      ]);
+      ];
+
+      setCredits((prev) => prev - 10);
+      setScenes(generatedScenes);
+
+      // Vault Storage Sync
+      const newProj = {
+        id: Date.now(),
+        name: prompt.slice(0, 25),
+        date: new Date().toLocaleDateString(),
+        scenes: generatedScenes
+      };
+      const existing = JSON.parse(localStorage.getItem("cineflow_vault_data") || "[]");
+      localStorage.setItem("cineflow_vault_data", JSON.stringify([newProj, ...existing]));
+
       setPipelineState("completed");
-      notify("✅ फिल्म पैकेज सफलतापूर्वक तैयार!");
+      notify("✅ फिल्म पैकेज तैयार व Vault में सेव हो गया!");
     }, 1200);
   };
 
@@ -62,11 +76,10 @@ export default function CineFlowStudio() {
   };
 
   const saveEdit = (id) => {
-    setScenes((prev) =>
-      prev.map((s) =>
-        s.id === id ? { ...s, desc: editPrompt, camera: editCamera, voice: editVoice } : s
-      )
+    const updated = scenes.map((s) =>
+      s.id === id ? { ...s, desc: editPrompt, camera: editCamera, voice: editVoice } : s
     );
+    setScenes(updated);
     setEditingId(null);
     notify(`✅ Scene 0${id} अपडेट हो गया!`);
   };
@@ -92,9 +105,14 @@ export default function CineFlowStudio() {
           <h1 className="text-xs font-black text-cyan-400 uppercase tracking-widest">CineFlow Pro Studio</h1>
           <p className="text-[9px] text-emerald-400 font-bold">{credits} Credits Active</p>
         </div>
-        <button onClick={() => setIsLoggedIn(false)} className="text-[10px] bg-red-950 text-red-400 border border-red-900 px-3 py-1 rounded-lg font-bold">
-          Logout
-        </button>
+        <div className="flex gap-2 items-center">
+          <Link href="/vault" className="text-[10px] bg-purple-950 text-purple-300 border border-purple-800 px-3 py-1 rounded-lg font-bold">
+            Vault 📂
+          </Link>
+          <button onClick={() => setIsLoggedIn(false)} className="text-[10px] bg-red-950 text-red-400 border border-red-900 px-3 py-1 rounded-lg font-bold">
+            Logout
+          </button>
+        </div>
       </header>
 
       {statusMsg && (
@@ -247,33 +265,4 @@ export default function CineFlowStudio() {
       )}
     </div>
   );
-          }// handleGenerate फंक्शन के अंदर setTimeout में यह लाइन जोड़ें:
-const newProject = {
-  id: Date.now(),
-  name: prompt.slice(0, 25),
-  scenes: [
-    {
-      id: 1,
-      title: "Scene 01: The Storm Begins",
-      desc: "योद्धा घने जंगल के रास्ते से प्राचीन खंडहरों की ओर बढ़ता है।",
-      camera: cameraRig,
-      voice: "रात बहुत अंधेरी थी और हवाएं तेज...",
-      bgm: "Epic Cinematic Drums",
-      img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80"
-    },
-    {
-      id: 2,
-      title: "Scene 02: Heavy Machinery & Gate",
-      desc: "विशाल मंदिर का द्वार खुलता है और सुनहरी दिव्य ऊर्जा बाहर निकलती है।",
-      camera: "JCB Mechanical Jib",
-      voice: "जैसे ही भारी पहिये घूमे, सदियों का ताला टूट गया...",
-      bgm: "Ancient Chants & Mystery",
-      img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=500&q=80"
-    }
-  ]
-};
-
-const existing = JSON.parse(localStorage.getItem("cineflow_vault_data") || "[]");
-localStorage.setItem("cineflow_vault_data", JSON.stringify([newProject, ...existing]));
-
-        
+}
