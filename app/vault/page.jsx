@@ -18,19 +18,18 @@ export default function Vault() {
 
   return (
     <div className="min-h-screen bg-black text-white p-5">
-      <div className="flex justify-between mb-6">
+      <div className="flex justify-between items-center mb-6">
         <h1 className="text-xl font-bold text-purple-400">VAULT</h1>
-        <Link href="/" className="bg-gray-800 px-3 py-1 rounded text-sm">Back</Link>
+        <Link href="/" className="bg-gray-800 px-3 py-1 rounded text-sm font-bold">Back</Link>
       </div>
-      
-      {/* अगर डेटा खाली है तो यह मैसेज दिखेगा */}
+
       {data.length === 0 ? (
-        <p className="text-gray-500 text-center mt-10">No projects saved yet. Go to Studio and save one!</p>
+        <p className="text-gray-500 text-center mt-8 text-xs">No projects saved yet.</p>
       ) : (
         <div className="space-y-3">
-          {data.map((i) => (
-            <div key={i.id} className="bg-gray-900 p-4 rounded border border-gray-700">
-              <p className="text-sm">{i.text}</p>
+          {data.map((item) => (
+            <div key={item.id} className="bg-gray-900 p-4 rounded-xl border border-gray-800">
+              <p className="text-xs text-gray-200">{item.text}</p>
             </div>
           ))}
         </div>
