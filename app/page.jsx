@@ -247,5 +247,33 @@ export default function CineFlowStudio() {
       )}
     </div>
   );
-          }
+          }// handleGenerate फंक्शन के अंदर setTimeout में यह लाइन जोड़ें:
+const newProject = {
+  id: Date.now(),
+  name: prompt.slice(0, 25),
+  scenes: [
+    {
+      id: 1,
+      title: "Scene 01: The Storm Begins",
+      desc: "योद्धा घने जंगल के रास्ते से प्राचीन खंडहरों की ओर बढ़ता है।",
+      camera: cameraRig,
+      voice: "रात बहुत अंधेरी थी और हवाएं तेज...",
+      bgm: "Epic Cinematic Drums",
+      img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80"
+    },
+    {
+      id: 2,
+      title: "Scene 02: Heavy Machinery & Gate",
+      desc: "विशाल मंदिर का द्वार खुलता है और सुनहरी दिव्य ऊर्जा बाहर निकलती है।",
+      camera: "JCB Mechanical Jib",
+      voice: "जैसे ही भारी पहिये घूमे, सदियों का ताला टूट गया...",
+      bgm: "Ancient Chants & Mystery",
+      img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=500&q=80"
+    }
+  ]
+};
+
+const existing = JSON.parse(localStorage.getItem("cineflow_vault_data") || "[]");
+localStorage.setItem("cineflow_vault_data", JSON.stringify([newProject, ...existing]));
+
         
