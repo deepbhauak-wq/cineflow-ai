@@ -1,4 +1,10 @@
-"use client";
+<Link
+  href="/vault"
+  className="px-2.5 py-1 rounded-lg font-bold text-[10px] bg-[#0a101f] text-cyan-400 border border-slate-800 flex items-center gap-1"
+>
+  Vault 📂
+</Link>
+  "use client";
 import React, { useState, useEffect } from "react";
 
 export default function CineFlowApp() {
