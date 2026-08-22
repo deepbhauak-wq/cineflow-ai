@@ -260,4 +260,68 @@ export default function CineFlowProStudio() {
     </div>
   );
             }
-          
+          // ... (ऊपर का कोड वही रहेगा)
+            {scenes.map((sc) => (
+              <div key={sc.id} className="bg-[#0b1222] border border-slate-800 rounded-2xl p-5 space-y-4 shadow-xl">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-black text-cyan-400 uppercase">{sc.title}</span>
+                  <span className="text-[10px] px-3 py-1 rounded-full bg-cyan-950 text-cyan-300 font-bold border border-cyan-800">
+                    {sc.camera}
+                  </span>
+                </div>
+
+                {editingSceneId === sc.id ? (
+                  <div className="space-y-3 bg-[#060a14] p-4 rounded-xl border-2 border-cyan-500 animate-pulse">
+                    <label className="text-[10px] text-cyan-400 font-black uppercase">Edit Prompt:</label>
+                    <textarea value={editPromptText} onChange={(e) => setEditPromptText(e.target.value)} className="w-full bg-[#0b1222] p-3 text-xs text-white rounded-lg border border-slate-700" />
+                    
+                    <div className="flex gap-2">
+                        <button onClick={() => handleSaveScene(sc.id)} className="flex-1 py-3 bg-emerald-600 rounded-xl font-black text-[11px]">SAVE & RE-RENDER</button>
+                        <button onClick={() => setEditingSceneId(null)} className="px-4 py-3 bg-slate-800 rounded-xl font-black text-[11px]">CANCEL</button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-xs text-slate-300 italic">"{sc.desc}"</p>
+                    <div className="flex gap-3">
+                      <button onClick={() => handleRegenerateScene(sc.id)} className="flex-1 py-3 rounded-xl border border-cyan-500 text-cyan-400 font-black text-[11px] hover:bg-cyan-950/30">🔄 RE-GENERATE SCENE</button>
+                      <button onClick={() => handleOpenEdit(sc)} className="flex-1 py-3 rounded-xl bg-slate-800 text-white font-black text-[11px] hover:bg-slate-700">✏️ EDIT PROMPT</button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+// // ... (ऊपर का कोड वही रहेगा)
+            {scenes.map((sc) => (
+              <div key={sc.id} className="bg-[#0b1222] border border-slate-800 rounded-2xl p-5 space-y-4 shadow-xl">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-black text-cyan-400 uppercase">{sc.title}</span>
+                  <span className="text-[10px] px-3 py-1 rounded-full bg-cyan-950 text-cyan-300 font-bold border border-cyan-800">
+                    {sc.camera}
+                  </span>
+                </div>
+
+                {editingSceneId === sc.id ? (
+                  <div className="space-y-3 bg-[#060a14] p-4 rounded-xl border-2 border-cyan-500 animate-pulse">
+                    <label className="text-[10px] text-cyan-400 font-black uppercase">Edit Prompt:</label>
+                    <textarea value={editPromptText} onChange={(e) => setEditPromptText(e.target.value)} className="w-full bg-[#0b1222] p-3 text-xs text-white rounded-lg border border-slate-700" />
+                    
+                    <div className="flex gap-2">
+                        <button onClick={() => handleSaveScene(sc.id)} className="flex-1 py-3 bg-emerald-600 rounded-xl font-black text-[11px]">SAVE & RE-RENDER</button>
+                        <button onClick={() => setEditingSceneId(null)} className="px-4 py-3 bg-slate-800 rounded-xl font-black text-[11px]">CANCEL</button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-xs text-slate-300 italic">"{sc.desc}"</p>
+                    <div className="flex gap-3">
+                      <button onClick={() => handleRegenerateScene(sc.id)} className="flex-1 py-3 rounded-xl border border-cyan-500 text-cyan-400 font-black text-[11px] hover:bg-cyan-950/30">🔄 RE-GENERATE SCENE</button>
+                      <button onClick={() => handleOpenEdit(sc)} className="flex-1 py-3 rounded-xl bg-slate-800 text-white font-black text-[11px] hover:bg-slate-700">✏️ EDIT PROMPT</button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+// ... (बाकी का कोड)
+
+
