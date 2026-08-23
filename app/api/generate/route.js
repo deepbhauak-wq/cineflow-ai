@@ -1,221 +1,146 @@
+            
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
 
 export default function StudioEditor() {
   const [activeScene, setActiveScene] = useState(1);
-  const [voiceText, setVoiceText] = useState("कबीर अपने परिवार के लिए कुछ बहुत अच्छा करना चाहता था।");
-  const [voiceEmotion, setVoiceEmotion] = useState("Cinematic Narration");
-  const [voiceSpeed, setVoiceSpeed] = useState("1.0x (Normal)");
-  const [bgMusic, setBgMusic] = useState("Epic Orchestral Tension (-22dB)");
-  const [transitionEffect, setTransitionEffect] = useState("Cinematic Crossfade");
+  const [dialogText, setDialogText] = useState("कबीर अपने परिवार के लिए कुछ बहुत अच्छा करना चाहता था।");
+  const [voiceProfile, setVoiceProfile] = useState("100% Shuddh Hindi (Deep Calm Tone)");
+  const [subsState, setSubsState] = useState("AUTO Animated Dynamic Pop ON");
   const [watermarkPos, setWatermarkPos] = useState("TOP RIGHT");
-  const [showLogo, setShowLogo] = useState(true);
-  const [exporting, setExporting] = useState(false);
+  const [isRendering, setIsRendering] = useState(false);
 
-  const handleExport = () => {
-    setExporting(true);
+  const handleReRender = () => {
+    setIsRendering(true);
     setTimeout(() => {
-      setExporting(false);
-      alert("🎉 4K Cinematic Masterpiece Rendered & Exported Successfully!");
-    }, 2000);
+      setIsRendering(false);
+      alert("Scene " + activeScene + " Re-Rendered Successfully with Shuddh Hindi & -22dB Ducking!");
+    }, 2500);
   };
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28">
+    <div className="min-h-screen bg-[#07090e] text-white p-4 font-sans pb-28 relative">
       
-      {/* Top Header */}
-      <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-        <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-lg shadow-lg">🎞️</div>
-          <div>
-            <h1 className="text-base sm:text-lg font-bold">Pro Multi-Track AI Studio</h1>
-            <p className="text-[11px] text-slate-400">Scene Swaps • Voice Tuning • Auto-Dubbing • 4K Export</p>
-          </div>
+      {isRendering && (
+        <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4 space-y-3">
+          <div className="w-12 h-12 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"></div>
+          <p className="text-xs text-cyan-400 font-bold">Re-rendering Scene with AI Voice & Auto Ducking...</p>
         </div>
+      )}
 
+      {/* Top Header */}
+      <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <div>
+          <h1 className="text-sm font-bold tracking-tight text-white flex items-center gap-2">
+            <span>🎬</span> Multi-Track AI Studio Editor
+          </h1>
+          <p className="text-[10px] text-slate-400">Scene Swaps • Voice Tuning • Auto-Dubbing</p>
+        </div>
         <div className="flex items-center gap-2">
-          <Link href="/" className="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-slate-300">
+          <Link href="/" className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 font-semibold border border-slate-700">
             ← Hub
           </Link>
-          <button onClick={handleExport} className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-xs text-black shadow-lg shadow-cyan-500/30 cursor-pointer">
-            {exporting ? "Rendering 4K..." : "Export 4K Video 🚀"}
+          <button onClick={() => alert("Exporting 4K Master Video...")} className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold text-xs shadow-lg cursor-pointer">
+            Export 4K Video 🚀
           </button>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto space-y-5">
+      <div className="max-w-4xl mx-auto space-y-4">
         
-        {/* Live Cinema Player Preview */}
-        <div className="bg-black border border-slate-800 rounded-3xl overflow-hidden shadow-2xl relative aspect-video flex flex-col items-center justify-center">
-          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-slate-700 text-[10px] text-cyan-400 font-mono">
-            CINEFLOW AI 4K HDR
+        {/* Live Cinema Preview Player */}
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-2 shadow-2xl">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-semibold text-cyan-400 uppercase tracking-wider">Live 9:16 / 16:9 Cinema Player Preview</span>
+            <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-[9px] text-cyan-300 font-mono font-bold">⚡ CINEFLOW AI</span>
           </div>
-          <div className="text-center space-y-1">
-            <span className="text-3xl">▶️</span>
-            <p className="text-xs font-semibold text-slate-300">Live 16:9 / 9:16 Cinema Preview Player</p>
-            <p className="text-[10px] text-slate-500">Active Scene {activeScene} Loaded with Audio & BGM Mix</p>
+          <div className="w-full aspect-video rounded-2xl bg-black border border-slate-800 relative flex items-center justify-center overflow-hidden shadow-inner">
+            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800" alt="" className="w-full h-full object-cover opacity-70"/>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-14 h-14 rounded-full bg-cyan-500/90 backdrop-blur-md flex items-center justify-center text-black font-bold text-xl shadow-xl">▶</div>
+            </div>
           </div>
         </div>
 
         {/* Multi-Track Timeline */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-          <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">Multi-Track Pro Timeline</label>
-            <span className="text-[10px] text-slate-400">Total Duration: 0:30s (3 Scenes)</span>
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3 shadow-xl">
+          <div className="flex justify-between items-center">
+            <span className="text-xs font-semibold text-cyan-400 uppercase">Multi-Track Timeline</span>
+            <button onClick={() => alert("AUTO Timeline Optimized!")} className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-bold">⚡ AUTO SYNC</button>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 text-xs">
             {/* Video Track */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1">
-              <span className="text-[11px] text-slate-400 font-mono w-14 shrink-0">🎬 Video</span>
-              {[1, 2, 3].map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setActiveScene(s)}
-                  className={`px-4 py-2 rounded-xl border text-xs font-medium whitespace-nowrap transition ${
-                    activeScene === s ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 ring-1 ring-cyan-500" : "bg-slate-800 border-slate-700 text-slate-400"
-                  }`}
-                >
-                  Scene {s} (0:10s)
-                </button>
-              ))}
+            <div className="flex items-center gap-3 bg-slate-950 p-2.5 rounded-2xl border border-slate-800">
+              <span className="w-16 text-slate-400 font-semibold">🎥 Video</span>
+              <div className="flex gap-2 overflow-x-auto">
+                {[1, 2, 3].map(s => (
+                  <button key={s} onClick={() => setActiveScene(s)} className={`px-3 py-1.5 rounded-xl border text-xs cursor-pointer ${activeScene === s ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-900 border-slate-800 text-slate-400"}`}>
+                    Scene {s} (0:00 - 0:10)
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Voice Track */}
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] text-slate-400 font-mono w-14 shrink-0">🎙️ Voice</span>
-              <div className="flex-1 bg-slate-800/80 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-purple-300 flex items-center justify-between">
-                <span>ElevenLabs Shuddh Hindi ({voiceEmotion})</span>
-                <span className="text-[10px] bg-purple-950/60 px-2 py-0.5 rounded text-purple-200">{voiceSpeed}</span>
-              </div>
+            <div className="flex items-center justify-between bg-slate-950 p-2.5 rounded-2xl border border-slate-800">
+              <span className="w-16 text-slate-400 font-semibold">🎙️ Voice</span>
+              <span className="text-cyan-300 font-medium truncate">{voiceProfile}</span>
+              <span className="text-[10px] text-purple-400 font-mono">1.5s Pause Locked</span>
             </div>
 
-            {/* BGM Track */}
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] text-slate-400 font-mono w-14 shrink-0">🎵 BGM</span>
-              <div className="flex-1 bg-slate-800/80 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-cyan-300 flex items-center justify-between">
-                <span>{bgMusic}</span>
-                <span className="text-[10px] text-slate-400">Ducking Active</span>
-              </div>
+            {/* Subtitles Track */}
+            <div className="flex items-center justify-between bg-slate-950 p-2.5 rounded-2xl border border-slate-800">
+              <span className="w-16 text-slate-400 font-semibold">📝 Subs</span>
+              <span className="text-green-400 font-medium">{subsState}</span>
             </div>
           </div>
         </div>
 
-        {/* PRO INSPECTOR: ACTIVE SCENE SETTINGS */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <h2 className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">Inspector: Scene {activeScene} Settings</h2>
-            <span className="text-[10px] bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded">Pro Engine Active</span>
+        {/* Inspector Panel for Active Scene */}
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-4 shadow-xl">
+          <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+            <span className="text-xs font-bold text-cyan-400 uppercase">Inspector: Scene {activeScene}</span>
+            <button onClick={() => setVoiceProfile("AUTO Shuddh Hindi (Deep Calm)")} className="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-bold">⚡ AUTO VOICE</button>
           </div>
 
-          {/* Voice Dialog Input */}
-          <div className="space-y-1.5">
-            <label className="text-[11px] text-slate-400 block">Voiceover Dialog Text (Shuddh Hindi / Auto-Dub)</label>
-            <textarea
-              rows={2}
-              value={voiceText}
-              onChange={(e) => setVoiceText(e.target.value)}
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500"
-            />
-          </div>
-
-          {/* Voice Tuning Controls */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="space-y-3">
             <div>
-              <label className="text-[11px] text-slate-400 block mb-1">Voice Emotion / Tone</label>
-              <select value={voiceEmotion} onChange={(e) => setVoiceEmotion(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
-                <option value="Cinematic Narration">Cinematic Narration (Deep Calm)</option>
-                <option value="Emotional & Dramatic">Emotional & Dramatic</option>
-                <option value="Energetic Trailer">Energetic Trailer</option>
-                <option value="Soft Storytelling">Soft Storytelling</option>
-              </select>
+              <label className="text-[10px] text-slate-400 uppercase block mb-1">Voiceover Dialog Text (10-13 Words / Scene)</label>
+              <textarea rows={2} value={dialogText} onChange={(e) => setDialogText(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-2xl p-3 text-xs text-white"/>
             </div>
 
             <div>
-              <label className="text-[11px] text-slate-400 block mb-1">Speech Speed</label>
-              <select value={voiceSpeed} onChange={(e) => setVoiceSpeed(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
-                <option value="0.9x (Slow Cinematic)">0.9x (Slow Cinematic)</option>
-                <option value="1.0x (Normal)">1.0x (Normal)</option>
-                <option value="1.15x (Fast Pace)">1.15x (Fast Pace)</option>
-              </select>
-            </div>
-          </div>
-
-          {/* BGM & Transitions */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label className="text-[11px] text-slate-400 block mb-1">Background Music Track</label>
-              <select value={bgMusic} onChange={(e) => setBgMusic(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
-                <option value="Epic Orchestral Tension (-22dB)">Epic Orchestral Tension (-22dB)</option>
-                <option value="Emotional Flute Melody (-20dB)">Emotional Flute Melody (-20dB)</option>
-                <option value="Dark Cyberpunk Synth (-25dB)">Dark Cyberpunk Synth (-25dB)</option>
-                <option value="No BGM (Voice Only)">No BGM (Voice Only)</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="text-[11px] text-slate-400 block mb-1">Scene Transition Effect</label>
-              <select value={transitionEffect} onChange={(e) => setTransitionEffect(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
-                <option value="Cinematic Crossfade">Cinematic Crossfade</option>
-                <option value="Smooth Zoom In">Smooth Zoom In</option>
-                <option value="Glitch Cut">Glitch Cut</option>
-                <option value="Hard Cut">Hard Cut</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Watermark Setup */}
-          <div className="space-y-2 pt-2 border-t border-slate-800">
-            <div className="flex items-center justify-between">
-              <label className="text-[11px] text-slate-400 font-medium">Brand Watermark / Logo Overlay</label>
-              <input type="checkbox" checked={showLogo} onChange={() => setShowLogo(!showLogo)} className="w-4 h-4 accent-cyan-500 cursor-pointer"/>
-            </div>
-            {showLogo && (
+              <label className="text-[10px] text-slate-400 uppercase block mb-1">Watermark Setup</label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {["TOP RIGHT", "TOP LEFT", "BOTTOM RIGHT", "BOTTOM LEFT"].map((pos) => (
-                  <button
-                    key={pos}
-                    onClick={() => setWatermarkPos(pos)}
-                    className={`py-2 rounded-xl border text-[11px] font-semibold transition ${
-                      watermarkPos === pos ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"
-                    }`}
-                  >
+                {["TOP RIGHT", "TOP LEFT", "BOTTOM RIGHT", "BOTTOM LEFT"].map(pos => (
+                  <button key={pos} onClick={() => setWatermarkPos(pos)} className={`py-2 rounded-xl border text-[11px] font-bold cursor-pointer ${watermarkPos === pos ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>
                     {pos}
                   </button>
                 ))}
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* Action Buttons */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            <button className="py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 font-semibold text-xs text-cyan-300 transition">
-              ⚡ Re-Render Scene {activeScene} (AI Veo)
-            </button>
-            <button className="py-3 rounded-xl bg-purple-600/30 hover:bg-purple-600/40 border border-purple-500/50 font-semibold text-xs text-purple-200 transition">
-              🎙️ Auto-Dub & Re-Voice Audio
-            </button>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button onClick={handleReRender} className="w-full py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 font-bold text-xs cursor-pointer shadow">
+                ⚡ Re-Render Scene {activeScene}
+              </button>
+              <button onClick={() => alert("Auto-Dub & Re-Voice pipeline triggered!")} className="w-full py-3 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs cursor-pointer shadow">
+                🎙️ Auto-Dub & Re-Voice
+              </button>
+            </div>
           </div>
-
         </div>
 
       </div>
 
-      {/* Floating Bottom Nav */}
-      <div className="fixed bottom-4 inset-x-0 flex justify-center z-50 pointer-events-none">
-        <div className="bg-slate-900/95 border border-slate-700 rounded-full px-5 py-2 shadow-2xl flex items-center gap-6 pointer-events-auto">
-          <Link href="/character-vault" className="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-slate-300 text-xs">
-            ←
-          </Link>
-          <span className="text-xs text-slate-400 font-medium">Editor Suite</span>
-          <Link href="/" className="w-8 h-8 rounded-full bg-cyan-500 text-black flex items-center justify-center text-xs font-bold">
-            🏠
-          </Link>
-        </div>
+      {/* Right Side Dock */}
+      <div className="fixed bottom-4 right-5 z-50 flex items-center gap-2 bg-slate-900/95 border border-slate-700 p-1.5 rounded-full shadow-2xl backdrop-blur-lg">
+        <Link href="/" className="w-9 h-9 rounded-full bg-slate-800 text-cyan-400 flex items-center justify-center text-sm border border-slate-700 shadow-md" title="Home">🏠</Link>
+        <Link href="/character-vault" className="w-9 h-9 rounded-full bg-slate-800 text-purple-400 flex items-center justify-center text-sm border border-slate-700 shadow-md" title="Vault">👤</Link>
+        <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 text-black flex items-center justify-center text-sm font-bold shadow-lg shadow-cyan-500/30" title="Editor">🎬</Link>
       </div>
-
     </div>
   );
-            }
-            
+}
