@@ -8,16 +8,16 @@ export default function ProStudioEditor() {
   const [proc, setProc] = useState(false);
   const [modal, setModal] = useState(false);
 
-  // Logo & Watermark System (4 Corners + Gallery)
+  // Logo & Watermark (4 Corners + Gallery)
   const [wmPos, setWmPos] = useState("top-right");
   const [wmStyle, setWmStyle] = useState("gold");
   const [wmOn, setWmOn] = useState(true);
   const [customLogo, setCustomLogo] = useState("");
 
-  // Video Analysis & Thumbnail Editor
+  // Video Analysis & Thumbnail
   const [analyzing, setAnalyzing] = useState(false);
   const [thumbImage, setThumbImage] = useState("https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600");
-  const [thumbText, setThumbText] = useState("Life Changing Turn | जीवन बदलाव | வாழ்வை மாற்றுங்கள்");
+  const [thumbText, setThumbText] = useState("Life Changing Turn | जीवन बदलाव");
   const [textPos, setTextPos] = useState("bottom");
 
   const runExport = (q) => {
@@ -34,8 +34,8 @@ export default function ProStudioEditor() {
     setTimeout(() => {
       setAnalyzing(false);
       setThumbImage("https://images.unsplash.com/photo-1544717305-2782549b5136?w=600");
-      setThumbText("Emotional Turning Point | भावुक पल | உணர்ச்சிப்பூர்வமான தருணம்");
-      alert("⚡ AI Video Analysis Complete: Keyframe extracted & Thumbnail generated!");
+      setThumbText("Emotional Turning Point | भावुक पल");
+      alert("AI Video Analysis Complete: Keyframe extracted!");
     }, 2000);
   };
 
@@ -45,7 +45,7 @@ export default function ProStudioEditor() {
       {proc && (
         <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4 gap-2">
           <div className="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin"></div>
-          <p className="text-[11px] text-cyan-400 font-bold">Rendering Master Video & Embedding Assets...</p>
+          <p className="text-[11px] text-cyan-400 font-bold">Rendering Master Video & Assets...</p>
         </div>
       )}
 
@@ -66,25 +66,21 @@ export default function ProStudioEditor() {
             </div>
             
             <div className="grid grid-cols-1 gap-2 text-xs">
-              {/* Option 1: 4K Ultra HD */}
               <button onClick={() => runExport("4K Cinema UHD (60 FPS)")} className="w-full py-2.5 px-3 rounded-xl bg-cyan-500 text-black font-bold flex items-center justify-between shadow cursor-pointer">
                 <span>⬇ 1. 4K Cinema UHD (60 FPS)</span>
                 <span className="text-[9px] bg-black/20 px-1.5 py-0.5 rounded font-mono">Master Video</span>
               </button>
 
-              {/* Option 2: 1080p Full HD */}
               <button onClick={() => runExport("1080p Full HD (MP4)")} className="w-full py-2.5 px-3 rounded-xl bg-slate-800 border border-slate-700 text-cyan-300 font-bold flex items-center justify-between cursor-pointer">
                 <span>⬇ 2. 1080p Full HD (Web Ready)</span>
                 <span className="text-[9px] bg-cyan-950 px-1.5 py-0.5 rounded font-mono">Fast Render</span>
               </button>
 
-              {/* Option 3: 4K Thumbnail Image */}
               <button onClick={() => runExport("4K Ultra HD Thumbnail Image")} className="w-full py-2.5 px-3 rounded-xl bg-yellow-500/20 border border-yellow-500/40 text-yellow-300 font-bold flex items-center justify-between cursor-pointer">
                 <span>⬇ 3. 4K Thumbnail Image</span>
                 <span className="text-[9px] bg-yellow-950 px-1.5 py-0.5 rounded font-mono">High CTR JPG</span>
               </button>
 
-              {/* Option 4: Master Audio Only */}
               <button onClick={() => runExport("Master Audio Track (WAV)")} className="w-full py-2.5 px-3 rounded-xl bg-purple-500/20 border border-purple-500/40 text-purple-300 font-bold flex items-center justify-between cursor-pointer">
                 <span>⬇ 4. Audio Only Master (WAV)</span>
                 <span className="text-[9px] bg-purple-950 px-1.5 py-0.5 rounded font-mono">Lossless Audio</span>
@@ -112,7 +108,7 @@ export default function ProStudioEditor() {
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-2 space-y-1.5 shadow-xl">
           <div className="flex justify-between items-center px-0.5">
             <span className="text-[8px] font-bold text-cyan-400 uppercase tracking-wider">Thumbnail & Video Live Preview</span>
-            <span className="text-[8px] text-green-400 font-mono">4 Export Formats Ready</span>
+            <span className="text-[8px] text-green-400 font-mono">4 Formats Ready</span>
           </div>
           <div className="w-full aspect-video rounded-lg bg-black border border-slate-800 relative flex items-center justify-center overflow-hidden">
             <img src={thumbImage} alt="" className="w-full h-full object-cover opacity-90"/>
@@ -150,7 +146,7 @@ export default function ProStudioEditor() {
 
         {/* AI Prompt */}
         <div className="bg-slate-900 border border-cyan-500/30 rounded-lg p-1.5 flex gap-1.5">
-          <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="🧠 AI Director..." className="w-full bg-slate-800/80 border border-slate-700 rounded px-2 py-1 text-[11px] text-white focus:outline-none"/>
+          <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="AI Director..." className="w-full bg-slate-800/80 border border-slate-700 rounded px-2 py-1 text-[11px] text-white focus:outline-none"/>
           <button onClick={() => { setProc(true); setTimeout(() => { setProc(false); alert("AI applied!"); setPrompt(""); }, 1200); }} className="px-2.5 py-1 rounded bg-cyan-500 text-black font-bold text-[10px] whitespace-nowrap cursor-pointer">Run ✨</button>
         </div>
 
@@ -269,8 +265,8 @@ export default function ProStudioEditor() {
 
               <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 space-y-1">
                 <span className="font-bold text-purple-300 block text-[11px]">4. Audio Track (WAV)</span>
-                <p className="text-[8px] text-slate-400">Lossless Sound & Mixed Master</p>
-                <button onClick={() => runExport("Master Audio Track (WAV)")} className="w-full py-1.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/40 font-bold text-[10px] cursor-pointer">⬇ Download WAV</button>
+                <p className="text-[8px] text-slate-400">Lossless Sound & Master</p>
+                <button onClick={() => runExport("Master Audio Track (WAV)")} className="w-full py-1.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500 font-bold text-[10px] cursor-pointer">⬇ Download WAV</button>
               </div>
             </div>
           </div>
