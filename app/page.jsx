@@ -19,8 +19,8 @@ export default function CineFlowApp() {
   const [showInstaP, setShowInstaP] = useState(false);
 
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
-  
-  // Generation & Player States
+
+  // Video Generation & Player States
   const [loading, setLoading] = useState(false);
   const [showPlayModal, setShowPlayModal] = useState(false);
   const [isPlayingCompleted, setIsPlayingCompleted] = useState(false);
@@ -87,7 +87,7 @@ export default function CineFlowApp() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setShowPlayModal(true);
+      setShowPlayModal(true); // Open Completed Video Player
     }, 3500);
   };
 
@@ -300,6 +300,4 @@ export default function CineFlowApp() {
           <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Arabic"].map((l) => (
-              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}</button>
-            ))}
-         
+              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}
