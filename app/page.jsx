@@ -20,7 +20,7 @@ export default function CineFlowApp() {
   const [showPlayModal, setShowPlayModal] = useState(false);
   const [isPlayingCompleted, setIsPlayingCompleted] = useState(false);
 
-  // Master Studio Settings (Audio box removed, backend auto-locked)
+  // Master Studio Settings
   const [storyPrompt, setStoryPrompt] = useState("");
   const [visualStyle, setVisualStyle] = useState("AUTO");
   const [customStyle, setCustomStyle] = useState("");
@@ -31,6 +31,7 @@ export default function CineFlowApp() {
   const [galleryImage, setGalleryImage] = useState(null);
 
   const styleCatalog = [
+    { name: "3D Cartoon", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=400&auto=format&fit=crop" },
     { name: "Disney-like", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300" },
     { name: "Pixar-like", img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=300" },
     { name: "Realistic", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200" },
@@ -39,7 +40,6 @@ export default function CineFlowApp() {
     { name: "Bible Art", img: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200" },
     { name: "Historical", img: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=200" },
     { name: "Documentary", img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=200" },
-    { name: "3D Cartoon", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200" },
     { name: "Anime", img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=200" },
     { name: "Fantasy", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200" },
     { name: "Dark Cinema", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=200" }
@@ -123,7 +123,6 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 font-sans pb-28 relative">
       
-      {/* Loading Screen during Generation */}
       {loading && (
         <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4 space-y-3">
           <div className="w-12 h-12 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"></div>
@@ -131,7 +130,6 @@ export default function CineFlowApp() {
         </div>
       )}
 
-      {/* Generated Video Playback Modal */}
       {showPlayModal && (
         <div className="fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
           <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3 shadow-2xl">
@@ -200,7 +198,7 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 2. Visual Art Style */}
+        {/* 2. Visual Art Style (With 3D Cartoon Image Loaded) */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="flex gap-2 overflow-x-auto pb-1">
