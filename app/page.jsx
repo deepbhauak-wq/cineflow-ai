@@ -4,26 +4,20 @@ import Link from "next/link";
 
 export default function CineFlowApp() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loginMethod, setLoginMethod] = useState("google"); // 'google', 'facebook', 'instagram'
+  const [loginMethod, setLoginMethod] = useState("google");
   
-  // Input states for all 3 login methods
   const [googleEmail, setGoogleEmail] = useState("");
   const [googlePass, setGooglePass] = useState("");
-  
   const [fbUser, setFbUser] = useState("");
   const [fbPass, setFbPass] = useState("");
-  
   const [instaUser, setInstaUser] = useState("");
   const [instaPass, setInstaPass] = useState("");
-  
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
   
-  // Subscription Plan State (4 Plans)
   const [showSubscriptionPlan, setShowSubscriptionPlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("Pro Director");
   const [billingCycle, setBillingCycle] = useState("Monthly");
 
-  // Studio Settings States (All 7 Settings)
   const [storyPrompt, setStoryPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
@@ -98,27 +92,24 @@ export default function CineFlowApp() {
     }, 1200);
   };
 
-  // 1. LOGIN SCREEN WITH ACTIVE GOOGLE, FACEBOOK & INSTAGRAM CREDENTIAL INPUTS
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen w-full bg-[#0a0d14] flex flex-col items-center justify-center p-4 text-white font-sans">
         <div className="w-full max-w-sm rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl flex flex-col items-center">
           
           <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-xl shadow-cyan-500/20 mb-4 border border-cyan-500/40">
-            <img src="https://i.ibb.co/3w513qJ7/32938.jpg" alt="CineFlow AI Logo" className="w-full h-full object-cover" />
+            <img src="https://i.ibb.co/3w513qJ7/32938.jpg" alt="Logo" className="w-full h-full object-cover" />
           </div>
 
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-1 text-center">CineFlow AI Pro</h1>
           <p className="text-xs text-slate-400 text-center mb-5">Autonomous Cinema Engine</p>
 
-          {/* Login Method Tabs */}
           <div className="w-full grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 mb-5">
             <button onClick={() => setLoginMethod("google")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "google" ? "bg-cyan-500 text-black" : "text-slate-400"}`}>Gmail</button>
             <button onClick={() => setLoginMethod("facebook")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "facebook" ? "bg-[#1877F2] text-white" : "text-slate-400"}`}>Facebook</button>
             <button onClick={() => setLoginMethod("instagram")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "instagram" ? "bg-gradient-to-r from-amber-500 to-purple-600 text-white" : "text-slate-400"}`}>Instagram</button>
           </div>
 
-          {/* GOOGLE / GMAIL LOGIN FORM */}
           {loginMethod === "google" && (
             <form onSubmit={(e) => handleAuthSubmit(e, "google")} className="w-full space-y-3.5">
               <div>
@@ -133,11 +124,10 @@ export default function CineFlowApp() {
             </form>
           )}
 
-          {/* FACEBOOK LOGIN FORM */}
           {loginMethod === "facebook" && (
             <form onSubmit={(e) => handleAuthSubmit(e, "facebook")} className="w-full space-y-3.5">
               <div>
-                <label className="text-[11px] text-slate-400 block mb-1">Facebook Username / Email / Phone</label>
+                <label className="text-[11px] text-slate-400 block mb-1">Facebook Username / Email</label>
                 <input type="text" required value={fbUser} onChange={(e) => setFbUser(e.target.value)} placeholder="username or email" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
               </div>
               <div>
@@ -148,11 +138,10 @@ export default function CineFlowApp() {
             </form>
           )}
 
-          {/* INSTAGRAM LOGIN FORM */}
           {loginMethod === "instagram" && (
             <form onSubmit={(e) => handleAuthSubmit(e, "instagram")} className="w-full space-y-3.5">
               <div>
-                <label className="text-[11px] text-slate-400 block mb-1">Instagram Username / Email</label>
+                <label className="text-[11px] text-slate-400 block mb-1">Instagram Username</label>
                 <input type="text" required value={instaUser} onChange={(e) => setInstaUser(e.target.value)} placeholder="username" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
               </div>
               <div>
@@ -171,7 +160,6 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28">
       
-      {/* Top Header with Exact Official Logo */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl overflow-hidden border border-cyan-500/40 shadow-md">
@@ -193,7 +181,6 @@ export default function CineFlowApp() {
         </div>
       </div>
 
-      {/* FORCE 4 SUBSCRIPTION PLANS MODAL */}
       {showSubscriptionPlan && (
         <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
           <div className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-6">
@@ -212,7 +199,6 @@ export default function CineFlowApp() {
               </div>
             </div>
 
-            {/* 4 SUBSCRIPTION PLANS GRID */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
               {[
                 { name: "Starter Creator", price: billingCycle === "Monthly" ? "$19" : "$12", credits: "300 Cr/mo", desc: "For individual social creators." },
@@ -249,7 +235,7 @@ export default function CineFlowApp() {
 
       <div className="max-w-4xl mx-auto space-y-5">
         
-        {/* FULL-SIZE CINEMATIC PLAYER / VIDEO VIEW SCREEN (No Multi-card edits) */}
+        {/* Full-Size Cinematic Player View */}
         <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-6 space-y-3 shadow-2xl">
           <div className="flex items-center justify-between">
             <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Full-Size Cinematic Player View</label>
@@ -270,7 +256,7 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 1. MASTER STORY & REFERENCE IMAGE */}
+        {/* 1. Master Story & Reference Image */}
         <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">1. Master Story & Reference Image</label>
           <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here... AI will auto-decompose into scenes." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs sm:text-sm text-white focus:outline-none"/>
@@ -287,4 +273,16 @@ export default function CineFlowApp() {
                   <p className="font-semibold text-cyan-300">Reference Photo Attached ✓</p>
                   <button onClick={() => setUploadedImage(null)} className="text-[10px] text-red-400 hover:underline">Remove</button>
                 </div>
-              </d
+              </div>
+            ) : <span className="text-[11px] text-slate-500">No reference image selected</span>}
+          </div>
+        </div>
+
+        {/* 2. Visual Art Style */}
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">2. Visual Art Style ({visualStyle})</label>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-72 overflow-y-auto pr-1">
+            {styleCatalog.map((s) => (
+              <div
+                key={s.name}
+        
