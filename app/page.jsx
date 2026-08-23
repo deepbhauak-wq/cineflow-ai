@@ -8,11 +8,15 @@ export default function CineFlowApp() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   
+  // Master Studio Settings States
   const [storyPrompt, setStoryPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
-  const [duration, setDuration] = useState("3 Min");
-  const [videoModel, setVideoModel] = useState("Veo");
-  const [voiceLang, setVoiceLang] = useState("Hindi (Pure)");
+  const [duration, setDuration] = useState("3 Min (18 Scenes)");
+  const [voiceLang, setVoiceLang] = useState("Hindi (Pure Shuddh)");
+  const [videoModel, setVideoModel] = useState("Veo / Kling");
+  
+  // Gallery / Image Upload State
+  const [uploadedImage, setUploadedImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -36,7 +40,16 @@ export default function CineFlowApp() {
     setIsLoggedIn(false);
   };
 
-  // 1. LOGIN SCREEN (Clean Vertical Center)
+  // Handle Gallery Image Upload
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setUploadedImage(imageUrl);
+    }
+  };
+
+  // 1. LOGIN SCREEN
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen w-full bg-[#0a0d14] flex flex-col items-center justify-center p-4 text-white font-sans overflow-x-hidden">
@@ -144,7 +157,7 @@ export default function CineFlowApp() {
     );
   }
 
-  // 2. MAIN STUDIO DASHBOARD (Clean Vertical Flow)
+  // 2. MAIN STUDIO DASHBOARD WITH GALLERY IMAGE UPLOAD
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans overflow-x-hidden">
       <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between border-b border-slate-800 pb-4 mb-6 gap-4">
@@ -174,8 +187,7 @@ export default function CineFlowApp() {
         </div>
       </div>
 
-      {/* Main Stacked Vertical Form */}
-      <div className="max-w-4xl mx-auto space-y-5 pb-16">
+      <div className="max-w-4xl mx-auto space-y-5 pb-20">
         <div className="text-center py-2">
           <span className="px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-[11px] text-cyan-300 font-medium">
             ✨ Autonomous Cinema Pipeline
@@ -185,19 +197,50 @@ export default function CineFlowApp() {
           </h2>
         </div>
 
-        <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
-          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">
-            1. Master Story / Screenplay Input
-          </label>
+        {/* 1. Master Story Input & Gallery Image Upload */}
+        <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">
+              1. Master Story & Reference Image Upload
+            </label>
+            <span className="text-[10px] text-slate-400">Gallery / Camera Support</span>
+          </div>
+
           <textarea
-            rows={4}
+            rows={3}
             value={storyPrompt}
             onChange={(e) => setStoryPrompt(e.target.value)}
-            placeholder="Enter your storyline here... AI will auto-decompose into scenes and Shuddh Hindi voiceover."
+            placeholder="Enter storyline here... AI will decompose into scenes and Shuddh Hindi voiceover."
             className="w-full bg-[#141b2d] border border-slate-700/60 rounded-xl p-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
           />
+
+          {/* Gallery Upload Box */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 border-t border-slate-800/80">
+            <label className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#141b2d] hover:bg-[#1c263f] border border-slate-700 text-xs font-medium text-cyan-300 cursor-pointer flex items-center justify-center gap-2 transition">
+              <span>🖼️ Upload Reference Photo from Gallery</span>
+              <input 
+                type="file" 
+                accept="image/*" 
+                onChange={handleImageUpload} 
+                className="hidden" 
+              />
+            </label>
+
+            {uploadedImage ? (
+              <div className="flex items-center gap-3 bg-slate-900 border border-slate-800 p-2 rounded-xl w-full sm:w-auto">
+                <img src={uploadedImage} alt="Preview" className="w-10 h-10 rounded-lg object-cover border border-cyan-500/40" />
+                <div className="text-xs">
+                  <p className="font-semibold text-cyan-300">Photo Attached ✓</p>
+                  <button onClick={() => setUploadedImage(null)} className="text-[10px] text-red-400 hover:underline">Remove</button>
+                </div>
+              </div>
+            ) : (
+              <span className="text-[11px] text-slate-500">No image selected (Optional for Image-to-Video)</span>
+            )}
+          </div>
         </div>
 
+        {/* 2. Aspect Ratio */}
         <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">
             2. Aspect Ratio Selection
@@ -217,6 +260,68 @@ export default function CineFlowApp() {
           </div>
         </div>
 
+        {/* 3. Timeline Duration Tiers */}
+        <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
+          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">
+            3. Timeline Duration Tiers
+          </label>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            {["3 Min (18 Scenes)", "15 Min (90 Scenes)", "30 Min (180 Scenes)", "60 Min (360 Scenes)"].map((tier) => (
+              <button
+                key={tier}
+                onClick={() => setDuration(tier)}
+                className={`py-2.5 px-2 rounded-xl border text-xs font-semibold transition ${
+                  duration === tier ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-[#141b2d] border-slate-800 text-slate-400"
+                }`}
+              >
+                {tier}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 4. Voiceover & Auto-Dubbing */}
+        <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
+          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">
+            4. Voiceover & Auto-Dubbing (ElevenLabs)
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            {["Hindi (Pure Shuddh)", "English (US Cinematic)", "Bilingual (Hindi + English Subs)"].map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setVoiceLang(lang)}
+                className={`p-3 rounded-xl border text-xs text-left transition ${
+                  voiceLang === lang ? "bg-cyan-500/20 border-cyan-500 text-white" : "bg-[#141b2d] border-slate-800 text-slate-400"
+                }`}
+              >
+                <span className="font-semibold block">{lang}</span>
+                <span className="text-[10px] text-slate-500">-22dB BGM Ducking</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 5. Video Rendering Models */}
+        <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
+          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">
+            5. AI Video Rendering Engine
+          </label>
+          <div className="grid grid-cols-3 gap-2.5">
+            {["Veo / Kling", "Runway Gen-3", "Luma Dream Machine"].map((model) => (
+              <button
+                key={model}
+                onClick={() => setVideoModel(model)}
+                className={`py-2.5 rounded-xl border text-xs font-semibold transition ${
+                  videoModel === model ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-[#141b2d] border-slate-800 text-slate-400"
+                }`}
+              >
+                {model}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Generate CTA Button */}
         <button
           onClick={() => {
             setLoading(true);
@@ -227,7 +332,7 @@ export default function CineFlowApp() {
           }}
           className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm tracking-wide shadow-xl shadow-cyan-500/25 hover:opacity-95 transition flex items-center justify-center gap-2 cursor-pointer"
         >
-          {loading ? "Generating Film Tracks..." : "🚀 GENERATE AUTONOMOUS CINEMA FILM"}
+          {loading ? "Generating Film & Media Tracks..." : "🚀 GENERATE AUTONOMOUS CINEMA FILM"}
         </button>
       </div>
     </div>
