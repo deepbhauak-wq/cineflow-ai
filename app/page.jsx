@@ -58,7 +58,11 @@ export default function CineFlowApp() {
 
   const handleAuth = (e, m) => {
     e.preventDefault();
-    let email = m === "google" ? (gEmail || "gmail@user.com") : m === "facebook" ? (fbU ? `${fbU}@fb.com` : "fb@user.com") : (instaU ? `${instaU}@insta.com` : "insta@user.com");
+    let email = "user@gmail.com";
+    if (m === "google") email = gEmail || "gmail@user.com";
+    if (m === "facebook") email = fbU ? `${fbU}@fb.com` : "fb@user.com";
+    if (m === "instagram") email = instaU ? `${instaU}@insta.com` : "insta@user.com";
+
     if (rememberMe) {
       localStorage.setItem("cineflow_logged_in", "true");
       localStorage.setItem("cineflow_user_email", email);
@@ -262,7 +266,7 @@ export default function CineFlowApp() {
             <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Engine Model</label>
             <div className="grid grid-cols-3 gap-2">
               {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
-                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
+                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs font-semibold transition ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
               ))}
             </div>
           </div>
@@ -271,7 +275,7 @@ export default function CineFlowApp() {
             <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Engine Model</label>
             <div className="grid grid-cols-3 gap-2">
               {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
-                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
+                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
               ))}
             </div>
           </div>
@@ -283,6 +287,4 @@ export default function CineFlowApp() {
       </div>
 
       <div className="fixed bottom-4 inset-x-0 flex justify-end z-50 px-6">
-        <div className="bg-slate-900 border border-slate-700 rounded-full px-4 py-2 shadow-2xl flex items-center gap-3">
-          <span className="text-[11px] text-slate-400">Next</span>
-          <Link href="/studio/editor" classN
+        <div className="bg-slate-900 border border-slate-700 rounded-full px-4 py-2 shadow-2xl flex items-
