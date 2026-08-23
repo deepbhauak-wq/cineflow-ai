@@ -60,7 +60,11 @@ export default function CineFlowApp() {
 
   const handleAuth = (e, m) => {
     e.preventDefault();
-    let email = m === "google" ? (gEmail || "gmail@user.com") : m === "facebook" ? (fbU ? `${fbU}@fb.com` : "fb@user.com") : (instaU ? `${instaU}@insta.com` : "insta@user.com");
+    let email = "user@gmail.com";
+    if (m === "google") email = gEmail || "gmail@user.com";
+    if (m === "facebook") email = fbU ? fbU + "@fb.com" : "fb@user.com";
+    if (m === "instagram") email = instaU ? instaU + "@insta.com" : "insta@user.com";
+
     if (rememberMe) {
       localStorage.setItem("cineflow_logged_in", "true");
       localStorage.setItem("cineflow_user_email", email);
@@ -174,7 +178,6 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28 relative">
       
-      {/* LOADING / GENERATING OVERLAY WITH PLAY/PAUSE OPTION */}
       {loading && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-6 space-y-4">
           <div className="w-full max-w-lg aspect-video rounded-3xl overflow-hidden border border-cyan-500/50 bg-black relative flex items-center justify-center shadow-2xl">
@@ -198,7 +201,6 @@ export default function CineFlowApp() {
         </div>
       )}
 
-      {/* Top Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-black border border-cyan-500/40 p-1 flex items-center justify-center shadow-md">
@@ -219,7 +221,6 @@ export default function CineFlowApp() {
 
       <div className="max-w-4xl mx-auto space-y-5">
         
-        {/* Full-Size Cinematic Player View */}
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-6 space-y-3 shadow-2xl">
           <div className="flex items-center justify-between">
             <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Full-Size Cinematic Player View</label>
@@ -242,7 +243,6 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 1. Master Story & Reference Image */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
           <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none"/>
@@ -252,7 +252,6 @@ export default function CineFlowApp() {
           </label>
         </div>
 
-        {/* 2. Visual Art Style */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5 max-h-64 overflow-y-auto">
@@ -266,7 +265,6 @@ export default function CineFlowApp() {
           <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
         </div>
 
-        {/* 3 & 4. Aspect Ratio & Duration */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
             <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
@@ -287,8 +285,8 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 5. Voiceover & Languages */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
           <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {["Hindi (Pure Shuddh)", "Eng
+            {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Arabic"].map((l) => (
+              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-c
