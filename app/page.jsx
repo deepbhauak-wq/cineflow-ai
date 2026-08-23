@@ -124,7 +124,7 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans overflow-x-hidden pb-28">
       
-      {/* Top Header: Clean Branding & Identity */}
+      {/* Top Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-base shadow-lg shadow-cyan-500/20">🎬</div>
@@ -148,7 +148,7 @@ export default function CineFlowApp() {
       {/* Main Stacked Content Form */}
       <div className="max-w-4xl mx-auto space-y-5">
         
-        {/* 1. Master Story Input & Reference Gallery Upload */}
+        {/* 1. Master Story Input & Reference Image */}
         <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-4">
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">1. Master Story & Reference Image</label>
           <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here... AI will auto-decompose into scenes." className="w-full bg-[#141b2d] border border-slate-700/60 rounded-xl p-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"/>
@@ -162,7 +162,7 @@ export default function CineFlowApp() {
               <div className="flex items-center gap-3 bg-slate-900 border border-slate-800 p-2 rounded-xl w-full sm:w-auto">
                 <img src={uploadedImage} alt="Preview" className="w-10 h-10 rounded-lg object-cover border border-cyan-500/40"/>
                 <div className="text-xs">
-                  <p className="font-semibold text-cyan-300">Reference Photo Attached &check;</p>
+                  <p className="font-semibold text-cyan-300">Reference Photo Attached ✓</p>
                   <button onClick={() => setUploadedImage(null)} className="text-[10px] text-red-400 hover:underline">Remove</button>
                 </div>
               </div>
@@ -249,6 +249,6 @@ export default function CineFlowApp() {
         </button>
       </div>
 
-      {/* Floating Bottom Reels-Style Left/Right Navigation Bar */}
+      {/* Floating Bottom Navigation Bar */}
       <div className="fixed bottom-4 inset-x-0 flex justify-center z-50 px-4 pointer-events-none">
-        <div className="bg-[#0f1422]/90 back
+        <div className="bg-[#0f1422]/90 backdrop-blur-lg border border-slate-700/80 rounded-full px-5 py-2.5 
