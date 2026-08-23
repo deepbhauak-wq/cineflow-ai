@@ -20,11 +20,8 @@ export default function CineFlowApp() {
   const [showInstaP, setShowInstaP] = useState(false);
 
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
-
-  // Video Player Interactive State
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // All 7 Settings States
   const [storyPrompt, setStoryPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
@@ -167,7 +164,6 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28">
       
-      {/* Top Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-black border border-cyan-500/40 p-1 flex items-center justify-center shadow-md">
@@ -188,7 +184,6 @@ export default function CineFlowApp() {
 
       <div className="max-w-4xl mx-auto space-y-5">
         
-        {/* Full-Size Cinematic Player View with Interactive Play/Pause */}
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-6 space-y-3 shadow-2xl">
           <div className="flex items-center justify-between">
             <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Full-Size Cinematic Player View</label>
@@ -203,18 +198,14 @@ export default function CineFlowApp() {
               <p className="text-[10px] text-slate-300">Autonomous Render • Shuddh Hindi Voiceover Active</p>
             </div>
 
-            <button 
-              onClick={() => setIsPlaying(!isPlaying)}
-              className="absolute inset-0 flex items-center justify-center cursor-pointer group"
-            >
-              <div className="w-16 h-16 rounded-full bg-cyan-500/90 backdrop-blur-md flex items-center justify-center text-black text-2xl shadow-xl shadow-cyan-500/40 group-hover:scale-110 transition">
+            <button onClick={() => setIsPlaying(!isPlaying)} className="absolute inset-0 flex items-center justify-center cursor-pointer">
+              <div className="w-16 h-16 rounded-full bg-cyan-500/90 backdrop-blur-md flex items-center justify-center text-black text-2xl shadow-xl shadow-cyan-500/40 hover:scale-110 transition">
                 {isPlaying ? "❚❚" : "▶"}
               </div>
             </button>
           </div>
         </div>
 
-        {/* 1. Master Story & Reference Image */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
           <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none"/>
@@ -224,7 +215,6 @@ export default function CineFlowApp() {
           </label>
         </div>
 
-        {/* 2. Visual Art Style */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5 max-h-64 overflow-y-auto">
@@ -238,7 +228,6 @@ export default function CineFlowApp() {
           <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
         </div>
 
-        {/* 3 & 4. Aspect Ratio & Duration */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
             <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
@@ -259,7 +248,6 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 5. Voiceover & Languages */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
           <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -269,7 +257,6 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 6 & 7. Video Engine & Story Engine Models */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
             <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Engine Model</label>
@@ -290,4 +277,12 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        <button onClick={() => window.location.href = "/studio/editor"} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-p
+        <button onClick={() => window.location.href = "/studio/editor"} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm text-black cursor-pointer shadow-xl">
+          🚀 GENERATE AUTONOMOUS CINEMA FILM
+        </button>
+      </div>
+
+      <div className="fixed bottom-4 inset-x-0 flex justify-end z-50 px-6">
+        <div className="bg-slate-900 border border-slate-700 rounded-full px-4 py-2 shadow-2xl flex items-center gap-3">
+          <span className="text-[11px] text-slate-400">Next</span>
+          <Link href="/studio/editor" classN
