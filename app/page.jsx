@@ -18,6 +18,7 @@ export default function CineFlowApp() {
   const [isPlayingCompleted, setIsPlayingCompleted] = useState(false);
   const [isPlayingDashboard, setIsPlayingDashboard] = useState(false);
 
+  // Complete 7 Studio Parameters
   const [storyPrompt, setStoryPrompt] = useState("");
   const [visualStyle, setVisualStyle] = useState("Cinematic");
   const [customStyle, setCustomStyle] = useState("");
@@ -42,10 +43,14 @@ export default function CineFlowApp() {
     { name: "Dark Cinema", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=200" }
   ];
 
+  // Pro Persistent Session Handler
   useEffect(() => {
     const s = localStorage.getItem("cineflow_logged_in");
     const e = localStorage.getItem("cineflow_user_email");
-    if (s === "true" && e) { setIsLoggedIn(true); setActiveEmail(e); }
+    if (s === "true" && e) {
+      setIsLoggedIn(true);
+      setActiveEmail(e);
+    }
   }, []);
 
   const handleAuth = (e, m) => {
@@ -65,29 +70,34 @@ export default function CineFlowApp() {
 
   const handleGenerate = () => {
     setLoading(true);
-    setTimeout(() => { setLoading(false); setShowPlayModal(true); }, 3500);
+    setTimeout(() => {
+      setLoading(false);
+      setShowPlayModal(true);
+    }, 3500);
   };
 
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-[#0a0d14] flex items-center justify-center p-4 text-white font-sans">
         <div className="w-full max-w-sm bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col items-center">
-          <div className="w-16 h-16 rounded-2xl bg-black border border-cyan-500/40 p-2 flex items-center justify-center mb-3">
-            <span className="text-xl text-cyan-400 font-bold">▶</span>
+          <div className="w-16 h-16 rounded-2xl bg-black border border-cyan-500/40 p-2 flex items-center justify-center mb-3 shadow-lg shadow-cyan-500/20">
+            <div className="w-full h-full rounded-full bg-gradient-to-tr from-cyan-400 via-indigo-500 to-purple-500 flex items-center justify-center">
+              <span className="text-xl text-white font-black pl-0.5">▶</span>
+            </div>
           </div>
           <h1 className="text-xl font-bold mb-1">CineFlow AI Pro</h1>
           <p className="text-xs text-slate-400 mb-4">Autonomous Cinema Engine</p>
           <div className="w-full grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl mb-4">
-            <button type="button" onClick={() => setLoginMethod("google")} className={`py-1 rounded-lg text-xs font-bold ${loginMethod === "google" ? "bg-cyan-500 text-black" : "text-slate-400"}`}>Gmail</button>
-            <button type="button" onClick={() => setLoginMethod("facebook")} className={`py-1 rounded-lg text-xs font-bold ${loginMethod === "facebook" ? "bg-[#1877F2] text-white" : "text-slate-400"}`}>Facebook</button>
-            <button type="button" onClick={() => setLoginMethod("instagram")} className={`py-1 rounded-lg text-xs font-bold ${loginMethod === "instagram" ? "bg-purple-600 text-white" : "text-slate-400"}`}>Instagram</button>
+            <button type="button" onClick={() => setLoginMethod("google")} className={`py-1 rounded-lg text-xs font-bold cursor-pointer ${loginMethod === "google" ? "bg-cyan-500 text-black" : "text-slate-400"}`}>Gmail</button>
+            <button type="button" onClick={() => setLoginMethod("facebook")} className={`py-1 rounded-lg text-xs font-bold cursor-pointer ${loginMethod === "facebook" ? "bg-[#1877F2] text-white" : "text-slate-400"}`}>Facebook</button>
+            <button type="button" onClick={() => setLoginMethod("instagram")} className={`py-1 rounded-lg text-xs font-bold cursor-pointer ${loginMethod === "instagram" ? "bg-purple-600 text-white" : "text-slate-400"}`}>Instagram</button>
           </div>
           {loginMethod === "google" && (
             <form onSubmit={(e) => handleAuth(e, "google")} className="w-full space-y-3">
               <input type="email" required value={gEmail} onChange={(e) => setGEmail(e.target.value)} placeholder="name@gmail.com" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"/>
               <div className="relative">
                 <input type={showGP ? "text" : "password"} required value={gPass} onChange={(e) => setGPass(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"/>
-                <button type="button" onClick={() => setShowGP(!showGP)} className="absolute right-3 top-2 text-[10px] text-cyan-400">{showGP ? "Hide" : "Show"}</button>
+                <button type="button" onClick={() => setShowGP(!showGP)} className="absolute right-3 top-2 text-[10px] text-cyan-400 cursor-pointer">{showGP ? "Hide" : "Show"}</button>
               </div>
               <button type="submit" className="w-full py-2.5 rounded-xl bg-cyan-500 font-bold text-xs text-black cursor-pointer">PERMANENT SIGN IN</button>
             </form>
@@ -144,20 +154,21 @@ export default function CineFlowApp() {
       {/* Top Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-black border border-cyan-500/40 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-xl bg-black border border-cyan-500/40 flex items-center justify-center shadow-md">
             <span className="text-xs text-cyan-400 font-bold">▶</span>
           </div>
           <h1 className="text-sm font-bold tracking-tight">CineFlow AI</h1>
         </div>
         <div className="flex items-center gap-2">
           <span className="px-2 py-1 rounded-lg bg-cyan-950 border border-cyan-500/40 text-[11px] text-cyan-300 font-mono">⚡ 55 Cr</span>
+          <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-bold uppercase">{activeEmail.charAt(0)}</div>
           <button onClick={handleLogout} className="text-xs text-red-400 hover:underline cursor-pointer">Logout</button>
         </div>
       </div>
 
       <div className="max-w-4xl mx-auto space-y-4">
         {/* Full Cinematic Player */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">🎬 Full-Size Cinematic Player View</label>
           <div className="w-full aspect-video rounded-xl overflow-hidden bg-black relative flex items-center justify-center shadow-inner">
             <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800" alt="" className="w-full h-full object-cover opacity-80"/>
@@ -167,14 +178,14 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 1. Master Story */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+        {/* BOX 1: Master Story */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
           <textarea rows={2} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs text-white"/>
         </div>
 
-        {/* 2. Visual Art Style (Left to Right Horizontal Scroll) */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+        {/* BOX 2: Visual Art Style */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="flex gap-2 overflow-x-auto pb-1">
             {styleCatalog.map((s) => (
@@ -187,63 +198,62 @@ export default function CineFlowApp() {
           <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white mt-1"/>
         </div>
 
-        {/* 3 & 4. Aspect Ratio & Duration */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
-            <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
-            <div className="grid grid-cols-3 gap-1">
-              {["16:9", "9:16", "21:9"].map((r) => (
-                <button key={r} onClick={() => setAspectRatio(r)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${aspectRatio === r ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{r}</button>
-              ))}
-            </div>
-          </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
-            <label className="text-xs font-semibold text-cyan-400 uppercase">4. Timeline Tier</label>
-            <div className="grid grid-cols-2 gap-1">
-              {["3 Min", "15 Min"].map((d) => (
-                <button key={d} onClick={() => setDuration(d)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${duration === d ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{d}</button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* 5. Voiceover & Languages */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
-          <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1">
-            {["Hindi (Pure Shuddh)", "English", "Spanish", "Arabic"].map((l) => (
-              <button key={l} onClick={() => setVoiceLang(l)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}</button>
+        {/* BOX 3: Aspect Ratio (All 6 Options Active) */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
+          <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
+            {["16:9", "9:16", "21:9", "4:3", "1:1", "Auto"].map((r) => (
+              <button key={r} onClick={() => setAspectRatio(r)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${aspectRatio === r ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{r}</button>
             ))}
           </div>
         </div>
 
-        {/* 6 & 7. Video Engine & Story Engine */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
-            <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Model</label>
-            <div className="grid grid-cols-2 gap-1">
-              {["Veo", "Kling"].map((m) => (
-                <button key={m} onClick={() => setVideoModel(m)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
-              ))}
-            </div>
-          </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
-            <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Model</label>
-            <div className="grid grid-cols-2 gap-1">
-              {["Gemini", "Claude"].map((s) => (
-                <button key={s} onClick={() => setStoryModel(s)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
-              ))}
-            </div>
+        {/* BOX 4: Timeline Tier (All 4 Options Active) */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
+          <label className="text-xs font-semibold text-cyan-400 uppercase">4. Timeline Tier</label>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+            {["3 Min (18 Scenes)", "15 Min (90 Scenes)", "30 Min (180 Scenes)", "60 Min (360 Scenes)"].map((d) => (
+              <button key={d} onClick={() => setDuration(d)} className={`py-1.5 px-1 rounded-lg border text-[11px] cursor-pointer ${duration === d ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{d}</button>
+            ))}
           </div>
         </div>
 
-        {/* Generate Button */}
-        <button onClick={handleGenerate} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-xs text-black cursor-pointer shadow-xl">
+        {/* BOX 5: Voiceover & Languages (All 8 Options Active) */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
+          <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+            {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Arabic"].map((l) => (
+              <button key={l} onClick={() => setVoiceLang(l)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}</button>
+            ))}
+          </div>
+        </div>
+
+        {/* BOX 6: Video Model (All 6 Options Active) */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
+          <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Engine Model</label>
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
+            {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
+              <button key={m} onClick={() => setVideoModel(m)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
+            ))}
+          </div>
+        </div>
+
+        {/* BOX 7: Story Model (All 6 Options Active) */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
+          <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Engine Model (AI Writer)</label>
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
+            {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
+              <button key={s} onClick={() => setStoryModel(s)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
+            ))}
+          </div>
+        </div>
+
+        <button onClick={handleGenerate} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm text-black cursor-pointer shadow-xl">
           🚀 GENERATE AUTONOMOUS CINEMA FILM
         </button>
       </div>
 
-      {/* Floating Right Dock: 3 Icon-Only Navigation Buttons */}
+      {/* Right Side Dock: 3 Icon-Only Navigation Buttons */}
       <div className="fixed bottom-4 right-5 z-50 flex items-center gap-2 bg-slate-900/95 border border-slate-700 p-1.5 rounded-full shadow-2xl backdrop-blur-lg">
         <Link href="/" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-cyan-400 flex items-center justify-center text-sm border border-slate-700 shadow-md">🏠</Link>
         <Link href="/character-vault" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-purple-400 flex items-center justify-center text-sm border border-slate-700 shadow-md">👤</Link>
@@ -251,4 +261,4 @@ export default function CineFlowApp() {
       </div>
     </div>
   );
-}
+                                                                              }
