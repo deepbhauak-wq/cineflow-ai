@@ -9,6 +9,7 @@ export default function CineFlowApp() {
   const [gEmail, setGEmail] = useState("");
   const [gPass, setGPass] = useState("");
   const [showGP, setShowGP] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
 
   const [fbU, setFbU] = useState("");
   const [fbP, setFbP] = useState("");
@@ -20,16 +21,17 @@ export default function CineFlowApp() {
 
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
 
+  // All 7 Settings States Fully Restored
   const [storyPrompt, setStoryPrompt] = useState("");
-  const [aspectRatio, setAspectRatio] = useState("16:9");
-  const [duration, setDuration] = useState("3 Min (18 Scenes)");
   const [visualStyle, setVisualStyle] = useState("Cinematic");
   const [customStyle, setCustomStyle] = useState("");
+  const [aspectRatio, setAspectRatio] = useState("16:9");
+  const [duration, setDuration] = useState("3 Min (18 Scenes)");
+  const [voiceLang, setVoiceLang] = useState("Hindi (Pure Shuddh)");
   const [videoModel, setVideoModel] = useState("Veo");
   const [storyModel, setStoryModel] = useState("Gemini");
-  const [voiceLang, setVoiceLang] = useState("Hindi (Pure Shuddh)");
+
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const styleCatalog = [
     { name: "Realistic", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=60" },
@@ -56,17 +58,19 @@ export default function CineFlowApp() {
   useEffect(() => {
     const saved = localStorage.getItem("cineflow_logged_in");
     const savedEmail = localStorage.getItem("cineflow_user_email");
-    if (saved === "true") {
+    if (saved === "true" && savedEmail) {
       setIsLoggedIn(true);
-      if (savedEmail) setActiveEmail(savedEmail);
+      setActiveEmail(savedEmail);
     }
   }, []);
 
   const handleAuth = (e, m) => {
     e.preventDefault();
     let email = m === "google" ? (gEmail || "gmail@user.com") : m === "facebook" ? (fbU ? `${fbU}@fb.com` : "fb@user.com") : (instaU ? `${instaU}@insta.com` : "insta@user.com");
-    localStorage.setItem("cineflow_logged_in", "true");
-    localStorage.setItem("cineflow_user_email", email);
+    if (rememberMe) {
+      localStorage.setItem("cineflow_logged_in", "true");
+      localStorage.setItem("cineflow_user_email", email);
+    }
     setActiveEmail(email);
     setIsLoggedIn(true);
   };
@@ -81,9 +85,11 @@ export default function CineFlowApp() {
     return (
       <div className="min-h-screen w-full bg-[#0a0d14] flex flex-col items-center justify-center p-4 text-white font-sans">
         <div className="w-full max-w-sm rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl flex flex-col items-center">
+          
           <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-xl shadow-cyan-500/20 mb-4 border border-cyan-500/40">
             <img src="https://i.ibb.co/3w513qJ7/32938.jpg" alt="Logo" className="w-full h-full object-cover" />
           </div>
+
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-1 text-center">CineFlow AI Pro</h1>
           <p className="text-xs text-slate-400 text-center mb-5">Autonomous Cinema Engine</p>
 
@@ -106,6 +112,10 @@ export default function CineFlowApp() {
                   <button type="button" onClick={() => setShowGP(!showGP)} className="absolute right-3 top-2 text-[10px] text-cyan-400 font-semibold cursor-pointer">{showGP ? "Hide" : "Show"}</button>
                 </div>
               </div>
+              <div className="flex items-center gap-2 pt-1">
+                <input type="checkbox" id="remG" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} className="w-4 h-4 accent-cyan-500 cursor-pointer"/>
+                <label htmlFor="remG" className="text-[11px] text-slate-300 cursor-pointer">Remember me (Auto-Login)</label>
+              </div>
               <button type="submit" className="w-full py-3 rounded-xl bg-cyan-500 font-bold text-xs text-black cursor-pointer">SIGN IN WITH GMAIL</button>
             </form>
           )}
@@ -122,6 +132,10 @@ export default function CineFlowApp() {
                   <input type={showFbP ? "text" : "password"} required value={fbP} onChange={(e) => setFbP(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"/>
                   <button type="button" onClick={() => setShowFbP(!showFbP)} className="absolute right-3 top-2 text-[10px] text-cyan-400 font-semibold cursor-pointer">{showFbP ? "Hide" : "Show"}</button>
                 </div>
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <input type="checkbox" id="remFb" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} className="w-4 h-4 accent-cyan-500 cursor-pointer"/>
+                <label htmlFor="remFb" className="text-[11px] text-slate-300 cursor-pointer">Remember me (Auto-Login)</label>
               </div>
               <button type="submit" className="w-full py-3 rounded-xl bg-[#1877F2] font-bold text-xs text-white cursor-pointer">SIGN IN WITH FACEBOOK</button>
             </form>
@@ -140,6 +154,10 @@ export default function CineFlowApp() {
                   <button type="button" onClick={() => setShowInstaP(!showInstaP)} className="absolute right-3 top-2 text-[10px] text-cyan-400 font-semibold cursor-pointer">{showInstaP ? "Hide" : "Show"}</button>
                 </div>
               </div>
+              <div className="flex items-center gap-2 pt-1">
+                <input type="checkbox" id="remInsta" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} className="w-4 h-4 accent-cyan-500 cursor-pointer"/>
+                <label htmlFor="remInsta" className="text-[11px] text-slate-300 cursor-pointer">Remember me (Auto-Login)</label>
+              </div>
               <button type="submit" className="w-full py-3 rounded-xl bg-purple-600 font-bold text-xs text-white cursor-pointer">SIGN IN WITH INSTAGRAM</button>
             </form>
           )}
@@ -151,6 +169,8 @@ export default function CineFlowApp() {
 
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28">
+      
+      {/* Top Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl overflow-hidden border border-cyan-500/40 shadow-md">
@@ -168,6 +188,8 @@ export default function CineFlowApp() {
       </div>
 
       <div className="max-w-4xl mx-auto space-y-5">
+        
+        {/* Full-Size Cinematic Player View */}
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-6 space-y-3 shadow-2xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Full-Size Cinematic Player View</label>
           <div className="w-full aspect-video rounded-2xl overflow-hidden border border-slate-700 bg-black relative flex items-center justify-center">
@@ -178,66 +200,87 @@ export default function CineFlowApp() {
           </div>
         </div>
 
+        {/* SETTING 1: Master Story & Reference Image */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
-          <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none"/>
+          <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here... AI will auto-decompose into scenes." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none"/>
           <label className="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-cyan-300 cursor-pointer inline-flex items-center gap-2">
-            <span>🖼️ Upload Photo</span>
+            <span>🖼️ Upload Reference Photo</span>
             <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files[0]; if (f) setUploadedImage(URL.createObjectURL(f)); }} className="hidden"/>
           </label>
         </div>
 
+        {/* SETTING 2: Visual Art Style */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-64 overflow-y-auto">
             {styleCatalog.map((s) => (
-              <div key={s.name} onClick={() => setVisualStyle(s.name)} className={`relative rounded-xl overflow-hidden border cursor-pointer ${visualStyle === s.name ? "border-cyan-400" : "border-slate-800"}`}>
+              <div key={s.name} onClick={() => setVisualStyle(s.name)} className={`relative rounded-xl overflow-hidden border cursor-pointer ${visualStyle === s.name ? "border-cyan-400 ring-2 ring-cyan-500/30" : "border-slate-800"}`}>
                 <img src={s.img} alt={s.name} className="w-full h-16 object-cover"/>
                 <p className="text-[10px] text-center p-1 bg-black/80 truncate">{s.name}</p>
               </div>
             ))}
           </div>
+          <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
         </div>
 
+        {/* SETTING 3 & 4: Aspect Ratio & Timeline Tier */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
             <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
             <div className="grid grid-cols-3 gap-2">
               {["16:9", "9:16", "21:9", "4:3", "1:1", "Auto"].map((r) => (
-                <button key={r} onClick={() => setAspectRatio(r)} className={`py-2 rounded-xl border text-xs ${aspectRatio === r ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{r}</button>
+                <button key={r} onClick={() => setAspectRatio(r)} className={`py-2 rounded-xl border text-xs ${aspectRatio === r ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{r}</button>
               ))}
             </div>
           </div>
+
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
             <label className="text-xs font-semibold text-cyan-400 uppercase">4. Timeline Tier</label>
             <div className="grid grid-cols-2 gap-2">
-              {["3 Min", "15 Min", "30 Min", "60 Min"].map((t) => (
-                <button key={t} onClick={() => setDuration(t)} className={`py-2 rounded-xl border text-[11px] ${duration === t ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{t}</button>
+              {["3 Min (18 Scenes)", "15 Min (90 Scenes)", "30 Min (180 Scenes)", "60 Min (360 Scenes)"].map((t) => (
+                <button key={t} onClick={() => setDuration(t)} className={`py-2 rounded-xl border text-[11px] ${duration === t ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{t}</button>
               ))}
             </div>
           </div>
         </div>
 
+        {/* SETTING 5: Voiceover & Languages */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
           <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {["Hindi (Pure Shuddh)", "English", "Spanish", "Arabic"].map((l) => (
-              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}</button>
+            {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Arabic"].map((l) => (
+              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}</button>
             ))}
           </div>
         </div>
 
-        <button onClick={() => window.location.href = "/studio/editor"} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-sm text-black cursor-pointer">
+        {/* SETTING 6 & 7: Video Engine & Story Engine Models */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+            <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Engine Model</label>
+            <div className="grid grid-cols-3 gap-2">
+              {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
+                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+            <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Engine Model</label>
+            <div className="grid grid-cols-3 gap-2">
+              {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
+                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <button onClick={() => window.location.href = "/studio/editor"} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm text-black cursor-pointer shadow-xl">
           🚀 GENERATE AUTONOMOUS CINEMA FILM
         </button>
       </div>
 
       <div className="fixed bottom-4 inset-x-0 flex justify-end z-50 px-6">
         <div className="bg-slate-900 border border-slate-700 rounded-full px-4 py-2 shadow-2xl flex items-center gap-3">
-          <span className="text-[11px] text-slate-400">Next</span>
-          <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 text-black flex items-center justify-center font-bold">→</Link>
-        </div>
-      </div>
-    </div>
-  );
-}
+  
