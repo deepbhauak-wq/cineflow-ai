@@ -17,11 +17,12 @@ export default function ProStudioEditor() {
   const [ytPrivacy, setYtPrivacy] = useState("Public");
   const [selectedThumbnail, setSelectedThumbnail] = useState(0);
 
-  // 13-Point Pro Editing Controls
+  // 13-Point Pro Editing & Audio Controls
   const [voiceVol, setVoiceVol] = useState(100);
-  const [musicVol, setMusicVol] = useState(10); // Ducked at -22dB
+  const [musicVol, setMusicVol] = useState(10);
   const [sfxVol, setSfxVol] = useState(40);
   const [colorGrade, setColorGrade] = useState("AK Ministry Cinematic");
+  const [showLogoWatermark, setShowLogoWatermark] = useState(true);
 
   const thumbnailOptions = [
     "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500",
@@ -33,16 +34,16 @@ export default function ProStudioEditor() {
     setIsProcessing(true);
     setTimeout(() => {
       setIsProcessing(false);
-      alert(`AI Editor executed: "${aiPrompt || 'Optimize Scene'}" -> Reframed with -22dB Ducking & Shuddh Hindi Narration!`);
+      alert("AI Editor executed successfully! Timeline and pacing synced.");
       setAiPrompt("");
     }, 2500);
   };
 
   const handleAutoMetadata = () => {
     setYtTitle("⚡ AUTO: एक ऐसा त्याग जिसने सबकी आँखें नम कर दीं | 4K Hindi Cinema");
-    setYtDescription("⚡ AUTO GENERATED SEO METADATA:\nकबीर की यह दास्तान आपके दिल को छू लेगी। जीवन की कठिन परिस्थितियों में सही मार्ग चुनने की एक अद्वितीय गाथा।\n\nAudio: 100% Shuddh Hindi (Deep Calm Tone)\nMaster Mixing: -22dB Background Ambient Ducking\n\nLike, Share & Subscribe for regular autonomous filmmaking releases.");
+    setYtDescription("⚡ AUTO GENERATED SEO METADATA:\nकबीर की यह दास्तान आपके दिल को छू लेगी। जीवन की कठिन परिस्थितियों में सही मार्ग चुनने की एक अद्वितीय गाथा।\n\nAudio: 100% Shuddh Hindi (Deep Calm Tone)\nMaster Mixing: -22dB Background Ambient Ducking\n\nLike, Share & Subscribe for regular releases.");
     setYtTags("#HindiCinema #TrueStory #EmotionalShorts #SpiritualJourney #ViralHindiVideo #AKMinistry");
-    alert("AI Metadata, High-CTR Title & Hashtags Generated Successfully!");
+    alert("AI Metadata, SEO Title, Hashtags & Thumbnail Selected!");
   };
 
   return (
@@ -92,7 +93,7 @@ export default function ProStudioEditor() {
                 <button onClick={() => { setExportModal(false); alert("Video Rendered & Exported in 4K!"); }} className="py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 font-bold text-xs cursor-pointer shadow">
                   💾 Export Video File
                 </button>
-                <button onClick={() => { setExportModal(false); alert("Directly Published to YouTube with Metadata & 4K Master Render!"); }} className="py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold text-xs cursor-pointer shadow-lg">
+                <button onClick={() => { setExportModal(false); alert("Directly Published to YouTube with Metadata & 4K Master Render!"); }} className="py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 text-white font-bold text-xs cursor-pointer shadow-lg">
                   🚀 Publish to YouTube
                 </button>
               </div>
@@ -129,6 +130,11 @@ export default function ProStudioEditor() {
           </div>
           <div className="w-full aspect-video rounded-2xl bg-black border border-slate-800 relative flex items-center justify-center overflow-hidden shadow-inner">
             <img src={thumbnailOptions[selectedThumbnail]} alt="" className="w-full h-full object-cover opacity-80"/>
+            {showLogoWatermark && (
+              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg border border-slate-700 text-[9px] font-bold text-cyan-300">
+                ⚡ AK MINISTRY LOGO
+              </div>
+            )}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-14 h-14 rounded-full bg-cyan-500/90 backdrop-blur-md flex items-center justify-center text-black font-bold text-xl shadow-xl">▶</div>
             </div>
@@ -139,7 +145,7 @@ export default function ProStudioEditor() {
         <div className="bg-slate-900 border border-cyan-500/40 rounded-3xl p-4 space-y-2.5 shadow-xl">
           <div className="flex items-center justify-between">
             <label className="text-xs font-bold text-cyan-400 uppercase">🧠 AI Editor Prompt (Natural Language Direction)</label>
-            <span className="text-[10px] text-green-400 font-mono">⚡ Pacing & Cuts Auto-Sync</span>
+            <span className="text-[10px] text-green-400 font-mono">⚡ Auto-Adjusts Cuts & Pacing</span>
           </div>
           <div className="flex gap-2">
             <input
@@ -194,7 +200,7 @@ export default function ProStudioEditor() {
           ))}
         </div>
 
-        {/* TAB: YOUTUBE AUTOMATION METADATA & THUMBNAIL */}
+        {/* TAB: YOUTUBE METADATA & THUMBNAIL */}
         {activeTab === "publish" && (
           <div className="bg-slate-900 border border-red-500/40 rounded-3xl p-4 space-y-4 shadow-xl text-xs">
             <div className="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -206,7 +212,6 @@ export default function ProStudioEditor() {
               </button>
             </div>
 
-            {/* AI Thumbnails */}
             <div className="space-y-1.5">
               <label className="text-[10px] font-semibold text-slate-400 uppercase">Auto-Generated High CTR Thumbnails</label>
               <div className="grid grid-cols-3 gap-2">
@@ -227,7 +232,6 @@ export default function ProStudioEditor() {
               </div>
             </div>
 
-            {/* Video Title */}
             <div className="space-y-1">
               <label className="text-[10px] font-semibold text-slate-400 uppercase">Video Title (High-CTR SEO)</label>
               <input
@@ -238,7 +242,6 @@ export default function ProStudioEditor() {
               />
             </div>
 
-            {/* Video Description */}
             <div className="space-y-1">
               <label className="text-[10px] font-semibold text-slate-400 uppercase">YouTube Description (Automatic Timestamps & Credits)</label>
               <textarea
@@ -249,7 +252,6 @@ export default function ProStudioEditor() {
               />
             </div>
 
-            {/* Viral Hashtags */}
             <div className="space-y-1">
               <label className="text-[10px] font-semibold text-slate-400 uppercase">Viral Hashtags (#) & Keyword Tags</label>
               <input
@@ -322,7 +324,7 @@ export default function ProStudioEditor() {
         {/* TAB 4: CHARACTER EDIT */}
         {activeTab === "character" && (
           <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3 shadow-xl text-xs">
-            <span className="font-bold text-purple-400 uppercase">Active Character Consistency Controls</span>
+            <span className="font-bold text-purple-400 uppercase">Active Character Continuity Controls</span>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {["Face/Identity Lock", "Outfit Change", "Expression Change", "Action Change", "Position Change", "Voice Change", "Apply to All", "Character Replace"].map(charOp => (
                 <button key={charOp} onClick={() => alert(`${charOp} applied`)} className="py-2.5 px-2 rounded-xl bg-purple-950/50 hover:bg-purple-900 border border-purple-500/40 text-purple-300 font-bold cursor-pointer">
@@ -346,5 +348,4 @@ export default function ProStudioEditor() {
                 <input type="range" min="0" max="100" value={voiceVol} onChange={(e) => setVoiceVol(e.target.value)} className="w-full accent-cyan-500"/>
               </div>
               <div className="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-1">
-                <span>Music Volume ({musicVol}%) [Ducked]</span>
-                <input type="range"
+                <
