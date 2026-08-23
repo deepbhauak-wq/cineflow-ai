@@ -122,17 +122,13 @@ export default function CineFlowApp() {
   }
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans overflow-x-hidden pb-28">
       
-      {/* Top Header: CineFlow AI + Arrow + User Logo + Credits */}
+      {/* Top Header: Clean Branding & Identity */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-        
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-base shadow-lg shadow-cyan-500/20">🎬</div>
           <h1 className="text-base sm:text-lg font-bold tracking-tight text-white">CineFlow AI</h1>
-          <Link href="/studio/editor" className="w-7 h-7 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-300 hover:bg-cyan-500/30 transition text-xs font-bold" title="Next Step">
-            &rarr;
-          </Link>
         </div>
 
         <div className="flex items-center gap-3">
@@ -140,20 +136,17 @@ export default function CineFlowApp() {
             <span>⚡</span> 55 Cr
           </div>
 
-          <Link href="/character-vault" className="px-3 py-1.5 rounded-xl bg-purple-600/30 border border-purple-500/40 text-xs text-purple-200">Vault 🔒</Link>
-          <Link href="/studio/editor" className="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-slate-300">Editor 🎞️</Link>
-
-          <div className="flex items-center gap-2 pl-1 border-l border-slate-800">
+          <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold text-white uppercase shadow-md" title={email}>
               {email ? email.charAt(0) : "U"}
             </div>
-            <button onClick={handleLogout} className="text-[11px] text-red-400 hover:underline">Logout</button>
+            <button onClick={handleLogout} className="text-xs text-red-400 hover:underline">Logout</button>
           </div>
         </div>
-
       </div>
 
-      <div className="max-w-4xl mx-auto space-y-5 pb-20">
+      {/* Main Stacked Content Form */}
+      <div className="max-w-4xl mx-auto space-y-5">
         
         {/* 1. Master Story Input & Reference Gallery Upload */}
         <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-4">
@@ -177,7 +170,7 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 2. Visual Style Selection with Live Image Cards */}
+        {/* 2. Visual Style Selection */}
         <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">2. Visual Art Style ({visualStyle})</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-72 overflow-y-auto pr-1">
@@ -220,7 +213,7 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 5. Voiceover & Language Support */}
+        {/* 5. Voiceover & Languages */}
         <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -255,6 +248,7 @@ export default function CineFlowApp() {
           {loading ? "Generating Film Tracks..." : "🚀 GENERATE AUTONOMOUS CINEMA FILM"}
         </button>
       </div>
-    </div>
-  );
-}
+
+      {/* Floating Bottom Reels-Style Left/Right Navigation Bar */}
+      <div className="fixed bottom-4 inset-x-0 flex justify-center z-50 px-4 pointer-events-none">
+        <div className="bg-[#0f1422]/90 back
