@@ -10,19 +10,19 @@ export default function ProStudioEditor() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [exportModal, setExportModal] = useState(false);
 
-  // YouTube Automation Engine States
-  const [ytTitle, setYtTitle] = useState("जीवन बदलने वाली कहानी | Heart Touching Hindi Cinema (4K)");
-  const [ytDescription, setYtDescription] = useState("यह कहानी आपको जीवन के गहरे अर्थ और सच्चाई का अहसास कराएगी। देखिए कैसे कबीर ने अपने परिवार के लिए त्याग किया।\n\n📌 Subscribe for more inspirational cinema.");
-  const [ytTags, setYtTags] = useState("#HindiStory #InspirationalCinema #LifeLessons #AKMinistry #MoralStories #EmotionalFilm");
+  // YouTube Automation & Metadata
+  const [ytTitle, setYtTitle] = useState("जीवन बदलने वाली कहानी | 4K Hindi Cinema");
+  const [ytDescription, setYtDescription] = useState("कबीर के त्याग की दिल छू लेने वाली गाथा।\n\n📌 Subscribe for inspirational cinema.");
+  const [ytTags, setYtTags] = useState("#HindiCinema #LifeLessons #AKMinistry #EmotionalStories #ViralHindi");
   const [ytPrivacy, setYtPrivacy] = useState("Public");
   const [selectedThumbnail, setSelectedThumbnail] = useState(0);
 
-  // 13-Point Pro Editing & Audio Controls
+  // Audio Mix & Grading
   const [voiceVol, setVoiceVol] = useState(100);
   const [musicVol, setMusicVol] = useState(10);
   const [sfxVol, setSfxVol] = useState(40);
   const [colorGrade, setColorGrade] = useState("AK Ministry Cinematic");
-  const [showLogoWatermark, setShowLogoWatermark] = useState(true);
+  const [showWatermark, setShowWatermark] = useState(true);
 
   const thumbnailOptions = [
     "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500",
@@ -34,16 +34,16 @@ export default function ProStudioEditor() {
     setIsProcessing(true);
     setTimeout(() => {
       setIsProcessing(false);
-      alert("AI Editor executed successfully! Timeline and pacing synced.");
+      alert("AI Editor: Timeline, voice pacing & -22dB audio ducking auto-synced!");
       setAiPrompt("");
-    }, 2500);
+    }, 2000);
   };
 
-  const handleAutoMetadata = () => {
-    setYtTitle("⚡ AUTO: एक ऐसा त्याग जिसने सबकी आँखें नम कर दीं | 4K Hindi Cinema");
-    setYtDescription("⚡ AUTO GENERATED SEO METADATA:\nकबीर की यह दास्तान आपके दिल को छू लेगी। जीवन की कठिन परिस्थितियों में सही मार्ग चुनने की एक अद्वितीय गाथा।\n\nAudio: 100% Shuddh Hindi (Deep Calm Tone)\nMaster Mixing: -22dB Background Ambient Ducking\n\nLike, Share & Subscribe for regular releases.");
-    setYtTags("#HindiCinema #TrueStory #EmotionalShorts #SpiritualJourney #ViralHindiVideo #AKMinistry");
-    alert("AI Metadata, SEO Title, Hashtags & Thumbnail Selected!");
+  const handleAutoPackaging = () => {
+    setYtTitle("⚡ AUTO: एक ऐसा त्याग जिसने इतिहास बदल दिया | 4K Hindi Cinema");
+    setYtDescription("⚡ AUTO METADATA:\nकठिन परिस्थितियों में अडिग रहने की गाथा।\n\nAudio: 100% Shuddh Hindi\nMixing: -22dB Ducking\nSubscribe for more.");
+    setYtTags("#HindiCinema #TrueStory #InspirationalShorts #AKMinistry #TrendingHindi");
+    alert("AI Packaging Complete: Title, Description, Hashtags & Thumbnail Locked!");
   };
 
   return (
@@ -52,300 +52,220 @@ export default function ProStudioEditor() {
       {isProcessing && (
         <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4 space-y-3">
           <div className="w-12 h-12 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"></div>
-          <p className="text-xs text-cyan-400 font-bold">Processing AI Filmmaking Pipeline & Syncing Audio...</p>
+          <p className="text-xs text-cyan-400 font-bold">🧠 Executing AI Pipeline & Audio Ducking...</p>
         </div>
       )}
 
-      {/* Export & YouTube Publish Modal */}
+      {/* Export / Publish Modal */}
       {exportModal && (
-        <div className="fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4 overflow-y-auto">
-          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-2xl my-auto">
+        <div className="fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3 shadow-2xl">
             <div className="flex justify-between items-center border-b border-slate-800 pb-2">
-              <h3 className="text-xs font-bold text-red-400 uppercase flex items-center gap-1.5">
-                <span>🔴</span> YouTube Direct Publisher & 4K Exporter
-              </h3>
-              <button onClick={() => setExportModal(false)} className="text-xs text-slate-400 cursor-pointer">✕</button>
+              <span className="text-xs font-bold text-red-400 uppercase">🔴 YouTube 4K Exporter & Publisher</span>
+              <button onClick={() => setExportModal(false)} className="text-xs text-slate-400">✕</button>
             </div>
-            
-            <div className="space-y-3 text-xs">
-              <div className="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-1.5">
-                <span className="text-[10px] text-slate-400 block font-semibold">1. Output Quality Preset</span>
-                <div className="grid grid-cols-3 gap-1.5">
-                  <button className="py-1.5 rounded-lg bg-cyan-500 text-black font-bold">4K Cinema (60 FPS)</button>
-                  <button className="py-1.5 rounded-lg bg-slate-800 text-slate-300">1080p FHD</button>
-                  <button className="py-1.5 rounded-lg bg-slate-800 text-slate-300">Audio Only (WAV)</button>
-                </div>
+            <div className="space-y-2 text-xs">
+              <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex justify-between items-center">
+                <span>Output Format</span>
+                <span className="text-cyan-400 font-bold">4K Cinema (60 FPS)</span>
               </div>
-
-              <div className="bg-slate-950 p-3 rounded-2xl border border-red-500/30 space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] text-red-400 font-bold uppercase">2. Auto YouTube Publisher</span>
-                  <span className="text-[10px] text-green-400 font-mono">Channel Connected</span>
-                </div>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {["Public", "Unlisted", "Private"].map((p) => (
-                    <button key={p} onClick={() => setYtPrivacy(p)} className={`py-1.5 rounded-lg border text-xs font-semibold ${ytPrivacy === p ? "bg-red-500/20 border-red-500 text-red-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{p}</button>
-                  ))}
-                </div>
+              <div className="bg-slate-950 p-2.5 rounded-xl border border-red-500/30 flex justify-between items-center">
+                <span>Privacy Mode</span>
+                <span className="text-red-400 font-bold">{ytPrivacy}</span>
               </div>
-
-              <div className="grid grid-cols-2 gap-2 pt-1">
-                <button onClick={() => { setExportModal(false); alert("Video Rendered & Exported in 4K!"); }} className="py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 font-bold text-xs cursor-pointer shadow">
-                  💾 Export Video File
-                </button>
-                <button onClick={() => { setExportModal(false); alert("Directly Published to YouTube with Metadata & 4K Master Render!"); }} className="py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 text-white font-bold text-xs cursor-pointer shadow-lg">
-                  🚀 Publish to YouTube
-                </button>
+              <div className="grid grid-cols-2 gap-2 pt-2">
+                <button onClick={() => { setExportModal(false); alert("Exported 4K Master File!"); }} className="py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-cyan-300 font-bold text-xs">💾 Export 4K</button>
+                <button onClick={() => { setExportModal(false); alert("Published directly to YouTube!"); }} className="py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs">🚀 Direct Publish</button>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Top Header */}
+      {/* Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
         <div>
-          <h1 className="text-sm font-bold tracking-tight text-white flex items-center gap-2">
-            <span>🎬</span> AK Ministry Pro AI Filmmaking Studio
-          </h1>
-          <p className="text-[10px] text-slate-400">Multi-Track Timeline • Auto YouTube Metadata • Continuity Engine</p>
+          <h1 className="text-sm font-bold text-white flex items-center gap-1.5"><span>🎬</span> AI Filmmaking Studio</h1>
+          <p className="text-[10px] text-slate-400">Multi-Track Timeline • Auto YouTube Packaging</p>
         </div>
         <div className="flex items-center gap-2">
-          <Link href="/" className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 font-semibold border border-slate-700">
-            ← Hub
-          </Link>
-          <button onClick={() => setExportModal(true)} className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-black font-bold text-xs shadow-lg cursor-pointer">
-            Export / Publish 🚀
-          </button>
+          <Link href="/" className="px-3 py-1.5 rounded-xl bg-slate-800 text-xs text-cyan-300 border border-slate-700">← Hub</Link>
+          <button onClick={() => setExportModal(true)} className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold text-xs shadow-lg">Publish 🚀</button>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto space-y-4">
+      <div className="max-w-4xl mx-auto space-y-3">
         
-        {/* Live Cinema Preview Player */}
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-2 shadow-2xl">
+        {/* Cinema Player */}
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-3 space-y-2 shadow-2xl">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-semibold text-cyan-400 uppercase tracking-wider">Live Master Preview (Scene {activeScene})</span>
-            <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-[9px] text-cyan-300 font-mono font-bold">⚡ CINEFLOW AI</span>
+            <span className="text-[10px] font-bold text-cyan-400 uppercase">Live Master Preview (Scene {activeScene})</span>
+            <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-[9px] text-cyan-300 font-mono font-bold">⚡ CINEFLOW ENGINE</span>
           </div>
-          <div className="w-full aspect-video rounded-2xl bg-black border border-slate-800 relative flex items-center justify-center overflow-hidden shadow-inner">
+          <div className="w-full aspect-video rounded-2xl bg-black border border-slate-800 relative flex items-center justify-center overflow-hidden">
             <img src={thumbnailOptions[selectedThumbnail]} alt="" className="w-full h-full object-cover opacity-80"/>
-            {showLogoWatermark && (
-              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg border border-slate-700 text-[9px] font-bold text-cyan-300">
-                ⚡ AK MINISTRY LOGO
-              </div>
+            {showWatermark && (
+              <span className="absolute top-3 right-3 bg-black/70 px-2 py-0.5 rounded border border-slate-700 text-[9px] font-bold text-cyan-300">⚡ AK MINISTRY LOGO</span>
             )}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-14 h-14 rounded-full bg-cyan-500/90 backdrop-blur-md flex items-center justify-center text-black font-bold text-xl shadow-xl">▶</div>
-            </div>
+            <div className="w-12 h-12 rounded-full bg-cyan-500 flex items-center justify-center text-black font-bold text-lg shadow-xl cursor-pointer">▶</div>
           </div>
         </div>
 
-        {/* AI Editor Prompt Box */}
-        <div className="bg-slate-900 border border-cyan-500/40 rounded-3xl p-4 space-y-2.5 shadow-xl">
-          <div className="flex items-center justify-between">
-            <label className="text-xs font-bold text-cyan-400 uppercase">🧠 AI Editor Prompt (Natural Language Direction)</label>
-            <span className="text-[10px] text-green-400 font-mono">⚡ Auto-Adjusts Cuts & Pacing</span>
-          </div>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={aiPrompt}
-              onChange={(e) => setAiPrompt(e.target.value)}
-              placeholder="e.g. 'इस scene को ज्यादा emotional बनाओ' or 'Add slow cinematic zoom'"
-              className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
-            />
-            <button onClick={handleAiEdit} className="px-4 py-2 rounded-xl bg-cyan-500 text-black font-bold text-xs whitespace-nowrap cursor-pointer shadow">
-              Run AI Edit ✨
-            </button>
-          </div>
+        {/* AI Prompt Box */}
+        <div className="bg-slate-900 border border-cyan-500/40 rounded-2xl p-3 flex gap-2">
+          <input
+            type="text"
+            value={aiPrompt}
+            onChange={(e) => setAiPrompt(e.target.value)}
+            placeholder="🧠 AI Director: 'Make scene emotional' or 'Add slow camera tracking'..."
+            className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white"
+          />
+          <button onClick={handleAiEdit} className="px-3.5 py-1.5 rounded-xl bg-cyan-500 text-black font-bold text-xs whitespace-nowrap">Run ✨</button>
         </div>
 
-        {/* AK Ministry Preset Toggle */}
-        <div className="bg-slate-900 border border-purple-500/40 rounded-3xl p-4 flex items-center justify-between shadow-xl">
+        {/* AK Ministry Preset */}
+        <div className="bg-slate-900 border border-purple-500/40 rounded-2xl p-3 flex items-center justify-between">
           <div>
-            <h3 className="text-xs font-bold text-purple-300 uppercase">⭐ AK Ministry Cinematic Preset</h3>
-            <p className="text-[10px] text-slate-400">Character Lock • 1.5s Pause • Deep Narration • BGM -22dB • "आमीन"</p>
+            <p className="text-xs font-bold text-purple-300">⭐ AK Ministry Cinematic Preset</p>
+            <p className="text-[10px] text-slate-400">Locked Character • 1.5s Pause • Deep Narration • BGM -22dB</p>
           </div>
-          <button
-            onClick={() => setAkMinistryActive(!akMinistryActive)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold cursor-pointer transition ${
-              akMinistryActive ? "bg-purple-600 text-white shadow-lg" : "bg-slate-800 text-slate-400 border border-slate-700"
-            }`}
-          >
-            {akMinistryActive ? "ENABLED 🟢" : "DISABLED ⚪"}
+          <button onClick={() => setAkMinistryActive(!akMinistryActive)} className={`px-3 py-1 rounded-xl text-xs font-bold ${akMinistryActive ? "bg-purple-600 text-white" : "bg-slate-800 text-slate-400"}`}>
+            {akMinistryActive ? "ACTIVE 🟢" : "OFF"}
           </button>
         </div>
 
-        {/* Pro Navigation Tabs */}
+        {/* Navigation Tabs */}
         <div className="flex gap-1.5 overflow-x-auto bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
           {[
-            { id: "timeline", label: "🎞️ Multi-Track Timeline" },
-            { id: "publish", label: "🔴 YouTube Metadata & Thumbnail" },
-            { id: "basic", label: "✂️ Basic Edit" },
-            { id: "ai", label: "🎥 AI Scene Gen" },
-            { id: "character", label: "👤 Character Edit" },
-            { id: "audio", label: "🔊 Audio Mix (-22dB)" },
-            { id: "color", label: "🎨 Color Grade" }
+            { id: "timeline", label: "🎞️ Timeline" },
+            { id: "publish", label: "🔴 YouTube Packaging" },
+            { id: "basic", label: "✂️ Edit" },
+            { id: "ai", label: "🎥 AI Gen" },
+            { id: "character", label: "👤 Character" },
+            { id: "audio", label: "🔊 Audio Mix" },
+            { id: "color", label: "🎨 Grade" }
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap cursor-pointer transition ${
-                activeTab === tab.id ? "bg-cyan-500 text-black shadow-md" : "text-slate-400 hover:text-white"
-              }`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap ${activeTab === tab.id ? "bg-cyan-500 text-black" : "text-slate-400"}`}
             >
               {tab.label}
             </button>
           ))}
         </div>
 
-        {/* TAB: YOUTUBE METADATA & THUMBNAIL */}
+        {/* TAB: YOUTUBE PACKAGING */}
         {activeTab === "publish" && (
-          <div className="bg-slate-900 border border-red-500/40 rounded-3xl p-4 space-y-4 shadow-xl text-xs">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-2">
-              <span className="font-bold text-red-400 uppercase flex items-center gap-1.5">
-                <span>🔴</span> YouTube SEO & Autonomous Packaging Engine
-              </span>
-              <button onClick={handleAutoMetadata} className="px-3 py-1 rounded-xl bg-red-500 text-white font-bold text-xs cursor-pointer shadow">
-                ⚡ AUTO GENERATE ALL
-              </button>
+          <div className="bg-slate-900 border border-red-500/40 rounded-2xl p-3 space-y-2.5 text-xs">
+            <div className="flex justify-between items-center border-b border-slate-800 pb-1.5">
+              <span className="font-bold text-red-400 uppercase">YouTube Metadata & SEO Engine</span>
+              <button onClick={handleAutoPackaging} className="px-2.5 py-1 rounded-lg bg-red-600 text-white font-bold text-[10px]">⚡ AUTO GENERATE</button>
             </div>
-
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-semibold text-slate-400 uppercase">Auto-Generated High CTR Thumbnails</label>
+            <div>
+              <span className="text-[10px] text-slate-400 block mb-1">Thumbnails</span>
               <div className="grid grid-cols-3 gap-2">
                 {thumbnailOptions.map((img, idx) => (
-                  <div
+                  <img
                     key={idx}
+                    src={img}
+                    alt=""
                     onClick={() => setSelectedThumbnail(idx)}
-                    className={`relative aspect-video rounded-xl overflow-hidden border cursor-pointer ${
-                      selectedThumbnail === idx ? "border-red-500 ring-2 ring-red-500/40" : "border-slate-800 opacity-60"
-                    }`}
-                  >
-                    <img src={img} alt="" className="w-full h-full object-cover"/>
-                    {selectedThumbnail === idx && (
-                      <span className="absolute bottom-1 right-1 bg-red-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">SELECTED</span>
-                    )}
-                  </div>
+                    className={`h-16 w-full object-cover rounded-xl border cursor-pointer ${selectedThumbnail === idx ? "border-red-500 ring-2 ring-red-500/40" : "border-slate-800 opacity-60"}`}
+                  />
                 ))}
               </div>
             </div>
-
-            <div className="space-y-1">
-              <label className="text-[10px] font-semibold text-slate-400 uppercase">Video Title (High-CTR SEO)</label>
-              <input
-                type="text"
-                value={ytTitle}
-                onChange={(e) => setYtTitle(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs text-white"
-              />
+            <div>
+              <span className="text-[10px] text-slate-400 block mb-1">Title</span>
+              <input type="text" value={ytTitle} onChange={(e) => setYtTitle(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2 text-xs text-white"/>
             </div>
-
-            <div className="space-y-1">
-              <label className="text-[10px] font-semibold text-slate-400 uppercase">YouTube Description (Automatic Timestamps & Credits)</label>
-              <textarea
-                rows={3}
-                value={ytDescription}
-                onChange={(e) => setYtDescription(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs text-white"
-              />
+            <div>
+              <span className="text-[10px] text-slate-400 block mb-1">Description</span>
+              <textarea rows={2} value={ytDescription} onChange={(e) => setYtDescription(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2 text-xs text-white"/>
             </div>
-
-            <div className="space-y-1">
-              <label className="text-[10px] font-semibold text-slate-400 uppercase">Viral Hashtags (#) & Keyword Tags</label>
-              <input
-                type="text"
-                value={ytTags}
-                onChange={(e) => setYtTags(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs text-cyan-300 font-mono"
-              />
+            <div>
+              <span className="text-[10px] text-slate-400 block mb-1">Hashtags</span>
+              <input type="text" value={ytTags} onChange={(e) => setYtTags(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2 text-xs text-cyan-300 font-mono"/>
             </div>
           </div>
         )}
 
-        {/* TAB 1: MULTI-TRACK TIMELINE */}
+        {/* TAB: TIMELINE */}
         {activeTab === "timeline" && (
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3 shadow-xl">
-            <span className="text-xs font-semibold text-cyan-400 uppercase">Multi-Track Timeline</span>
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-3 bg-slate-950 p-2.5 rounded-2xl border border-slate-800">
-                <span className="w-16 text-slate-400 font-semibold">🎥 Video</span>
-                <div className="flex gap-2 overflow-x-auto">
-                  {[1, 2, 3, 4].map(s => (
-                    <button key={s} onClick={() => setActiveScene(s)} className={`px-3 py-1.5 rounded-xl border text-xs cursor-pointer ${activeScene === s ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-900 border-slate-800 text-slate-400"}`}>
-                      Scene {s}
-                    </button>
-                  ))}
-                </div>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 text-xs">
+            <span className="font-bold text-cyan-400 uppercase text-[10px]">Multi-Track Timeline</span>
+            <div className="flex items-center gap-2 bg-slate-950 p-2 rounded-xl border border-slate-800">
+              <span className="text-slate-400 w-14">Video</span>
+              <div className="flex gap-1.5 overflow-x-auto">
+                {[1, 2, 3, 4].map(s => (
+                  <button key={s} onClick={() => setActiveScene(s)} className={`px-2.5 py-1 rounded-lg border ${activeScene === s ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-900 border-slate-800 text-slate-400"}`}>Scene {s}</button>
+                ))}
               </div>
-              <div className="flex items-center justify-between bg-slate-950 p-2.5 rounded-2xl border border-slate-800">
-                <span className="w-16 text-slate-400 font-semibold">🎙️ Voice</span>
-                <span className="text-cyan-300">100% Shuddh Hindi (Deep Calm)</span>
-                <span className="text-[10px] text-purple-400">1.5s Pause Locked</span>
-              </div>
-              <div className="flex items-center justify-between bg-slate-950 p-2.5 rounded-2xl border border-slate-800">
-                <span className="w-16 text-slate-400 font-semibold">🎵 Music</span>
-                <span className="text-yellow-300">Ambient Cinematic Pad</span>
-                <span className="text-[10px] text-green-400">Ducked @ -22dB</span>
-              </div>
+            </div>
+            <div className="flex justify-between bg-slate-950 p-2 rounded-xl border border-slate-800 text-slate-300">
+              <span>Voice: Shuddh Hindi (1.5s Pause)</span>
+              <span className="text-green-400">BGM: -22dB</span>
             </div>
           </div>
         )}
 
-        {/* TAB 2: BASIC EDIT */}
+        {/* TAB: BASIC EDIT */}
         {activeTab === "basic" && (
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3 shadow-xl text-xs">
-            <span className="font-bold text-cyan-400 uppercase">Scene {activeScene} Basic Controls</span>
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-              {["Cut", "Trim", "Split", "Crop", "Speed (1x)", "Reverse"].map(op => (
-                <button key={op} onClick={() => alert(`${op} applied`)} className="py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 font-semibold text-slate-300 cursor-pointer">
-                  {op}
-                </button>
-              ))}
-            </div>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 grid grid-cols-3 sm:grid-cols-6 gap-2 text-xs">
+            {["Cut", "Trim", "Split", "Crop", "Speed 1x", "Reverse"].map(op => (
+              <button key={op} onClick={() => alert(`${op} applied`)} className="py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 font-semibold">{op}</button>
+            ))}
           </div>
         )}
 
-        {/* TAB 3: AI SCENE GEN */}
+        {/* TAB: AI GEN */}
         {activeTab === "ai" && (
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3 shadow-xl text-xs">
-            <span className="font-bold text-cyan-400 uppercase">Generative AI Video Operations</span>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {["Regenerate Scene", "Extend Scene", "Change Lighting", "Change Weather", "Change Background", "Image → Video", "Video → Video", "Change Camera"].map(aiOp => (
-                <button key={aiOp} onClick={() => alert(`${aiOp} triggered`)} className="py-2.5 px-2 rounded-xl bg-cyan-950/50 hover:bg-cyan-900 border border-cyan-500/40 text-cyan-300 font-bold cursor-pointer">
-                  ✨ {aiOp}
-                </button>
-              ))}
-            </div>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            {["Regen Scene", "Extend Scene", "Lighting", "Weather", "Background", "Image → Video"].map(op => (
+              <button key={op} onClick={() => alert(`${op} triggered`)} className="py-2 rounded-xl bg-cyan-950/50 border border-cyan-500/30 text-cyan-300 font-bold">✨ {op}</button>
+            ))}
           </div>
         )}
 
-        {/* TAB 4: CHARACTER EDIT */}
+        {/* TAB: CHARACTER */}
         {activeTab === "character" && (
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3 shadow-xl text-xs">
-            <span className="font-bold text-purple-400 uppercase">Active Character Continuity Controls</span>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {["Face/Identity Lock", "Outfit Change", "Expression Change", "Action Change", "Position Change", "Voice Change", "Apply to All", "Character Replace"].map(charOp => (
-                <button key={charOp} onClick={() => alert(`${charOp} applied`)} className="py-2.5 px-2 rounded-xl bg-purple-950/50 hover:bg-purple-900 border border-purple-500/40 text-purple-300 font-bold cursor-pointer">
-                  👤 {charOp}
-                </button>
-              ))}
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            {["Face Lock", "Outfit Change", "Expression", "Action", "Voice Lock", "Apply All"].map(op => (
+              <button key={op} onClick={() => alert(`${op} locked`)} className="py-2 rounded-xl bg-purple-950/50 border border-purple-500/30 text-purple-300 font-bold">👤 {op}</button>
+            ))}
+          </div>
+        )}
+
+        {/* TAB: AUDIO MIX */}
+        {activeTab === "audio" && (
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 text-xs">
+            <div className="flex justify-between items-center"><span className="text-cyan-400 font-bold uppercase">Audio Ducking</span><span className="text-green-400 font-mono">BGM -22dB</span></div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div className="bg-slate-950 p-2 rounded-xl border border-slate-800"><span>Voice ({voiceVol}%)</span><input type="range" min="0" max="100" value={voiceVol} onChange={(e) => setVoiceVol(e.target.value)} className="w-full accent-cyan-500"/></div>
+              <div className="bg-slate-950 p-2 rounded-xl border border-slate-800"><span>Music ({musicVol}%)</span><input type="range" min="0" max="50" value={musicVol} onChange={(e) => setMusicVol(e.target.value)} className="w-full accent-yellow-500"/></div>
+              <div className="bg-slate-950 p-2 rounded-xl border border-slate-800"><span>SFX ({sfxVol}%)</span><input type="range" min="0" max="100" value={sfxVol} onChange={(e) => setSfxVol(e.target.value)} className="w-full accent-purple-500"/></div>
             </div>
           </div>
         )}
 
-        {/* TAB 5: AUDIO MIX */}
-        {activeTab === "audio" && (
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3 shadow-xl text-xs">
-            <div className="flex justify-between items-center">
-              <span className="font-bold text-cyan-400 uppercase">Audio Levels & Auto Ducking</span>
-              <span className="text-green-400 font-mono">BGM Locked @ -22dB</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-1">
-                <span>Voice Volume ({voiceVol}%)</span>
-                <input type="range" min="0" max="100" value={voiceVol} onChange={(e) => setVoiceVol(e.target.value)} className="w-full accent-cyan-500"/>
-              </div>
-              <div className="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-1">
-                <
+        {/* TAB: COLOR GRADE */}
+        {activeTab === "color" && (
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 grid grid-cols-3 gap-2 text-xs">
+            {["AK Ministry Cinematic", "Warm Biblical", "Dark Drama", "Vibrant 3D", "Documentary", "AI Auto"].map(g => (
+              <button key={g} onClick={() => setColorGrade(g)} className={`py-2 rounded-xl border font-bold ${colorGrade === g ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{g}</button>
+            ))}
+          </div>
+        )}
+
+      </div>
+
+      {/* Dock */}
+      <div className="fixed bottom-4 right-5 z-50 flex items-center gap-2 bg-slate-900/95 border border-slate-700 p-1.5 rounded-full shadow-2xl backdrop-blur-lg">
+        <Link href="/" className="w-9 h-9 rounded-full bg-slate-800 text-cyan-400 flex items-center justify-center text-sm border border-slate-700">🏠</Link>
+        <Link href="/character-vault" className="w-9 h-9 rounded-full bg-slate-800 text-purple-400 flex items-center justify-center text-sm border border-slate-700">👤</Link>
+        <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 text-black flex items-center justify-center text-sm font-bold shadow-lg">🎬</Link>
+      </div>
+    </div>
+  );
+}
