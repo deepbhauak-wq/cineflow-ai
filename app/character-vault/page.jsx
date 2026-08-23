@@ -18,24 +18,22 @@ export default function CineFlowApp() {
   const [isPlayingCompleted, setIsPlayingCompleted] = useState(false);
   const [isPlayingDashboard, setIsPlayingDashboard] = useState(false);
 
-  // 7 Master Studio Parameters with Locked Audio Specs
+  // Master Studio Settings
   const [storyPrompt, setStoryPrompt] = useState("");
   const [visualStyle, setVisualStyle] = useState("Disney-like");
   const [customStyle, setCustomStyle] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
-  const [voiceLang, setVoiceLang] = useState("100% Shuddh Hindi (Deep Calm)");
   const [videoModel, setVideoModel] = useState("Veo");
   const [storyModel, setStoryModel] = useState("Gemini");
   const [galleryImage, setGalleryImage] = useState(null);
 
-  // Locked Autonomous Audio Standards
+  // Automatic Locked Audio Specifications
   const audioSpecs = {
-    language: "100% Shuddh Hindi",
-    tone: "Deep, Calm, Authoritative",
-    pacing: "Strictly 10–13 Words/Scene",
-    pause: "1.5s–2.0s Natural Pause",
-    bgmDucking: "-22 dB (< 10%)"
+    engine: "100% Shuddh Hindi (Deep, Calm, Authoritative Profile)",
+    pacing: "Strictly 10–13 Words/Scene cadence target",
+    pause: "1.5s–2.0s post-dialogue locked interval",
+    ducking: "BGM permanently clamped at -22 dB (< 10% volume)"
   };
 
   const styleCatalog = [
@@ -89,7 +87,7 @@ export default function CineFlowApp() {
     return (
       <div className="min-h-screen bg-[#0a0d14] flex items-center justify-center p-4 text-white font-sans">
         <div className="w-full max-w-sm bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col items-center">
-          <div className="w-16 h-16 rounded-2xl bg-black border border-cyan-500/40 p-2 flex items-center justify-center mb-3 shadow-lg shadow-cyan-500/20">
+          <div className="w-16 h-16 rounded-2xl bg-black border border-cyan-500/40 p-2 flex items-center justify-center mb-3">
             <span className="text-xl text-cyan-400 font-bold">▶</span>
           </div>
           <h1 className="text-xl font-bold mb-1">CineFlow AI Pro</h1>
@@ -133,7 +131,7 @@ export default function CineFlowApp() {
       {loading && (
         <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4 space-y-3">
           <div className="w-12 h-12 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"></div>
-          <p className="text-xs text-cyan-400 font-bold">Rendering Film with Shuddh Hindi Voiceover...</p>
+          <p className="text-xs text-cyan-400 font-bold">Rendering Autonomous Cinema Film...</p>
         </div>
       )}
 
@@ -141,7 +139,7 @@ export default function CineFlowApp() {
         <div className="fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
           <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3 shadow-2xl">
             <div className="flex justify-between items-center">
-              <span className="text-xs font-bold text-green-400">🎉 Master Production Rendered (Audio Ducked @ -22 dB)</span>
+              <span className="text-xs font-bold text-green-400">🎉 Film Rendered Successfully</span>
               <button onClick={() => setShowPlayModal(false)} className="text-xs text-slate-400 cursor-pointer">Close ✕</button>
             </div>
             <div className="w-full aspect-video rounded-2xl overflow-hidden bg-black relative flex items-center justify-center">
@@ -151,33 +149,32 @@ export default function CineFlowApp() {
               </button>
             </div>
             <div className="flex justify-between items-center pt-2">
-              <p className="text-[11px] text-slate-400">100% Shuddh Hindi • 10-13 Words/Scene Locked</p>
+              <p className="text-xs text-slate-400">100% Shuddh Hindi • BGM -22dB Locked</p>
               <Link href="/studio/editor" className="px-3 py-1.5 rounded-xl bg-cyan-500 text-black font-bold text-xs">Open in Editor ✏️</Link>
             </div>
           </div>
         </div>
       )}
 
-      {/* Top Header */}
+      {/* Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-black border border-cyan-500/40 flex items-center justify-center shadow-md">
+          <div className="w-8 h-8 rounded-xl bg-black border border-cyan-500/40 flex items-center justify-center">
             <span className="text-xs text-cyan-400 font-bold">▶</span>
           </div>
           <h1 className="text-sm font-bold tracking-tight">CineFlow AI</h1>
         </div>
         <div className="flex items-center gap-2">
           <span className="px-2 py-1 rounded-lg bg-cyan-950 border border-cyan-500/40 text-[11px] text-cyan-300 font-mono">⚡ 55 Cr</span>
-          <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-bold uppercase">{activeEmail.charAt(0)}</div>
           <button onClick={handleLogout} className="text-xs text-red-400 hover:underline cursor-pointer">Logout</button>
         </div>
       </div>
 
       <div className="max-w-4xl mx-auto space-y-4">
-        {/* Full Cinematic Player */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-xl">
+        {/* Cinematic Player */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
           <label className="text-xs font-semibold text-cyan-400 uppercase">🎬 Full-Size Cinematic Player View</label>
-          <div className="w-full aspect-video rounded-xl overflow-hidden bg-black relative flex items-center justify-center shadow-inner">
+          <div className="w-full aspect-video rounded-xl overflow-hidden bg-black relative flex items-center justify-center">
             <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800" alt="" className="w-full h-full object-cover opacity-80"/>
             <button onClick={() => setIsPlayingDashboard(!isPlayingDashboard)} className="absolute inset-0 flex items-center justify-center cursor-pointer">
               <div className="w-12 h-12 rounded-full bg-cyan-500 flex items-center justify-center text-black text-xl font-bold">{isPlayingDashboard ? "❚❚" : "▶"}</div>
@@ -185,111 +182,98 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* BOX 1: Master Story & Gallery Upload */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-xl">
+        {/* 1. Master Story */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
           <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
-          <textarea rows={2} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here... Auto-cadence matches 10-13 words per scene." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs text-white"/>
+          <textarea rows={2} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs text-white"/>
           <div className="flex items-center gap-3">
             <label className="px-3 py-1.5 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-[11px] text-cyan-300 cursor-pointer font-semibold inline-flex items-center gap-1.5">
               <span>🖼️ Open Gallery / Upload Photo</span>
               <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files[0]; if (f) setGalleryImage(URL.createObjectURL(f)); }} className="hidden"/>
             </label>
-            {galleryImage && <span className="text-[10px] text-green-400 font-mono">✅ Photo Loaded</span>}
+            {galleryImage && <span className="text-[10px] text-green-400">✅ Photo Loaded</span>}
           </div>
         </div>
 
-        {/* BOX 2: Visual Art Style */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-xl">
+        {/* 2. Visual Art Style */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="flex gap-2 overflow-x-auto pb-1">
             {styleCatalog.map((s) => (
-              <div key={s.name} onClick={() => setVisualStyle(s.name)} className={`flex-shrink-0 w-28 rounded-xl overflow-hidden border cursor-pointer ${visualStyle === s.name ? "border-cyan-400 ring-2 ring-cyan-500/30 scale-105" : "border-slate-800 opacity-70"}`}>
+              <div key={s.name} onClick={() => setVisualStyle(s.name)} className={`flex-shrink-0 w-28 rounded-xl overflow-hidden border cursor-pointer ${visualStyle === s.name ? "border-cyan-400 ring-2 ring-cyan-500/30" : "border-slate-800"}`}>
                 <img src={s.img} alt={s.name} className="w-full h-14 object-cover"/>
-                <p className="text-[9px] text-center p-1 bg-black truncate font-medium">{s.name}</p>
+                <p className="text-[9px] text-center p-1 bg-black truncate">{s.name}</p>
               </div>
             ))}
           </div>
           <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white mt-1"/>
         </div>
 
-        {/* BOX 3: Aspect Ratio */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
-          <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
-            {["16:9", "9:16", "21:9", "4:3", "1:1", "Auto"].map((r) => (
-              <button key={r} onClick={() => setAspectRatio(r)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${aspectRatio === r ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{r}</button>
-            ))}
-          </div>
-        </div>
-
-        {/* BOX 4: Timeline Tier */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
-          <label className="text-xs font-semibold text-cyan-400 uppercase">4. Timeline Tier</label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
-            {["3 Min (18 Scenes)", "15 Min (90 Scenes)", "30 Min (180 Scenes)", "60 Min (360 Scenes)"].map((d) => (
-              <button key={d} onClick={() => setDuration(d)} className={`py-1.5 px-1 rounded-lg border text-[11px] cursor-pointer ${duration === d ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{d}</button>
-            ))}
-          </div>
-        </div>
-
-        {/* BOX 5: Master Audio & Voiceover Lock */}
-        <div className="bg-slate-900 border border-cyan-500/40 rounded-2xl p-4 space-y-3 shadow-xl relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <label className="text-xs font-bold text-cyan-400 uppercase">5. Master Audio & Voiceover Engine (100% Locked)</label>
-            <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-[10px] font-mono font-bold text-cyan-300">🔒 AUTO-LOCKED</span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-            <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-              <span className="text-[10px] text-slate-400 block">Voice Profile</span>
-              <p className="font-bold text-white mt-0.5">100% Shuddh Hindi</p>
-              <span className="text-[9px] text-cyan-300">Deep, Calm, Authoritative</span>
+        {/* 3 & 4. Aspect Ratio & Duration */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
+            <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-1">
+              {["16:9", "9:16", "21:9", "4:3", "1:1", "Auto"].map((r) => (
+                <button key={r} onClick={() => setAspectRatio(r)} className={`py-1.5 rounded-lg border text-xs ${aspectRatio === r ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{r}</button>
+              ))}
             </div>
-            <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-              <span className="text-[10px] text-slate-400 block">Cadence Engine</span>
-              <p className="font-bold text-white mt-0.5">10–13 Words / Scene</p>
-              <span className="text-[9px] text-purple-300">Strict Pacing Lock</span>
-            </div>
-            <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-              <span className="text-[10px] text-slate-400 block">Natural Pause</span>
-              <p className="font-bold text-white mt-0.5">1.5s – 2.0s Interval</p>
-              <span className="text-[9px] text-yellow-300">Post-Dialogue Rest</span>
-            </div>
-            <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-              <span className="text-[10px] text-slate-400 block">BGM Acoustic Ducking</span>
-              <p className="font-bold text-white mt-0.5">-22 dB Clamped</p>
-              <span className="text-[9px] text-green-400">&lt; 10% Background Vol</span>
+          </div>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
+            <label className="text-xs font-semibold text-cyan-400 uppercase">4. Timeline Tier</label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1">
+              {["3 Min (18 Scenes)", "15 Min (90 Scenes)", "30 Min (180 Scenes)", "60 Min (360 Scenes)"].map((d) => (
+                <button key={d} onClick={() => setDuration(d)} className={`py-1.5 px-1 rounded-lg border text-[11px] ${duration === d ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{d}</button>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* BOX 6 & 7: Models */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
-            <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Engine Model</label>
-            <div className="grid grid-cols-3 gap-1.5">
+        {/* 5. Audio & Voiceover Engine (100% Locked) */}
+        <div className="bg-slate-900 border border-cyan-500/40 rounded-2xl p-4 space-y-2">
+          <div className="flex justify-between items-center">
+            <label className="text-xs font-bold text-cyan-400 uppercase">5. Audio & Voiceover Engine (Auto-Locked)</label>
+            <span className="text-[10px] text-green-400 font-mono">🔒 ACTIVE</span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+            <div className="bg-slate-950 p-2 rounded-lg border border-slate-800"><span className="text-[10px] text-slate-400 block">Voice Engine</span><span className="font-bold text-cyan-300">{audioSpecs.engine}</span></div>
+            <div className="bg-slate-950 p-2 rounded-lg border border-slate-800"><span className="text-[10px] text-slate-400 block">Cadence Target</span><span className="font-bold text-purple-300">{audioSpecs.pacing}</span></div>
+            <div className="bg-slate-950 p-2 rounded-lg border border-slate-800"><span className="text-[10px] text-slate-400 block">Natural Pause</span><span className="font-bold text-yellow-300">{audioSpecs.pause}</span></div>
+            <div className="bg-slate-950 p-2 rounded-lg border border-slate-800"><span className="text-[10px] text-slate-400 block">Acoustic Ducking</span><span className="font-bold text-green-400">{audioSpecs.ducking}</span></div>
+          </div>
+        </div>
+
+        {/* 6 & 7. Video Engine & Story Models */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
+            <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Model</label>
+            <div className="grid grid-cols-3 gap-1">
               {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
-                <button key={m} onClick={() => setVideoModel(m)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
+                <button key={m} onClick={() => setVideoModel(m)} className={`py-1.5 rounded-lg border text-xs ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
               ))}
             </div>
           </div>
-
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
-            <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Engine Model (AI Writer)</label>
-            <div className="grid grid-cols-3 gap-1.5">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
+            <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Model</label>
+            <div className="grid grid-cols-3 gap-1">
               {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
-                <button key={s} onClick={() => setStoryModel(s)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
+                <button key={s} onClick={() => setStoryModel(s)} className={`py-1.5 rounded-lg border text-xs ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
               ))}
             </div>
           </div>
         </div>
 
-        <button onClick={handleGenerate} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm text-black cursor-pointer shadow-xl">
+        <button onClick={handleGenerate} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-xs text-black cursor-pointer shadow-xl">
           🚀 GENERATE AUTONOMOUS CINEMA FILM
         </button>
       </div>
 
-      {/* Floating Right Dock */}
+      {/* Right Side Dock */}
       <div className="fixed bottom-4 right-5 z-50 flex items-center gap-2 bg-slate-900/95 border border-slate-700 p-1.5 rounded-full shadow-2xl backdrop-blur-lg">
-        <Link href="/" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-cyan-400 flex items-center justify-center text-sm border border-slate-700 shadow-md" title="Home">🏠</Link>
-        <Link href="/character-vault" classNa
+        <Link href="/" className="w-9 h-9 rounded-full bg-slate-800 text-cyan-400 flex items-center justify-center text-sm border border-slate-700 shadow-md">🏠</Link>
+        <Link href="/character-vault" className="w-9 h-9 rounded-full bg-slate-800 text-purple-400 flex items-center justify-center text-sm border border-slate-700 shadow-md">👤</Link>
+        <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 text-black flex items-center justify-center text-sm font-bold shadow-lg shadow-cyan-500/30">🎬</Link>
+      </div>
+    </div>
+  );
+}
