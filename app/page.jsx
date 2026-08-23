@@ -19,13 +19,14 @@ export default function CineFlowApp() {
   const [showInstaP, setShowInstaP] = useState(false);
 
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
-  
-  // States for generation and final completed video player
-  const [loading, setLoading] = useState(false);
-  const [isCompletedModalOpen, setIsCompletedModalOpen] = useState(false);
-  const [isPlayingFinal, setIsPlayingFinal] = useState(false);
 
-  // All 7 Studio Settings States
+  // Video Generation & Player States
+  const [loading, setLoading] = useState(false);
+  const [showPlayModal, setShowPlayModal] = useState(false);
+  const [isPlayingCompleted, setIsPlayingCompleted] = useState(false);
+  const [isPlayingDashboard, setIsPlayingDashboard] = useState(false);
+
+  // All 7 Settings States
   const [storyPrompt, setStoryPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
@@ -51,7 +52,7 @@ export default function CineFlowApp() {
     { name: "Dark Cinematic", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=200&auto=format&fit=crop&q=60" }
   ];
 
-  // Permanent Login Session Check on Load
+  // Permanent Persistent Login Session Load
   useEffect(() => {
     const saved = localStorage.getItem("cineflow_logged_in");
     const savedEmail = localStorage.getItem("cineflow_user_email");
@@ -68,7 +69,7 @@ export default function CineFlowApp() {
     if (m === "facebook") email = fbU ? fbU + "@fb.com" : "fb@user.com";
     if (m === "instagram") email = instaU ? instaU + "@insta.com" : "insta@user.com";
 
-    // Permanently save to localStorage
+    // Save permanently to browser storage
     localStorage.setItem("cineflow_logged_in", "true");
     localStorage.setItem("cineflow_user_email", email);
     
@@ -86,7 +87,7 @@ export default function CineFlowApp() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setIsCompletedModalOpen(true); // Open final completed video modal
+      setShowPlayModal(true); // Open Completed Video Player
     }, 3500);
   };
 
@@ -169,42 +170,42 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28 relative">
       
-      {/* LOADING SPINNER OVERLAY */}
+      {/* LOADING OVERLAY */}
       {loading && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-6 space-y-4">
           <div className="w-16 h-16 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"></div>
           <div className="text-center space-y-1">
             <p className="text-sm font-bold text-cyan-400">Rendering Autonomous AI Film...</p>
-            <p className="text-xs text-slate-400">Compiling Veo video tracks & Hindi voiceover...</p>
+            <p className="text-xs text-slate-400">Compiling Veo video tracks & {voiceLang} voiceover...</p>
           </div>
         </div>
       )}
 
       {/* FINAL COMPLETED VIDEO PLAYER MODAL */}
-      {isCompletedModalOpen && (
+      {showPlayModal && (
         <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex flex-col items-center justify-center p-4">
-          <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
+          <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex justify-between items-center">
-              <span className="px-3 py-1 rounded-full bg-green-500/20 border border-green-500/40 text-[10px] text-green-300 font-bold uppercase">🎉 Generation Completed Successfully</span>
-              <button onClick={() => setIsCompletedModalOpen(false)} className="text-slate-400 hover:text-white text-sm font-bold">✕ Close</button>
+              <span className="px-3 py-1 rounded-full bg-green-500/20 border border-green-500/40 text-[10px] text-green-300 font-bold uppercase">🎉 Film Rendered Successfully</span>
+              <button onClick={() => setShowPlayModal(false)} className="text-slate-400 hover:text-white text-sm font-bold">✕ Close</button>
             </div>
 
             <div className="w-full aspect-video rounded-2xl overflow-hidden border border-slate-700 bg-black relative flex items-center justify-center shadow-2xl">
-              <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1000&auto=format&fit=crop&q=80" alt="Completed Film" className={`w-full h-full object-cover transition duration-500 ${isPlayingFinal ? "scale-105" : "opacity-90"}`}/>
-              <button onClick={() => setIsPlayingFinal(!isPlayingFinal)} className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/30 hover:bg-black/10 transition">
+              <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1000&auto=format&fit=crop&q=80" alt="Completed Film" className={`w-full h-full object-cover transition duration-500 ${isPlayingCompleted ? "scale-105" : "opacity-90"}`}/>
+              <button onClick={() => setIsPlayingCompleted(!isPlayingCompleted)} className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/30 hover:bg-black/10 transition">
                 <div className="w-16 h-16 rounded-full bg-cyan-500 flex items-center justify-center text-black text-2xl shadow-xl hover:scale-110 transition">
-                  {isPlayingFinal ? "❚❚" : "▶"}
+                  {isPlayingCompleted ? "❚❚" : "▶"}
                 </div>
               </button>
             </div>
 
             <div className="flex items-center justify-between pt-2">
               <div>
-                <h3 className="text-sm font-bold text-white">CineFlow Master Production (4K HDR)</h3>
-                <p className="text-[10px] text-slate-400">Generated using {videoModel} & {storyModel}</p>
+                <h3 className="text-xs font-bold text-white">CineFlow Master Production (4K HDR)</h3>
+                <p className="text-[10px] text-slate-400">Ready to play and export</p>
               </div>
-              <Link href="/studio/editor" className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs shadow-lg">
-                Open in Timeline Editor ✏️
+              <Link href="/studio/editor" className="px-4 py-2 rounded-xl bg-cyan-500 text-black font-bold text-xs">
+                Open in Editor ✏️
               </Link>
             </div>
           </div>
@@ -232,6 +233,23 @@ export default function CineFlowApp() {
 
       <div className="max-w-4xl mx-auto space-y-5">
         
+        {/* Full-Size Cinematic Dashboard Player */}
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-6 space-y-3 shadow-2xl">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Full-Size Cinematic Player View</label>
+            <span className="text-[10px] text-cyan-300 font-mono">{isPlayingDashboard ? "🟢 Playing..." : "⏸️ Paused"}</span>
+          </div>
+
+          <div className="w-full aspect-video rounded-2xl overflow-hidden border border-slate-700 bg-black relative flex items-center justify-center shadow-inner">
+            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1000&auto=format&fit=crop&q=80" alt="" className={`w-full h-full object-cover transition duration-500 ${isPlayingDashboard ? "scale-105 opacity-100" : "opacity-80"}`}/>
+            <button onClick={() => setIsPlayingDashboard(!isPlayingDashboard)} className="absolute inset-0 flex items-center justify-center cursor-pointer">
+              <div className="w-16 h-16 rounded-full bg-cyan-500/90 backdrop-blur-md flex items-center justify-center text-black text-2xl shadow-xl hover:scale-110 transition">
+                {isPlayingDashboard ? "❚❚" : "▶"}
+              </div>
+            </button>
+          </div>
+        </div>
+
         {/* 1. Master Story & Reference Image */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
@@ -282,24 +300,4 @@ export default function CineFlowApp() {
           <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Arabic"].map((l) => (
-              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}</button>
-            ))}
-          </div>
-        </div>
-
-        {/* 6 & 7. Video Engine & Story Engine Models */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
-            <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Engine Model</label>
-            <div className="grid grid-cols-3 gap-2">
-              {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
-                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs font-semibold transition ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
-            <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Engine Model</label>
-            <div className="grid grid-cols-3 gap-2">
-              {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
-                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "b
+              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}
