@@ -60,7 +60,7 @@ export default function ProStudioEditor() {
       
       {proc && (
         <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4 gap-3">
-          <div className="w-10 h-10 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"/>
+          <div className="w-10 h-10 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"></div>
           <p className="text-xs text-cyan-400 font-bold tracking-wider">Processing 4K Pipeline & -22dB Ducking...</p>
         </div>
       )}
@@ -71,12 +71,12 @@ export default function ProStudioEditor() {
           <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-2xl">
             <div className="flex justify-between items-center border-b border-slate-800 pb-2">
               <span className="text-xs font-bold text-red-400 uppercase">🔴 Direct Exporter & Publisher</span>
-              <button onClick={() => setModal(false)} className="text-xs text-slate-400">✕</button>
+              <button onClick={() => setModal(false)} className="text-xs text-slate-400 cursor-pointer">✕</button>
             </div>
             <div className="space-y-2 text-xs">
-              <button onClick={() => runExport("4K Cinema")} className="w-full py-2.5 rounded-xl bg-cyan-500 text-black font-bold">⬇ Direct Download 4K (60 FPS)</button>
-              <button onClick={() => runExport("1080p FHD")} className="w-full py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-cyan-300 font-bold">⬇ Direct Download 1080p</button>
-              <button onClick={() => { setModal(false); alert("Directly published to YouTube!"); }} className="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold">🚀 Direct Publish to YouTube</button>
+              <button onClick={() => runExport("4K Cinema")} className="w-full py-2.5 rounded-xl bg-cyan-500 text-black font-bold cursor-pointer">⬇ Direct Download 4K (60 FPS)</button>
+              <button onClick={() => runExport("1080p FHD")} className="w-full py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-cyan-300 font-bold cursor-pointer">⬇ Direct Download 1080p</button>
+              <button onClick={() => { setModal(false); alert("Directly published to YouTube!"); }} className="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold cursor-pointer">🚀 Direct Publish to YouTube</button>
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@ export default function ProStudioEditor() {
         </div>
         <div className="flex items-center gap-2">
           <Link href="/" className="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] text-cyan-300 border border-slate-700">← Hub</Link>
-          <button onClick={() => setModal(true)} className="px-3 py-1 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold text-[11px] shadow-lg">Publish / Export 🚀</button>
+          <button onClick={() => setModal(true)} className="px-3 py-1 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold text-[11px] shadow-lg cursor-pointer">Publish / Export 🚀</button>
         </div>
       </div>
 
@@ -122,7 +122,7 @@ export default function ProStudioEditor() {
             placeholder="🧠 AI Director: 'Make scene emotional' or 'Add slow zoom'..."
             className="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-2.5 py-1 text-xs text-white placeholder-slate-500 focus:outline-none"
           />
-          <button onClick={() => { setProc(true); setTimeout(() => { setProc(false); alert("AI Director adjustments applied!"); setPrompt(""); }, 1500); }} className="px-3 py-1 rounded-lg bg-cyan-500 text-black font-bold text-xs whitespace-nowrap">Run ✨</button>
+          <button onClick={() => { setProc(true); setTimeout(() => { setProc(false); alert("AI Director adjustments applied!"); setPrompt(""); }, 1500); }} className="px-3 py-1 rounded-lg bg-cyan-500 text-black font-bold text-xs whitespace-nowrap cursor-pointer">Run ✨</button>
         </div>
 
         {/* AK Ministry Preset Bar */}
@@ -131,7 +131,7 @@ export default function ProStudioEditor() {
             <p className="text-[11px] font-bold text-purple-300">⭐ AK Ministry Cinematic Preset</p>
             <p className="text-[9px] text-slate-400">Locked Character • 1.5s Pause • Deep Narration • BGM -22dB • "आमीन"</p>
           </div>
-          <button onClick={() => setAkPreset(!akPreset)} className={`px-2.5 py-1 rounded-lg text-[10px] font-bold ${akPreset ? "bg-purple-600 text-white" : "bg-slate-800 text-slate-400"}`}>
+          <button onClick={() => setAkPreset(!akPreset)} className={`px-2.5 py-1 rounded-lg text-[10px] font-bold cursor-pointer ${akPreset ? "bg-purple-600 text-white" : "bg-slate-800 text-slate-400"}`}>
             {akPreset ? "ACTIVE 🟢" : "OFF"}
           </button>
         </div>
@@ -149,7 +149,7 @@ export default function ProStudioEditor() {
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold whitespace-nowrap transition ${tab === t.id ? "bg-cyan-500 text-black" : "text-slate-400 hover:text-white"}`}
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold whitespace-nowrap transition cursor-pointer ${tab === t.id ? "bg-cyan-500 text-black" : "text-slate-400 hover:text-white"}`}
             >
               {t.label}
             </button>
@@ -161,7 +161,7 @@ export default function ProStudioEditor() {
           <div className="bg-slate-900 border border-amber-500/20 rounded-xl p-3 space-y-2.5 text-xs">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1.5">
               <span className="font-bold text-amber-400 text-[10px] uppercase">AK Ministry Watermark Configuration</span>
-              <button onClick={() => setWmOn(!wmOn)} className={`px-2 py-0.5 rounded text-[9px] font-bold ${wmOn ? "bg-green-500/20 text-green-300 border border-green-500" : "bg-slate-800 text-slate-400"}`}>{wmOn ? "WATERMARK ON" : "OFF"}</button>
+              <button onClick={() => setWmOn(!wmOn)} className={`px-2 py-0.5 rounded text-[9px] font-bold cursor-pointer ${wmOn ? "bg-green-500/20 text-green-300 border border-green-500" : "bg-slate-800 text-slate-400"}`}>{wmOn ? "WATERMARK ON" : "OFF"}</button>
             </div>
             <div>
               <span className="text-[9px] text-slate-400 block mb-1">Corner Placement:</span>
@@ -172,7 +172,7 @@ export default function ProStudioEditor() {
                   { id: "bottom-left", l: "Bottom-Left ↙" },
                   { id: "bottom-right", l: "Bottom-Right ↘" }
                 ].map((p) => (
-                  <button key={p.id} onClick={() => setPos(p.id)} className={`py-1.5 rounded-lg border text-[10px] font-bold ${pos === p.id ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{p.l}</button>
+                  <button key={p.id} onClick={() => setPos(p.id)} className={`py-1.5 rounded-lg border text-[10px] font-bold cursor-pointer ${pos === p.id ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{p.l}</button>
                 ))}
               </div>
             </div>
@@ -184,7 +184,7 @@ export default function ProStudioEditor() {
                   { id: "neon-cyan", l: "⚡ Neon Cyan" },
                   { id: "classic-white", l: "⚪ Classic White" }
                 ].map((s) => (
-                  <button key={s.id} onClick={() => setStyle(s.id)} className={`py-1.5 rounded-lg border text-[10px] font-bold ${style === s.id ? "bg-amber-500/20 border-amber-500 text-amber-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s.l}</button>
+                  <button key={s.id} onClick={() => setStyle(s.id)} className={`py-1.5 rounded-lg border text-[10px] font-bold cursor-pointer ${style === s.id ? "bg-amber-500/20 border-amber-500 text-amber-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s.l}</button>
                 ))}
               </div>
             </div>
@@ -227,26 +227,26 @@ export default function ProStudioEditor() {
           <div className="bg-slate-900 border border-red-500/30 rounded-xl p-3 space-y-2 text-xs">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1.5">
               <span className="font-bold text-red-400 text-[10px] uppercase">YouTube Packaging & Copy Utility</span>
-              <button onClick={autoFill} className="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[9px]">⚡ AUTO GENERATE</button>
+              <button onClick={autoFill} className="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[9px] cursor-pointer">⚡ AUTO GENERATE</button>
             </div>
             <div>
               <div className="flex justify-between items-center mb-0.5">
                 <span className="text-[9px] text-slate-400 uppercase">Title</span>
-                <button onClick={() => copyText(title, "Title")} className="text-[9px] text-cyan-400 hover:underline">📋 Copy</button>
+                <button onClick={() => copyText(title, "Title")} className="text-[9px] text-cyan-400 hover:underline cursor-pointer">📋 Copy</button>
               </div>
               <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-lg p-1.5 text-xs text-white"/>
             </div>
             <div>
               <div className="flex justify-between items-center mb-0.5">
                 <span className="text-[9px] text-slate-400 uppercase">Description</span>
-                <button onClick={() => copyText(desc, "Description")} className="text-[9px] text-cyan-400 hover:underline">📋 Copy</button>
+                <button onClick={() => copyText(desc, "Description")} className="text-[9px] text-cyan-400 hover:underline cursor-pointer">📋 Copy</button>
               </div>
               <textarea rows={2} value={desc} onChange={(e) => setDesc(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-lg p-1.5 text-xs text-white"/>
             </div>
             <div>
               <div className="flex justify-between items-center mb-0.5">
                 <span className="text-[9px] text-slate-400 uppercase">Hashtags (#)</span>
-                <button onClick={() => copyText(tags, "Hashtags")} className="text-[9px] text-cyan-400 hover:underline">📋 Copy</button>
+                <button onClick={() => copyText(tags, "Hashtags")} className="text-[9px] text-cyan-400 hover:underline cursor-pointer">📋 Copy</button>
               </div>
               <input type="text" value={tags} onChange={(e) => setTags(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-lg p-1.5 text-xs text-cyan-300 font-mono"/>
             </div>
@@ -264,7 +264,7 @@ export default function ProStudioEditor() {
                     <img src={img} alt="" className="w-full h-full object-cover"/>
                     {thumb === idx && <span className="absolute bottom-0.5 right-0.5 bg-yellow-500 text-black text-[8px] font-bold px-1 rounded">ACTIVE</span>}
                   </div>
-                  <button onClick={() => alert(`Thumbnail ${idx + 1} Downloaded!`)} className="w-full py-0.5 rounded bg-slate-800 text-[9px] text-slate-300 font-semibold">⬇ Download</button>
+                  <button onClick={() => alert(`Thumbnail ${idx + 1} Downloaded!`)} className="w-full py-0.5 rounded bg-slate-800 text-[9px] text-slate-300 font-semibold cursor-pointer">⬇ Download</button>
                 </div>
               ))}
             </div>
@@ -279,7 +279,7 @@ export default function ProStudioEditor() {
               <span className="text-slate-400 w-12 text-[10px]">Video</span>
               <div className="flex gap-1.5 overflow-x-auto">
                 {[1, 2, 3, 4].map((s) => (
-                  <button key={s} onClick={() => setScene(s)} className={`px-2.5 py-1 rounded-lg border text-xs ${scene === s ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-900 border-slate-800 text-slate-400"}`}>Scene {s}</button>
+                  <button key={s} onClick={() => setScene(s)} className={`px-2.5 py-1 rounded-lg border text-xs cursor-pointer ${scene === s ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-900 border-slate-800 text-slate-400"}`}>Scene {s}</button>
                 ))}
               </div>
             </div>
@@ -298,22 +298,14 @@ export default function ProStudioEditor() {
               <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800 space-y-1">
                 <span className="font-bold text-cyan-300 block text-[11px]">4K Cinema Master</span>
                 <p className="text-[9px] text-slate-400">3840x2160 Ultra HD • 60 FPS</p>
-                <button onClick={() => runExport("4K UHD")} className="w-full py-1.5 rounded-lg bg-cyan-500 text-black font-bold text-[10px]">⬇ 4K Download</button>
+                <button onClick={() => runExport("4K UHD")} className="w-full py-1.5 rounded-lg bg-cyan-500 text-black font-bold text-[10px] cursor-pointer">⬇ 4K Download</button>
               </div>
               <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800 space-y-1">
                 <span className="font-bold text-slate-200 block text-[11px]">1080p FHD</span>
                 <p className="text-[9px] text-slate-400">1920x1080 • Fast Rendering</p>
-                <button onClick={() => runExport("1080p FHD")} className="w-full py-1.5 rounded-lg bg-slate-800 text-cyan-300 border border-slate-700 font-bold text-[10px]">⬇ 1080p Download</button>
+                <button onClick={() => runExport("1080p FHD")} className="w-full py-1.5 rounded-lg bg-slate-800 text-cyan-300 border border-slate-700 font-bold text-[10px] cursor-pointer">⬇ 1080p Download</button>
               </div>
               <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800 space-y-1">
                 <span className="font-bold text-purple-300 block text-[11px]">Audio Only Master</span>
                 <p className="text-[9px] text-slate-400">Pure Voice + -22dB Music (WAV)</p>
-                <button onClick={() => alert("Audio WAV downloaded!")} className="w-full py-1.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500 font-bold text-[10px]">⬇ Audio (WAV)</button>
-              </div>
-            </div>
-          </div>
-        )}
-
-      </div>
-
-      {/* Floating B
+                <button 
