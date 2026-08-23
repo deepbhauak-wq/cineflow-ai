@@ -20,24 +20,23 @@ export default function CineFlowApp() {
 
   // Complete 7 Studio Parameters
   const [storyPrompt, setStoryPrompt] = useState("");
-  const [visualStyle, setVisualStyle] = useState("Cinematic");
+  const [visualStyle, setVisualStyle] = useState("Pixar-like");
   const [customStyle, setCustomStyle] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
   const [voiceLang, setVoiceLang] = useState("Hindi (Pure Shuddh)");
   const [videoModel, setVideoModel] = useState("Veo");
   const [storyModel, setStoryModel] = useState("Gemini");
+  const [galleryImage, setGalleryImage] = useState(null);
 
+  // Pixar-like included in Style Catalog
   const styleCatalog = [
+    { name: "Pixar-like", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&auto=format&fit=crop&q=80" },
     { name: "Realistic", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200" },
     { name: "Cinematic", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=200" },
     { name: "Epic", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200" },
-    { name: "Bible Art", img: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200" },
-    { name: "Historical", img: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=200" },
-    { name: "Documentary", img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=200" },
     { name: "3D Cartoon", img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=200" },
-    { name: "Disney-like", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=200" },
-    { name: "Pixar-like", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200" },
+    { name: "Disney-like", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200" },
     { name: "Anime", img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=200" },
     { name: "Fantasy", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200" },
     { name: "Dark Cinema", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=200" }
@@ -178,27 +177,35 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* BOX 1: Master Story */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-xl">
+        {/* BOX 1: Master Story & Gallery Upload */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
           <textarea rows={2} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs text-white"/>
+          
+          <div className="flex items-center gap-3">
+            <label className="px-3 py-1.5 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-[11px] text-cyan-300 cursor-pointer font-semibold inline-flex items-center gap-1.5 hover:bg-cyan-500/30 transition">
+              <span>🖼️ Open Gallery / Upload Photo</span>
+              <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files[0]; if (f) setGalleryImage(URL.createObjectURL(f)); }} className="hidden"/>
+            </label>
+            {galleryImage && <span className="text-[10px] text-green-400 font-mono">✅ Photo Loaded from Gallery</span>}
+          </div>
         </div>
 
-        {/* BOX 2: Visual Art Style */}
+        {/* BOX 2: Visual Art Style (Pixar-like featured first) */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="flex gap-2 overflow-x-auto pb-1">
             {styleCatalog.map((s) => (
-              <div key={s.name} onClick={() => setVisualStyle(s.name)} className={`flex-shrink-0 w-28 rounded-xl overflow-hidden border cursor-pointer ${visualStyle === s.name ? "border-cyan-400 ring-2 ring-cyan-500/30" : "border-slate-800"}`}>
+              <div key={s.name} onClick={() => setVisualStyle(s.name)} className={`flex-shrink-0 w-28 rounded-xl overflow-hidden border cursor-pointer ${visualStyle === s.name ? "border-cyan-400 ring-2 ring-cyan-500/30 scale-105" : "border-slate-800 opacity-70"}`}>
                 <img src={s.img} alt={s.name} className="w-full h-14 object-cover"/>
-                <p className="text-[9px] text-center p-1 bg-black truncate">{s.name}</p>
+                <p className="text-[9px] text-center p-1 bg-black truncate font-medium">{s.name}</p>
               </div>
             ))}
           </div>
           <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white mt-1"/>
         </div>
 
-        {/* BOX 3: Aspect Ratio (All 6 Options Active) */}
+        {/* BOX 3: Aspect Ratio */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
@@ -208,7 +215,7 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* BOX 4: Timeline Tier (All 4 Options Active) */}
+        {/* BOX 4: Timeline Tier */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">4. Timeline Tier</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
@@ -218,7 +225,7 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* BOX 5: Voiceover & Languages (All 8 Options Active) */}
+        {/* BOX 5: Voiceover & Languages */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
@@ -228,7 +235,7 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* BOX 6: Video Model (All 6 Options Active) */}
+        {/* BOX 6: Video Engine Model */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Engine Model</label>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
@@ -238,7 +245,7 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* BOX 7: Story Model (All 6 Options Active) */}
+        {/* BOX 7: Story Engine Model */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Engine Model (AI Writer)</label>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
@@ -255,10 +262,11 @@ export default function CineFlowApp() {
 
       {/* Right Side Dock: 3 Icon-Only Navigation Buttons */}
       <div className="fixed bottom-4 right-5 z-50 flex items-center gap-2 bg-slate-900/95 border border-slate-700 p-1.5 rounded-full shadow-2xl backdrop-blur-lg">
-        <Link href="/" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-cyan-400 flex items-center justify-center text-sm border border-slate-700 shadow-md">🏠</Link>
-        <Link href="/character-vault" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-purple-400 flex items-center justify-center text-sm border border-slate-700 shadow-md">👤</Link>
-        <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black flex items-center justify-center text-sm font-bold shadow-lg shadow-cyan-500/30">🎬</Link>
+        <Link href="/" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-cyan-400 flex items-center justify-center text-sm border border-slate-700 shadow-md" title="Home">🏠</Link>
+        <Link href="/character-vault" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-purple-400 flex items-center justify-center text-sm border border-slate-700 shadow-md" title="Vault">👤</Link>
+        <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black flex items-center justify-center text-sm font-bold shadow-lg shadow-cyan-500/30" title="Editor">🎬</Link>
       </div>
     </div>
   );
-                                                                              }
+            }
+                                                                
