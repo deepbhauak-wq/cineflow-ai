@@ -6,7 +6,6 @@ export default function ProStudioEditor() {
   const [tab, setTab] = useState("timeline");
   const [scene, setScene] = useState(1);
   const [prompt, setPrompt] = useState("");
-  const [preset, setPreset] = useState(true);
   const [proc, setProc] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -22,7 +21,15 @@ export default function ProStudioEditor() {
   const [mVol, setMVol] = useState(10);
   const [sVol, setSVol] = useState(40);
 
-  const previewImg = "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600";
+  // Scene Video Data
+  const scenes = [
+    { id: 1, title: "Scene 1", duration: "0:00 - 0:10", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600", text: "कबीर अपने परिवार के लिए कुछ बहुत अच्छा करना चाहता था।" },
+    { id: 2, title: "Scene 2", duration: "0:10 - 0:20", img: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600", text: "लेकिन हर कदम पर मन में असफलता का भय भी लगा रहता था।" },
+    { id: 3, title: "Scene 3", duration: "0:20 - 0:30", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600", text: "एक दिन एक बड़ा अवसर मिला, पर वह निर्णय लेने से डर रहा था।" },
+    { id: 4, title: "Scene 4", duration: "0:30 - 0:40", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600", text: "उसने विश्वास के साथ कदम आगे बढ़ाया और सब कुछ बदल गया।" }
+  ];
+
+  const activeSceneData = scenes.find((s) => s.id === scene) || scenes[0];
 
   const runExport = (q) => {
     setProc(true);
@@ -73,7 +80,7 @@ export default function ProStudioEditor() {
       <div className="max-w-2xl mx-auto flex items-center justify-between border-b border-slate-800/80 pb-2 mb-2.5">
         <div>
           <h1 className="text-xs font-bold text-white tracking-tight flex items-center gap-1"><span>🎬</span> PRO CINEMA STUDIO</h1>
-          <p className="text-[8px] text-slate-400">Direct Download • Gallery Auto Integration • Audio Ducking</p>
+          <p className="text-[8px] text-slate-400">Direct Download • Visual Multi-Track Timeline • Audio Ducking</p>
         </div>
         <div className="flex items-center gap-1.5">
           <Link href="/" className="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-cyan-300 border border-slate-700">← Hub</Link>
@@ -90,7 +97,7 @@ export default function ProStudioEditor() {
             <span className="text-[8px] text-green-400 font-mono">🔒 Master Locked</span>
           </div>
           <div className="w-full aspect-video rounded-lg bg-black border border-slate-800 relative flex items-center justify-center overflow-hidden">
-            <img src={previewImg} alt="" className="w-full h-full object-cover opacity-80"/>
+            <img src={activeSceneData.img} alt="" className="w-full h-full object-cover opacity-80"/>
             {wmOn && (
               <div className={`absolute ${pos === "top-left" ? "top-2 left-2" : pos === "top-right" ? "top-2 right-2" : pos === "bottom-left" ? "bottom-2 left-2" : "bottom-2 right-2"} px-2 py-0.5 rounded border text-[8px] font-bold backdrop-blur-md flex items-center gap-1 ${style === "gold" ? "bg-amber-950/90 border-amber-500 text-amber-300" : style === "neon-cyan" ? "bg-cyan-950/90 border-cyan-500 text-cyan-300" : "bg-black/90 border-slate-600 text-white"}`}>
                 {galleryLogo ? <img src={galleryLogo} alt="" className="w-3 h-3 rounded-full object-cover"/> : <span>👑</span>}
@@ -107,21 +114,10 @@ export default function ProStudioEditor() {
           <button onClick={() => { setProc(true); setTimeout(() => { setProc(false); alert("AI adjustments applied!"); setPrompt(""); }, 1200); }} className="px-2.5 py-1 rounded bg-cyan-500 text-black font-bold text-[10px] whitespace-nowrap cursor-pointer">Run ✨</button>
         </div>
 
-        {/* Master Preset */}
-        <div className="bg-slate-900 border border-purple-500/30 rounded-lg p-2 flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold text-purple-300">⭐ Master Cinema Preset</p>
-            <p className="text-[8px] text-slate-400">Locked Character • 1.5s Pause • Deep Narration • BGM -22dB</p>
-          </div>
-          <button onClick={() => setPreset(!preset)} className={`px-2 py-0.5 rounded text-[9px] font-bold cursor-pointer ${preset ? "bg-purple-600 text-white" : "bg-slate-800 text-slate-400"}`}>
-            {preset ? "ON 🟢" : "OFF"}
-          </button>
-        </div>
-
         {/* Navigation Tabs */}
         <div className="flex gap-1 overflow-x-auto bg-slate-950 p-1 rounded-lg border border-slate-800">
           {[
-            { id: "timeline", label: "🎞️ Timeline" },
+            { id: "timeline", label: "🎞️ Visual Timeline" },
             { id: "watermark", label: "👑 Gallery Logo" },
             { id: "audio", label: "🎵 Gallery Audio" },
             { id: "download", label: "💾 Direct Download" }
@@ -132,7 +128,51 @@ export default function ProStudioEditor() {
           ))}
         </div>
 
-        {/* TAB 1: GALLERY LOGO WATERMARK */}
+        {/* TAB 1: VISUAL TIMELINE WITH VIDEO FRAMES */}
+        {tab === "timeline" && (
+          <div className="bg-slate-900 border border-slate-800 rounded-lg p-2.5 space-y-2 text-xs">
+            <div className="flex justify-between items-center border-b border-slate-800 pb-1">
+              <span className="font-bold text-cyan-400 uppercase text-[9px]">Multi-Track Visual Scene Timeline</span>
+              <span className="text-[8px] text-green-400 font-mono">BGM: -22dB Ducked</span>
+            </div>
+
+            {/* Video Track with Thumbnails */}
+            <div className="space-y-1">
+              <span className="text-[8px] text-slate-400 font-semibold uppercase block">🎥 Video Track:</span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                {scenes.map((s) => (
+                  <div
+                    key={s.id}
+                    onClick={() => setScene(s.id)}
+                    className={`bg-slate-950 p-1 rounded-lg border cursor-pointer transition ${
+                      scene === s.id ? "border-cyan-500 ring-1 ring-cyan-500/40" : "border-slate-800 opacity-70 hover:opacity-100"
+                    }`}
+                  >
+                    <div className="relative aspect-video rounded overflow-hidden mb-1">
+                      <img src={s.img} alt="" className="w-full h-full object-cover"/>
+                      <span className="absolute bottom-0.5 right-0.5 bg-black/80 px-1 py-0.2 rounded text-[7px] font-mono text-cyan-300">{s.duration}</span>
+                    </div>
+                    <div className="flex justify-between items-center px-0.5">
+                      <span className="text-[9px] font-bold text-white">{s.title}</span>
+                      {scene === s.id && <span className="text-[7px] text-cyan-400 font-bold">ACTIVE</span>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Inspector Dialog Track */}
+            <div className="bg-slate-950 p-2 rounded-lg border border-slate-800 space-y-1">
+              <div className="flex justify-between items-center">
+                <span className="text-[8px] text-purple-400 font-semibold uppercase">🎙️ Voiceover Script (Scene {scene}):</span>
+                <span className="text-[8px] text-slate-400">1.5s Pause Locked</span>
+              </div>
+              <p className="text-[10px] text-slate-200 font-sans">{activeSceneData.text}</p>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: GALLERY LOGO WATERMARK */}
         {tab === "watermark" && (
           <div className="bg-slate-900 border border-amber-500/20 rounded-lg p-2.5 space-y-2 text-xs">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1">
@@ -165,7 +205,7 @@ export default function ProStudioEditor() {
           </div>
         )}
 
-        {/* TAB 2: GALLERY AUDIO ENGINE */}
+        {/* TAB 3: GALLERY AUDIO ENGINE */}
         {tab === "audio" && (
           <div className="bg-slate-900 border border-slate-800 rounded-lg p-2.5 space-y-2 text-xs">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1">
@@ -199,25 +239,6 @@ export default function ProStudioEditor() {
           </div>
         )}
 
-        {/* TAB 3: TIMELINE */}
-        {tab === "timeline" && (
-          <div className="bg-slate-900 border border-slate-800 rounded-lg p-2 space-y-1.5 text-xs">
-            <span className="font-bold text-cyan-400 uppercase text-[9px]">Timeline Track</span>
-            <div className="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded border border-slate-800">
-              <span className="text-slate-400 w-10 text-[9px]">Video</span>
-              <div className="flex gap-1 overflow-x-auto">
-                {[1, 2, 3, 4].map((s) => (
-                  <button key={s} onClick={() => setScene(s)} className={`px-2 py-0.5 rounded border text-[10px] cursor-pointer ${scene === s ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-900 border-slate-800 text-slate-400"}`}>Scene {s}</button>
-                ))}
-              </div>
-            </div>
-            <div className="flex justify-between bg-slate-950 p-1.5 rounded border border-slate-800 text-slate-300 text-[9px]">
-              <span>Voice: 100% Shuddh Hindi (1.5s Pause)</span>
-              <span className="text-green-400">BGM: -22dB Ducked</span>
-            </div>
-          </div>
-        )}
-
         {/* TAB 4: DIRECT DOWNLOAD */}
         {tab === "download" && (
           <div className="bg-slate-900 border border-slate-800 rounded-lg p-2.5 space-y-1.5 text-xs">
@@ -233,7 +254,7 @@ export default function ProStudioEditor() {
               </div>
               <div className="bg-slate-950 p-2 rounded border border-slate-800 space-y-1">
                 <span className="font-bold text-purple-300 block text-[10px]">Audio WAV</span>
-                <button onClick={() => runExport("Audio WAV")} className="w-full py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500 font-bold text-[9px] cursor-pointer">⬇ Download</button>
+                <button onClick={() => runExport("Audio WAV")} className="w-full py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500 font-bold text-[10px] cursor-pointer">⬇ Download</button>
               </div>
             </div>
           </div>
