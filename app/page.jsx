@@ -1,10 +1,11 @@
+       
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function CineFlowApp() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("user@gmail.com");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   
@@ -55,6 +56,7 @@ export default function CineFlowApp() {
   const handleLogin = (userEmail = "user@gmail.com") => {
     localStorage.setItem("cineflow_logged_in", "true");
     localStorage.setItem("cineflow_user_email", userEmail);
+    setEmail(userEmail);
     setIsLoggedIn(true);
   };
 
@@ -123,23 +125,40 @@ export default function CineFlowApp() {
 
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans overflow-x-hidden">
-      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between border-b border-slate-800 pb-4 mb-6 gap-4">
+      
+      {/* Top Header: CineFlow AI with Next Arrow & User Circle Logo with Credits */}
+      <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+        
+        {/* Left: CineFlow AI + Next Arrow */}
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-base shadow-lg shadow-cyan-500/20">🎬</div>
+          <h1 className="text-base sm:text-lg font-bold tracking-tight text-white">CineFlow AI</h1>
+          <Link href="/studio/editor" className="w-7 h-7 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-300 hover:bg-cyan-500/30 transition text-xs font-bold" title="Next Step">
+            →
+          </Link>
+        </div>
+
+        {/* Right: Active Gmail Circular Logo + Credits + Navigation Links */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-xl shadow-lg shadow-cyan-500/20">🎬</div>
-          <div>
-            <h1 className="text-base sm:text-lg font-bold">CineFlow AI Pro Studio</h1>
-            <p className="text-xs text-slate-400">User: <span className="text-cyan-400">{email || "Pro Creator"}</span></p>
+          <div className="px-3 py-1.5 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-xs font-mono text-cyan-300 flex items-center gap-1">
+            <span>⚡</span> 55 Cr
+          </div>
+
+          <Link href="/character-vault" className="px-3 py-1.5 rounded-xl bg-purple-600/30 border border-purple-500/40 text-xs text-purple-200">Vault 🔒</Link>
+          <Link href="/studio/editor" className="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-slate-300">Editor 🎞️</Link>
+
+          {/* User Circular Logo with Email Initial */}
+          <div className="flex items-center gap-2 pl-1 border-l border-slate-800">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold text-white uppercase shadow-md" title={email}>
+              {email ? email.charAt(0) : "U"}
+            </div>
+            <button onClick={handleLogout} className="text-[11px] text-red-400 hover:underline">Logout</button>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          <div className="px-3 py-1.5 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-xs font-mono text-cyan-300">⚡ 55 Cr</div>
-          <Link href="/character-vault" className="px-3 py-1.5 rounded-xl bg-purple-600/30 border border-purple-500/40 text-xs text-purple-200">Vault 🔒</Link>
-          <Link href="/studio/editor" className="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-slate-300">Editor 🎞️</Link>
-          <button onClick={handleLogout} className="px-3 py-1.5 rounded-xl bg-red-950/40 border border-red-800/60 text-xs text-red-300">Logout</button>
-        </div>
       </div>
 
+      {/* Vertical Up-Down Stacked Flow */}
       <div className="max-w-4xl mx-auto space-y-5 pb-20">
         
         {/* 1. Master Story Input & Reference Gallery Upload */}
@@ -232,17 +251,4 @@ export default function CineFlowApp() {
             <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">7. Story Engine Model</label>
             <div className="grid grid-cols-3 gap-2">
               {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
-                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-[#141b2d] border-slate-800 text-slate-400"}`}>{s}</button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <button onClick={() => { setLoading(true); setTimeout(() => { setLoading(false); window.location.href = "/studio/editor"; }, 1200); }} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm tracking-wide shadow-xl shadow-cyan-500/25 hover:opacity-95 transition flex items-center justify-center gap-2 cursor-pointer">
-          {loading ? "Generating Film Tracks..." : "🚀 GENERATE AUTONOMOUS CINEMA FILM"}
-        </button>
-      </div>
-    </div>
-  );
-                                                                                                                        }
-                                                                                                                        
+                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "bg-purple-500
