@@ -8,10 +8,16 @@ export default function CineFlowApp() {
   
   const [googleEmail, setGoogleEmail] = useState("");
   const [googlePass, setGooglePass] = useState("");
+  const [showGooglePass, setShowGooglePass] = useState(false);
+
   const [fbUser, setFbUser] = useState("");
   const [fbPass, setFbPass] = useState("");
+  const [showFbPass, setShowFbPass] = useState(false);
+
   const [instaUser, setInstaUser] = useState("");
   const [instaPass, setInstaPass] = useState("");
+  const [showInstaPass, setShowInstaPass] = useState(false);
+
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
 
   const [storyPrompt, setStoryPrompt] = useState("");
@@ -106,6 +112,7 @@ export default function CineFlowApp() {
             <button type="button" onClick={() => setLoginMethod("instagram")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "instagram" ? "bg-gradient-to-r from-amber-500 to-purple-600 text-white" : "text-slate-400"}`}>Instagram</button>
           </div>
 
+          {/* GMAIL LOGIN */}
           {loginMethod === "google" && (
             <form onSubmit={(e) => handleAuthSubmit(e, "google")} className="w-full space-y-3.5">
               <div>
@@ -114,12 +121,16 @@ export default function CineFlowApp() {
               </div>
               <div>
                 <label className="text-[11px] text-slate-400 block mb-1">Google Password</label>
-                <input type="password" required value={googlePass} onChange={(e) => setGooglePass(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+                <div className="relative">
+                  <input type={showGooglePass ? "text" : "password"} required value={googlePass} onChange={(e) => setGooglePass(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+                  <button type="button" onClick={() => setShowGooglePass(!showGooglePass)} className="absolute right-3 top-2 text-[10px] text-cyan-400 font-semibold cursor-pointer">{showGooglePass ? "Hide" : "Show"}</button>
+                </div>
               </div>
               <button type="submit" className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-xs text-white shadow-lg cursor-pointer">SIGN IN WITH GMAIL</button>
             </form>
           )}
 
+          {/* FACEBOOK LOGIN */}
           {loginMethod === "facebook" && (
             <form onSubmit={(e) => handleAuthSubmit(e, "facebook")} className="w-full space-y-3.5">
               <div>
@@ -128,12 +139,16 @@ export default function CineFlowApp() {
               </div>
               <div>
                 <label className="text-[11px] text-slate-400 block mb-1">Facebook Password</label>
-                <input type="password" required value={fbPass} onChange={(e) => setFbPass(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+                <div className="relative">
+                  <input type={showFbPass ? "text" : "password"} required value={fbPass} onChange={(e) => setFbPass(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+                  <button type="button" onClick={() => setShowFbPass(!showFbPass)} className="absolute right-3 top-2 text-[10px] text-cyan-400 font-semibold cursor-pointer">{showFbPass ? "Hide" : "Show"}</button>
+                </div>
               </div>
               <button type="submit" className="w-full py-3 rounded-xl bg-[#1877F2] font-bold text-xs text-white shadow-lg cursor-pointer">SIGN IN WITH FACEBOOK</button>
             </form>
           )}
 
+          {/* INSTAGRAM LOGIN */}
           {loginMethod === "instagram" && (
             <form onSubmit={(e) => handleAuthSubmit(e, "instagram")} className="w-full space-y-3.5">
               <div>
@@ -142,7 +157,10 @@ export default function CineFlowApp() {
               </div>
               <div>
                 <label className="text-[11px] text-slate-400 block mb-1">Instagram Password</label>
-                <input type="password" required value={instaPass} onChange={(e) => setInstaPass(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+                <div className="relative">
+                  <input type={showInstaPass ? "text" : "password"} required value={instaPass} onChange={(e) => setInstaPass(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+                  <button type="button" onClick={() => setShowInstaPass(!showInstaPass)} className="absolute right-3 top-2 text-[10px] text-cyan-400 font-semibold cursor-pointer">{showInstaPass ? "Hide" : "Show"}</button>
+                </div>
               </div>
               <button type="submit" className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 via-pink-500 to-purple-600 font-bold text-xs text-white shadow-lg cursor-pointer">SIGN IN WITH INSTAGRAM</button>
             </form>
@@ -156,6 +174,7 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28">
       
+      {/* Top Header with Exact Official Logo */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl overflow-hidden border border-cyan-500/40 shadow-md">
@@ -270,47 +289,4 @@ export default function CineFlowApp() {
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Indonesian", "French", "German", "Arabic", "All Languages"].map((lang) => (
-              <button key={lang} onClick={() => setVoiceLang(lang)} className={`py-2 px-2 rounded-xl border text-xs transition ${voiceLang === lang ? "bg-cyan-500/20 border-cyan-500 text-white font-semibold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{lang}</button>
-            ))}
-          </div>
-        </div>
-
-        {/* 6 & 7. Video & Story Engines */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">6. Video Engine Model</label>
-            <div className="grid grid-cols-3 gap-2">
-              {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
-                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs font-semibold transition ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">7. Story Engine Model</label>
-            <div className="grid grid-cols-3 gap-2">
-              {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
-                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Generate CTA Button */}
-        <button onClick={handleGenerate} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm tracking-wide shadow-xl shadow-cyan-500/25 hover:opacity-95 transition flex items-center justify-center gap-2 cursor-pointer">
-          {loading ? "Generating Film..." : "🚀 GENERATE AUTONOMOUS CINEMA FILM"}
-        </button>
-      </div>
-
-      {/* Floating Bottom Navigation (Right Side Only) */}
-      <div className="fixed bottom-4 inset-x-0 flex justify-end z-50 px-6 pointer-events-none">
-        <div className="bg-slate-900/95 border border-slate-700 rounded-full px-4 py-2 shadow-2xl flex items-center gap-3 pointer-events-auto">
-          <span className="text-[11px] text-slate-400 font-medium tracking-wide">Next Step</span>
-          <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm flex items-center justify-center shadow-lg shadow-cyan-500/30 transition active:scale-95 cursor-pointer" title="Timeline Editor">
-            →
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
+              <button key={lang} onClick={() => setVoiceLang(lang)} className={`py-2 px-2 round
