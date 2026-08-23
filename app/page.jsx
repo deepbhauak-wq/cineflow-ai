@@ -4,16 +4,26 @@ import Link from "next/link";
 
 export default function CineFlowApp() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [email, setEmail] = useState("user@gmail.com");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [loginMethod, setLoginMethod] = useState("google"); // 'google', 'facebook', 'instagram'
+  
+  // Input states for all 3 login methods
+  const [googleEmail, setGoogleEmail] = useState("");
+  const [googlePass, setGooglePass] = useState("");
+  
+  const [fbUser, setFbUser] = useState("");
+  const [fbPass, setFbPass] = useState("");
+  
+  const [instaUser, setInstaUser] = useState("");
+  const [instaPass, setInstaPass] = useState("");
+  
+  const [activeEmail, setActiveEmail] = useState("user@gmail.com");
   
   // Subscription Plan State (4 Plans)
   const [showSubscriptionPlan, setShowSubscriptionPlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("Pro Director");
   const [billingCycle, setBillingCycle] = useState("Monthly");
 
-  // Studio Settings States (All 7 Settings Fully Restored)
+  // Studio Settings States (All 7 Settings)
   const [storyPrompt, setStoryPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
@@ -24,12 +34,6 @@ export default function CineFlowApp() {
   const [voiceLang, setVoiceLang] = useState("Hindi (Pure Shuddh)");
   const [uploadedImage, setUploadedImage] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  // Video Generation & Scene Preview Vault with Edit Button
-  const [generatedVault, setGeneratedVault] = useState([
-    { id: 1, title: "Scene 1: Cinematic Intro & Character Entry", url: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500&auto=format&fit=crop&q=60", duration: "0:10s" },
-    { id: 2, title: "Scene 2: Emotional Dialogue Sequence", url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500&auto=format&fit=crop&q=60", duration: "0:15s" }
-  ]);
 
   const styleCatalog = [
     { name: "Realistic", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=60" },
@@ -58,14 +62,20 @@ export default function CineFlowApp() {
     const savedEmail = localStorage.getItem("cineflow_user_email");
     if (saved === "true") {
       setIsLoggedIn(true);
-      if (savedEmail) setEmail(savedEmail);
+      if (savedEmail) setActiveEmail(savedEmail);
     }
   }, []);
 
-  const handleLogin = (userEmail = "user@gmail.com") => {
+  const handleAuthSubmit = (e, method) => {
+    e.preventDefault();
+    let emailUsed = "user@gmail.com";
+    if (method === "google") emailUsed = googleEmail || "google.user@gmail.com";
+    if (method === "facebook") emailUsed = fbUser ? `${fbUser}@facebook.com` : "fb.user@facebook.com";
+    if (method === "instagram") emailUsed = instaUser ? `${instaUser}@instagram.com` : "insta.user@instagram.com";
+
     localStorage.setItem("cineflow_logged_in", "true");
-    localStorage.setItem("cineflow_user_email", userEmail);
-    setEmail(userEmail);
+    localStorage.setItem("cineflow_user_email", emailUsed);
+    setActiveEmail(emailUsed);
     setIsLoggedIn(true);
   };
 
@@ -84,18 +94,11 @@ export default function CineFlowApp() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      const newScene = {
-        id: Date.now(),
-        title: storyPrompt ? `Scene: ${storyPrompt.slice(0, 25)}...` : "New Autonomous Scene",
-        url: uploadedImage || styleCatalog[0].img,
-        duration: "0:10s"
-      };
-      setGeneratedVault([newScene, ...generatedVault]);
       window.location.href = "/studio/editor";
     }, 1200);
   };
 
-  // 1. LOGIN SCREEN WITH ACTIVE SOCIAL LOGOS & OFFICIAL LOGO
+  // 1. LOGIN SCREEN WITH ACTIVE GOOGLE, FACEBOOK & INSTAGRAM CREDENTIAL INPUTS
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen w-full bg-[#0a0d14] flex flex-col items-center justify-center p-4 text-white font-sans">
@@ -106,37 +109,60 @@ export default function CineFlowApp() {
           </div>
 
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-1 text-center">CineFlow AI Pro</h1>
-          <p className="text-xs text-slate-400 text-center mb-6">Autonomous Cinema Engine</p>
+          <p className="text-xs text-slate-400 text-center mb-5">Autonomous Cinema Engine</p>
 
-          <div className="w-full flex flex-col gap-3">
-            <button onClick={() => handleLogin("google.user@gmail.com")} className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center gap-3 text-sm font-medium transition cursor-pointer">
-              <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-              <span>Continue with Google / Gmail</span>
-            </button>
-            <button onClick={() => handleLogin("facebook.user@fb.com")} className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center gap-3 text-sm font-medium transition cursor-pointer">
-              <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-              <span>Continue with Facebook</span>
-            </button>
-            <button onClick={() => handleLogin("instagram.user@insta.com")} className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center gap-3 text-sm font-medium transition cursor-pointer">
-              <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24"><defs><linearGradient id="igG4" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stopColor="#fdf497"/><stop offset="45%" stopColor="#fd5949"/><stop offset="90%" stopColor="#285AEB"/></linearGradient></defs><path fill="url(#igG4)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-              <span>Continue with Instagram</span>
-            </button>
+          {/* Login Method Tabs */}
+          <div className="w-full grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 mb-5">
+            <button onClick={() => setLoginMethod("google")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "google" ? "bg-cyan-500 text-black" : "text-slate-400"}`}>Gmail</button>
+            <button onClick={() => setLoginMethod("facebook")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "facebook" ? "bg-[#1877F2] text-white" : "text-slate-400"}`}>Facebook</button>
+            <button onClick={() => setLoginMethod("instagram")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "instagram" ? "bg-gradient-to-r from-amber-500 to-purple-600 text-white" : "text-slate-400"}`}>Instagram</button>
           </div>
 
-          <div className="w-full flex items-center my-5">
-            <div className="flex-1 h-px bg-slate-800"></div>
-            <span className="px-3 text-[10px] tracking-widest text-slate-500 font-semibold uppercase">OR CREDENTIALS</span>
-            <div className="flex-1 h-px bg-slate-800"></div>
-          </div>
+          {/* GOOGLE / GMAIL LOGIN FORM */}
+          {loginMethod === "google" && (
+            <form onSubmit={(e) => handleAuthSubmit(e, "google")} className="w-full space-y-3.5">
+              <div>
+                <label className="text-[11px] text-slate-400 block mb-1">Gmail Address</label>
+                <input type="email" required value={googleEmail} onChange={(e) => setGoogleEmail(e.target.value)} placeholder="yourname@gmail.com" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+              </div>
+              <div>
+                <label className="text-[11px] text-slate-400 block mb-1">Google Password</label>
+                <input type="password" required value={googlePass} onChange={(e) => setGooglePass(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+              </div>
+              <button type="submit" className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-xs text-white shadow-lg cursor-pointer">SIGN IN WITH GMAIL</button>
+            </form>
+          )}
 
-          <form onSubmit={(e) => { e.preventDefault(); handleLogin(email); }} className="w-full space-y-3.5">
-            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@email.com" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"/>
-            <div className="relative">
-              <input type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"/>
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-2.5 text-xs text-slate-400">{showPassword ? "Hide" : "Show"}</button>
-            </div>
-            <button type="submit" className="w-full mt-2 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold text-sm shadow-lg text-white cursor-pointer">SIGN IN</button>
-          </form>
+          {/* FACEBOOK LOGIN FORM */}
+          {loginMethod === "facebook" && (
+            <form onSubmit={(e) => handleAuthSubmit(e, "facebook")} className="w-full space-y-3.5">
+              <div>
+                <label className="text-[11px] text-slate-400 block mb-1">Facebook Username / Email / Phone</label>
+                <input type="text" required value={fbUser} onChange={(e) => setFbUser(e.target.value)} placeholder="username or email" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+              </div>
+              <div>
+                <label className="text-[11px] text-slate-400 block mb-1">Facebook Password</label>
+                <input type="password" required value={fbPass} onChange={(e) => setFbPass(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+              </div>
+              <button type="submit" className="w-full py-3 rounded-xl bg-[#1877F2] font-bold text-xs text-white shadow-lg cursor-pointer">SIGN IN WITH FACEBOOK</button>
+            </form>
+          )}
+
+          {/* INSTAGRAM LOGIN FORM */}
+          {loginMethod === "instagram" && (
+            <form onSubmit={(e) => handleAuthSubmit(e, "instagram")} className="w-full space-y-3.5">
+              <div>
+                <label className="text-[11px] text-slate-400 block mb-1">Instagram Username / Email</label>
+                <input type="text" required value={instaUser} onChange={(e) => setInstaUser(e.target.value)} placeholder="username" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+              </div>
+              <div>
+                <label className="text-[11px] text-slate-400 block mb-1">Instagram Password</label>
+                <input type="password" required value={instaPass} onChange={(e) => setInstaPass(e.target.value)} placeholder="••••••••" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+              </div>
+              <button type="submit" className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 via-pink-500 to-purple-600 font-bold text-xs text-white shadow-lg cursor-pointer">SIGN IN WITH INSTAGRAM</button>
+            </form>
+          )}
+
         </div>
       </div>
     );
@@ -145,7 +171,7 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28">
       
-      {/* Top Header with Official Logo */}
+      {/* Top Header with Exact Official Logo */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl overflow-hidden border border-cyan-500/40 shadow-md">
@@ -159,8 +185,8 @@ export default function CineFlowApp() {
             ⚡ 55 Cr (Upgrade)
           </button>
           <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold text-white uppercase" title={email}>
-              {email ? email.charAt(0) : "U"}
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold text-white uppercase" title={activeEmail}>
+              {activeEmail ? activeEmail.charAt(0) : "U"}
             </div>
             <button onClick={handleLogout} className="text-xs text-red-400 hover:underline">Logout</button>
           </div>
@@ -223,25 +249,24 @@ export default function CineFlowApp() {
 
       <div className="max-w-4xl mx-auto space-y-5">
         
-        {/* GENERATED SCENES & PREVIEW VAULT WITH EDIT BUTTON */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+        {/* FULL-SIZE CINEMATIC PLAYER / VIDEO VIEW SCREEN (No Multi-card edits) */}
+        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-6 space-y-3 shadow-2xl">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Generated Scenes & Video Preview Vault</label>
-            <button onClick={() => setShowSubscriptionPlan(true)} className="text-[10px] text-cyan-300 underline cursor-pointer">View 4 Plans</button>
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Full-Size Cinematic Player View</label>
+            <button onClick={() => setShowSubscriptionPlan(true)} className="text-[10px] text-cyan-300 underline cursor-pointer">View Subscription Plans</button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {generatedVault.map((scene) => (
-              <div key={scene.id} className="bg-slate-950 border border-slate-800 rounded-xl p-3 flex items-center gap-3">
-                <img src={scene.url} alt="" className="w-16 h-12 rounded-lg object-cover border border-cyan-500/30"/>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-white truncate">{scene.title}</p>
-                  <p className="text-[10px] text-slate-400">Duration: {scene.duration} • Ready</p>
-                </div>
-                <Link href="/studio/editor" className="px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs shrink-0 cursor-pointer">
-                  Edit ✏️
-                </Link>
+
+          <div className="w-full aspect-video rounded-2xl overflow-hidden border border-slate-700 bg-black relative flex items-center justify-center shadow-inner group">
+            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1000&auto=format&fit=crop&q=80" alt="Cinematic Output" className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition duration-500"/>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4">
+              <span className="text-xs font-bold text-cyan-300">CineFlow AI Production - Scene 01 (4K HDR)</span>
+              <p className="text-[10px] text-slate-300">Autonomous Render Complete • Shuddh Hindi Voiceover Active</p>
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-14 h-14 rounded-full bg-cyan-500/90 backdrop-blur-md flex items-center justify-center text-black text-xl shadow-xl shadow-cyan-500/40 cursor-pointer hover:scale-110 transition">
+                ▶
               </div>
-            ))}
+            </div>
           </div>
         </div>
 
@@ -262,100 +287,4 @@ export default function CineFlowApp() {
                   <p className="font-semibold text-cyan-300">Reference Photo Attached ✓</p>
                   <button onClick={() => setUploadedImage(null)} className="text-[10px] text-red-400 hover:underline">Remove</button>
                 </div>
-              </div>
-            ) : <span className="text-[11px] text-slate-500">No reference image selected</span>}
-          </div>
-        </div>
-
-        {/* 2. VISUAL ART STYLE (19 Styles + Custom) */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">2. Visual Art Style ({visualStyle})</label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-72 overflow-y-auto pr-1">
-            {styleCatalog.map((s) => (
-              <div
-                key={s.name}
-                onClick={() => setVisualStyle(s.name)}
-                className={`relative rounded-xl overflow-hidden border cursor-pointer group transition ${
-                  visualStyle === s.name ? "border-cyan-400 ring-2 ring-cyan-500/30" : "border-slate-800 opacity-75 hover:opacity-100"
-                }`}
-              >
-                <img src={s.img} alt={s.name} className="w-full h-16 object-cover group-hover:scale-105 transition duration-300" />
-                <div className="absolute inset-x-0 bottom-0 bg-black/80 p-1 text-center">
-                  <p className="text-[10px] font-medium text-white truncate">{s.name}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white mt-2 focus:outline-none"/>
-        </div>
-
-        {/* 3 & 4. ASPECT RATIO & TIMELINE TIER */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">3. Aspect Ratio</label>
-            <div className="grid grid-cols-3 gap-2">
-              {["16:9", "9:16", "21:9", "4:3", "1:1", "Auto"].map((ratio) => (
-                <button key={ratio} onClick={() => setAspectRatio(ratio)} className={`py-2 rounded-xl border text-xs font-semibold transition ${aspectRatio === ratio ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{ratio}</button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">4. Timeline Tier</label>
-            <div className="grid grid-cols-2 gap-2">
-              {["3 Min (18 Scenes)", "15 Min (90 Scenes)", "30 Min (180 Scenes)", "60 Min (360 Scenes)"].map((tier) => (
-                <button key={tier} onClick={() => setDuration(tier)} className={`py-2 px-1 rounded-xl border text-[11px] font-semibold transition ${duration === tier ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{tier}</button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* 5. VOICEOVER & LANGUAGES */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">5. Voiceover & Languages</label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Indonesian", "French", "German", "Arabic", "All Languages"].map((lang) => (
-              <button key={lang} onClick={() => setVoiceLang(lang)} className={`py-2 px-2 rounded-xl border text-xs transition ${voiceLang === lang ? "bg-cyan-500/20 border-cyan-500 text-white font-semibold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{lang}</button>
-            ))}
-          </div>
-        </div>
-
-        {/* 6 & 7. VIDEO & STORY ENGINES */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">6. Video Engine Model</label>
-            <div className="grid grid-cols-3 gap-2">
-              {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
-                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs font-semibold transition ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">7. Story Engine Model</label>
-            <div className="grid grid-cols-3 gap-2">
-              {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
-                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Generate CTA Button */}
-        <button onClick={handleGenerate} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm tracking-wide shadow-xl shadow-cyan-500/25 hover:opacity-95 transition flex items-center justify-center gap-2 cursor-pointer">
-          {loading ? "Generating Film & Saving to Vault..." : "🚀 GENERATE AUTONOMOUS CINEMA FILM"}
-        </button>
-      </div>
-
-      {/* Floating Bottom Navigation (Right Side Only) */}
-      <div className="fixed bottom-4 inset-x-0 flex justify-end z-50 px-6 pointer-events-none">
-        <div className="bg-slate-900/95 border border-slate-700 rounded-full px-4 py-2 shadow-2xl flex items-center gap-3 pointer-events-auto">
-          <span className="text-[11px] text-slate-400 font-medium tracking-wide">Next Step</span>
-          <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm flex items-center justify-center shadow-lg shadow-cyan-500/30 transition active:scale-95 cursor-pointer" title="Timeline Editor">
-            →
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
+              </d
