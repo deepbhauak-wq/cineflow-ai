@@ -20,13 +20,11 @@ export default function CineFlowApp() {
 
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
 
-  // Video Generation & Player States
   const [loading, setLoading] = useState(false);
   const [showPlayModal, setShowPlayModal] = useState(false);
   const [isPlayingCompleted, setIsPlayingCompleted] = useState(false);
   const [isPlayingDashboard, setIsPlayingDashboard] = useState(false);
 
-  // All 7 Settings States
   const [storyPrompt, setStoryPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
@@ -52,7 +50,6 @@ export default function CineFlowApp() {
     { name: "Dark Cinematic", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=200&auto=format&fit=crop&q=60" }
   ];
 
-  // Permanent Persistent Login Session Load
   useEffect(() => {
     const saved = localStorage.getItem("cineflow_logged_in");
     const savedEmail = localStorage.getItem("cineflow_user_email");
@@ -69,7 +66,6 @@ export default function CineFlowApp() {
     if (m === "facebook") email = fbU ? fbU + "@fb.com" : "fb@user.com";
     if (m === "instagram") email = instaU ? instaU + "@insta.com" : "insta@user.com";
 
-    // Save permanently to browser storage
     localStorage.setItem("cineflow_logged_in", "true");
     localStorage.setItem("cineflow_user_email", email);
     
@@ -87,7 +83,7 @@ export default function CineFlowApp() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setShowPlayModal(true); // Open Completed Video Player
+      setShowPlayModal(true);
     }, 3500);
   };
 
@@ -170,7 +166,6 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28 relative">
       
-      {/* LOADING OVERLAY */}
       {loading && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-6 space-y-4">
           <div className="w-16 h-16 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"></div>
@@ -181,7 +176,6 @@ export default function CineFlowApp() {
         </div>
       )}
 
-      {/* FINAL COMPLETED VIDEO PLAYER MODAL */}
       {showPlayModal && (
         <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex flex-col items-center justify-center p-4">
           <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
@@ -212,7 +206,6 @@ export default function CineFlowApp() {
         </div>
       )}
 
-      {/* Top Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-black border border-cyan-500/40 p-1 flex items-center justify-center shadow-md">
@@ -233,7 +226,6 @@ export default function CineFlowApp() {
 
       <div className="max-w-4xl mx-auto space-y-5">
         
-        {/* Full-Size Cinematic Dashboard Player */}
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-6 space-y-3 shadow-2xl">
           <div className="flex items-center justify-between">
             <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Full-Size Cinematic Player View</label>
@@ -250,7 +242,6 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 1. Master Story & Reference Image */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
           <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none"/>
@@ -260,7 +251,6 @@ export default function CineFlowApp() {
           </label>
         </div>
 
-        {/* 2. Visual Art Style */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5 max-h-64 overflow-y-auto">
@@ -274,7 +264,6 @@ export default function CineFlowApp() {
           <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
         </div>
 
-        {/* 3 & 4. Aspect Ratio & Duration */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
             <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
@@ -295,9 +284,18 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* 5. Voiceover & Languages */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
           <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Arabic"].map((l) => (
-              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}
+              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}</button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+            <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Engine Model</label>
+            <div className="grid grid-cols-3 gap-2">
+              {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
+                <button key={m} onClick={() => setVideoModel
