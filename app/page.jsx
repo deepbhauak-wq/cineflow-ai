@@ -8,7 +8,6 @@ export default function CineFlowApp() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   
-  // Studio states
   const [storyPrompt, setStoryPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min");
@@ -16,7 +15,6 @@ export default function CineFlowApp() {
   const [voiceLang, setVoiceLang] = useState("Hindi (Pure)");
   const [loading, setLoading] = useState(false);
 
-  // Check persistent login on page load
   useEffect(() => {
     const savedLogin = localStorage.getItem("cineflow_logged_in");
     const savedEmail = localStorage.getItem("cineflow_user_email");
@@ -38,24 +36,23 @@ export default function CineFlowApp() {
     setIsLoggedIn(false);
   };
 
-  // 1. LOGIN SCREEN WITH PERMANENT MEMORY
+  // 1. LOGIN SCREEN (Clean Vertical Center)
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen w-full bg-[#0a0d14] flex items-center justify-center p-4 text-white font-sans">
-        <div className="w-full max-w-sm rounded-3xl bg-[#0f1422]/95 border border-slate-800/80 p-8 shadow-2xl backdrop-blur-xl flex flex-col items-center">
+      <div className="min-h-screen w-full bg-[#0a0d14] flex flex-col items-center justify-center p-4 text-white font-sans overflow-x-hidden">
+        <div className="w-full max-w-sm rounded-3xl bg-[#0f1422]/95 border border-slate-800/80 p-6 sm:p-8 shadow-2xl backdrop-blur-xl flex flex-col items-center">
           
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 mb-4">
-            <span className="text-3xl">🎬</span>
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 mb-4">
+            <span className="text-2xl">🎬</span>
           </div>
 
-          <h1 className="text-2xl font-bold tracking-tight text-white mb-1 text-center">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-1 text-center">
             CineFlow AI Pro Studio
           </h1>
           <p className="text-xs text-slate-400 text-center mb-6">
             Google Flow-Grade Autonomous Cinema Engine
           </p>
 
-          {/* Social Auth Buttons */}
           <div className="w-full flex flex-col gap-3">
             <button
               type="button"
@@ -101,13 +98,13 @@ export default function CineFlowApp() {
             </button>
           </div>
 
-          <div className="w-full flex items-center my-6">
+          <div className="w-full flex items-center my-5">
             <div className="flex-1 h-px bg-slate-800"></div>
             <span className="px-3 text-[10px] tracking-widest text-slate-500 font-semibold uppercase">OR CREDENTIALS</span>
             <div className="flex-1 h-px bg-slate-800"></div>
           </div>
 
-          <form onSubmit={(e) => { e.preventDefault(); handleLogin(email); }} className="w-full space-y-4">
+          <form onSubmit={(e) => { e.preventDefault(); handleLogin(email); }} className="w-full space-y-3.5">
             <div>
               <label className="text-xs text-slate-400 mb-1 block">Email / ID</label>
               <input
@@ -147,69 +144,70 @@ export default function CineFlowApp() {
     );
   }
 
-  // 2. MAIN STUDIO DASHBOARD
+  // 2. MAIN STUDIO DASHBOARD (Clean Vertical Flow)
   return (
-    <div className="min-h-screen bg-[#07090e] text-white p-4 md:p-8 font-sans pb-20">
-      <div className="max-w-5xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-8">
+    <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans overflow-x-hidden">
+      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between border-b border-slate-800 pb-4 mb-6 gap-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-xl shadow-lg shadow-cyan-500/20">
             🎬
           </div>
           <div>
-            <h1 className="text-lg font-bold">CineFlow AI Pro Studio</h1>
-            <p className="text-xs text-slate-400">Logged in as: <span className="text-cyan-400">{email || "User"}</span></p>
+            <h1 className="text-base sm:text-lg font-bold">CineFlow AI Pro Studio</h1>
+            <p className="text-xs text-slate-400">User: <span className="text-cyan-400">{email || "Pro Creator"}</span></p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-2">
           <div className="px-3 py-1.5 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-xs font-mono text-cyan-300">
-            ⚡ 55 Credits
+            ⚡ 55 Cr
           </div>
-          <Link href="/character-vault" className="px-3.5 py-1.5 rounded-xl bg-purple-600/30 border border-purple-500/40 text-xs text-purple-200">
+          <Link href="/character-vault" className="px-3 py-1.5 rounded-xl bg-purple-600/30 border border-purple-500/40 text-xs text-purple-200">
             Vault 🔒
           </Link>
-          <Link href="/studio/editor" className="px-3.5 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-slate-300">
+          <Link href="/studio/editor" className="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-slate-300">
             Editor 🎞️
           </Link>
-          <button onClick={handleLogout} className="px-3 py-1.5 rounded-xl bg-red-950/40 border border-red-800/60 text-xs text-red-300 hover:bg-red-900 transition">
+          <button onClick={handleLogout} className="px-3 py-1.5 rounded-xl bg-red-950/40 border border-red-800/60 text-xs text-red-300">
             Logout
           </button>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto space-y-6">
-        <div className="text-center py-4">
+      {/* Main Stacked Vertical Form */}
+      <div className="max-w-4xl mx-auto space-y-5 pb-16">
+        <div className="text-center py-2">
           <span className="px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-[11px] text-cyan-300 font-medium">
-            ✨ Autonomous Cinema Pipeline Active
+            ✨ Autonomous Cinema Pipeline
           </span>
-          <h2 className="text-2xl font-bold mt-2">
-            Turn Your Idea into a <span className="text-cyan-400">Cinematic Masterpiece</span>
+          <h2 className="text-xl sm:text-2xl font-bold mt-2">
+            Create Cinematic Masterpieces <span className="text-cyan-400">Instantly</span>
           </h2>
         </div>
 
-        <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-5 space-y-3">
-          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">
+        <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
+          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">
             1. Master Story / Screenplay Input
           </label>
           <textarea
             rows={4}
             value={storyPrompt}
             onChange={(e) => setStoryPrompt(e.target.value)}
-            placeholder="Enter story topic here... AI will decompose into scenes and voiceover in Shuddh Hindi."
-            className="w-full bg-[#141b2d] border border-slate-700/60 rounded-xl p-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+            placeholder="Enter your storyline here... AI will auto-decompose into scenes and Shuddh Hindi voiceover."
+            className="w-full bg-[#141b2d] border border-slate-700/60 rounded-xl p-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
           />
         </div>
 
-        <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-5 space-y-3">
+        <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">
-            2. Aspect Ratio & Duration
+            2. Aspect Ratio Selection
           </label>
           <div className="grid grid-cols-3 gap-2.5">
             {["16:9", "9:16", "21:9"].map((ratio) => (
               <button
                 key={ratio}
                 onClick={() => setAspectRatio(ratio)}
-                className={`py-3 rounded-xl border text-xs font-semibold transition ${
+                className={`py-2.5 rounded-xl border text-xs font-semibold transition ${
                   aspectRatio === ratio ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-[#141b2d] border-slate-800 text-slate-400"
                 }`}
               >
@@ -225,14 +223,13 @@ export default function CineFlowApp() {
             setTimeout(() => {
               setLoading(false);
               window.location.href = "/studio/editor";
-            }, 1500);
+            }, 1200);
           }}
-          className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm tracking-wide shadow-xl shadow-cyan-500/25 hover:opacity-95 transition flex items-center justify-center gap-2"
+          className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm tracking-wide shadow-xl shadow-cyan-500/25 hover:opacity-95 transition flex items-center justify-center gap-2 cursor-pointer"
         >
           {loading ? "Generating Film Tracks..." : "🚀 GENERATE AUTONOMOUS CINEMA FILM"}
         </button>
       </div>
     </div>
   );
-            }
-            
+}
