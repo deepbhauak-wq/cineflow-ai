@@ -20,7 +20,7 @@ export default function CineFlowApp() {
 
   // Complete 7 Studio Parameters
   const [storyPrompt, setStoryPrompt] = useState("");
-  const [visualStyle, setVisualStyle] = useState("Pixar-like");
+  const [visualStyle, setVisualStyle] = useState("Disney-like");
   const [customStyle, setCustomStyle] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
@@ -29,20 +29,23 @@ export default function CineFlowApp() {
   const [storyModel, setStoryModel] = useState("Gemini");
   const [galleryImage, setGalleryImage] = useState(null);
 
-  // Pixar-like included in Style Catalog
+  // Style Catalog with Disney-like and Pixar-like HD URLs
   const styleCatalog = [
-    { name: "Pixar-like", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&auto=format&fit=crop&q=80" },
+    { name: "Disney-like", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&auto=format&fit=crop&q=80" },
+    { name: "Pixar-like", img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=300&auto=format&fit=crop&q=80" },
     { name: "Realistic", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200" },
     { name: "Cinematic", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=200" },
     { name: "Epic", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200" },
-    { name: "3D Cartoon", img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=200" },
-    { name: "Disney-like", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200" },
+    { name: "Bible Art", img: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200" },
+    { name: "Historical", img: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=200" },
+    { name: "Documentary", img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=200" },
+    { name: "3D Cartoon", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200" },
     { name: "Anime", img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=200" },
     { name: "Fantasy", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200" },
     { name: "Dark Cinema", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=200" }
   ];
 
-  // Pro Persistent Session Handler
+  // Persistent Login Handler
   useEffect(() => {
     const s = localStorage.getItem("cineflow_logged_in");
     const e = localStorage.getItem("cineflow_user_email");
@@ -150,7 +153,7 @@ export default function CineFlowApp() {
         </div>
       )}
 
-      {/* Top Header */}
+      {/* Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-black border border-cyan-500/40 flex items-center justify-center shadow-md">
@@ -191,7 +194,7 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* BOX 2: Visual Art Style (Pixar-like featured first) */}
+        {/* BOX 2: Visual Art Style */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-xl">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="flex gap-2 overflow-x-auto pb-1">
@@ -268,5 +271,5 @@ export default function CineFlowApp() {
       </div>
     </div>
   );
-            }
-                                                                
+          }
+      
