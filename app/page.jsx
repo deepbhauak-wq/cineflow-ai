@@ -8,8 +8,17 @@ export default function UnifiedProCineFlow() {
   const [gPass, setGPass] = useState("");
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
 
-  // Generator States
+  // Full 7 Master Studio Settings
   const [storyPrompt, setStoryPrompt] = useState("");
+  const [visualStyle, setVisualStyle] = useState("AUTO");
+  const [customStyle, setCustomStyle] = useState("");
+  const [aspectRatio, setAspectRatio] = useState("AUTO");
+  const [duration, setDuration] = useState("AUTO");
+  const [voiceLang, setVoiceLang] = useState("100% Shuddh Hindi (Deep Calm)");
+  const [videoModel, setVideoModel] = useState("AUTO");
+  const [storyModel, setStoryModel] = useState("AUTO");
+  const [galleryImage, setGalleryImage] = useState(null);
+
   const [loading, setLoading] = useState(false);
   const [showPlayModal, setShowPlayModal] = useState(false);
 
@@ -22,6 +31,15 @@ export default function UnifiedProCineFlow() {
   const [musicVol, setMusicVol] = useState(10);
   const [sfxVol, setSfxVol] = useState(40);
   const [colorGrade, setColorGrade] = useState("AK Ministry Cinematic");
+
+  const styleCatalog = [
+    { name: "Disney-like", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300" },
+    { name: "Pixar-like", img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=300" },
+    { name: "Realistic", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200" },
+    { name: "Cinematic", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=200" },
+    { name: "Epic", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200" },
+    { name: "Bible Art", img: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200" }
+  ];
 
   useEffect(() => {
     const s = localStorage.getItem("cineflow_logged_in");
@@ -116,22 +134,94 @@ export default function UnifiedProCineFlow() {
         </div>
       </div>
 
-      {/* Main Content Area Based on Navigation */}
+      {/* Main Content Area */}
       <div className="max-w-4xl mx-auto space-y-4">
         
+        {/* TAB 1: GENERATOR & SETTINGS */}
         {activeNav === "generator" && (
           <div className="space-y-4">
+            {/* 1. Master Story */}
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
               <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story Prompt</label>
-              <textarea rows={2} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter story or write AUTO..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs text-white"/>
+              <textarea rows={2} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here... or write AUTO..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs text-white"/>
+              <label className="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-[11px] text-cyan-300 cursor-pointer inline-flex items-center gap-1.5">
+                <span>🖼️ Gallery Upload</span>
+                <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files[0]; if (f) setGalleryImage(URL.createObjectURL(f)); }} className="hidden"/>
+              </label>
+              {galleryImage && <span className="text-[10px] text-green-400 ml-2">✅ Photo Loaded</span>}
             </div>
 
-            <div className="bg-slate-900 border border-cyan-500/40 rounded-2xl p-3 space-y-1">
-              <div className="flex justify-between items-center">
-                <label className="text-xs font-bold text-cyan-400 uppercase">Audio & Voiceover Engine (Auto-Locked)</label>
-                <span className="text-[10px] text-green-400 font-mono">⚡ ACTIVE</span>
+            {/* 2. Visual Art Style */}
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+              <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                <div onClick={() => setVisualStyle("AUTO")} className={`flex-shrink-0 w-28 rounded-xl overflow-hidden border cursor-pointer p-2 flex flex-col items-center justify-center bg-cyan-950/40 ${visualStyle === "AUTO" ? "border-cyan-400 ring-2 ring-cyan-500/30" : "border-slate-800"}`}>
+                  <span className="text-xl">⚡</span>
+                  <p className="text-[10px] font-bold text-cyan-300 mt-1">AUTO</p>
+                </div>
+                {styleCatalog.map((s) => (
+                  <div key={s.name} onClick={() => setVisualStyle(s.name)} className={`flex-shrink-0 w-28 rounded-xl overflow-hidden border cursor-pointer ${visualStyle === s.name ? "border-cyan-400 ring-2 ring-cyan-500/30" : "border-slate-800 opacity-70"}`}>
+                    <img src={s.img} alt={s.name} className="w-full h-14 object-cover"/>
+                    <p className="text-[9px] text-center p-1 bg-black truncate font-medium">{s.name}</p>
+                  </div>
+                ))}
               </div>
-              <p className="text-[11px] text-slate-300 font-mono">100% Shuddh Hindi (Deep Calm) • 10-13 Words/Scene • BGM Clamped at -22dB</p>
+              <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white mt-1"/>
+            </div>
+
+            {/* 3. Aspect Ratio */}
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
+              <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio ({aspectRatio})</label>
+              <div className="grid grid-cols-4 sm:grid-cols-7 gap-1.5">
+                {["AUTO", "16:9", "9:16", "21:9", "4:3", "1:1"].map((r) => (
+                  <button key={r} onClick={() => setAspectRatio(r)} className={`py-1.5 rounded-lg border text-xs cursor-pointer ${aspectRatio === r ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>
+                    {r === "AUTO" ? "⚡ AUTO" : r}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 4. Timeline Tier */}
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
+              <label className="text-xs font-semibold text-cyan-400 uppercase">4. Timeline Tier ({duration})</label>
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
+                {["AUTO", "3 Min (18 Scenes)", "15 Min (90 Scenes)", "30 Min (180 Scenes)", "60 Min (360 Scenes)"].map((d) => (
+                  <button key={d} onClick={() => setDuration(d)} className={`py-1.5 px-1 rounded-lg border text-[11px] cursor-pointer ${duration === d ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>
+                    {d === "AUTO" ? "⚡ AUTO" : d}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 5. Voiceover & Audio Engine */}
+            <div className="bg-slate-900 border border-cyan-500/40 rounded-2xl p-3 space-y-1.5">
+              <div className="flex justify-between items-center">
+                <label className="text-xs font-bold text-cyan-400 uppercase">5. Audio & Voiceover Engine (Auto-Locked)</label>
+                <span className="text-[10px] text-green-400 font-mono">⚡ 100% AUTO</span>
+              </div>
+              <p className="text-[11px] text-slate-300 font-mono bg-slate-950 p-2 rounded-lg">
+                100% Shuddh Hindi (Deep Calm) • 10-13 Words/Scene • BGM Clamped at -22dB
+              </p>
+            </div>
+
+            {/* 6 & 7. Models */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
+                <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Model ({videoModel})</label>
+                <div className="grid grid-cols-3 gap-1">
+                  {["AUTO", "Veo", "Kling", "Runway"].map((m) => (
+                    <button key={m} onClick={() => setVideoModel(m)} className={`py-1.5 rounded-lg border text-xs ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m === "AUTO" ? "⚡ AUTO" : m}</button>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2">
+                <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Model ({storyModel})</label>
+                <div className="grid grid-cols-3 gap-1">
+                  {["AUTO", "Gemini", "Claude", "AutoGPT"].map((s) => (
+                    <button key={s} onClick={() => setStoryModel(s)} className={`py-1.5 rounded-lg border text-xs ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s === "AUTO" ? "⚡ AUTO" : s}</button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <button onClick={handleGenerate} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm text-black cursor-pointer shadow-xl">
@@ -140,6 +230,7 @@ export default function UnifiedProCineFlow() {
           </div>
         )}
 
+        {/* TAB 2: VAULT */}
         {activeNav === "vault" && (
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-4">
             <h2 className="text-xs font-bold text-cyan-400 uppercase">👤 Character Continuity Vault</h2>
@@ -153,6 +244,7 @@ export default function UnifiedProCineFlow() {
           </div>
         )}
 
+        {/* TAB 3: STUDIO EDITOR */}
         {activeNav === "editor" && (
           <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-4 shadow-xl">
             <div className="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -177,37 +269,6 @@ export default function UnifiedProCineFlow() {
                 {akMinistryActive ? "ENABLED 🟢" : "DISABLED"}
               </button>
             </div>
-
-            <div className="flex gap-1.5 overflow-x-auto bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
-              {[
-                { id: "timeline", label: "🎞️ Multi-Track Timeline" },
-                { id: "basic", label: "✂️ Basic Edit" },
-                { id: "ai", label: "🎥 AI Scene Gen" },
-                { id: "character", label: "👤 Character Edit" },
-                { id: "audio", label: "🔊 Audio Mix (-22dB)" },
-                { id: "color", label: "🎨 Color Grade" }
-              ].map(tab => (
-                <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap cursor-pointer ${activeTab === tab.id ? "bg-cyan-500 text-black shadow-md" : "text-slate-400"}`}>
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {activeTab === "timeline" && (
-              <div className="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-2 text-xs">
-                <span className="text-cyan-400 font-bold uppercase text-[10px]">Multi-Track Timeline</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-400 w-16">Video:</span>
-                  {[1, 2, 3].map(s => (
-                    <button key={s} onClick={() => setActiveScene(s)} className={`px-2.5 py-1 rounded-lg border text-xs ${activeScene === s ? "bg-cyan-500 text-black font-bold" : "bg-slate-900 text-slate-400"}`}>Scene {s}</button>
-                  ))}
-                </div>
-                <div className="flex justify-between text-slate-400">
-                  <span>Voice: 100% Shuddh Hindi (1.5s Pause)</span>
-                  <span className="text-green-400">BGM @ -22dB</span>
-                </div>
-              </div>
-            )}
           </div>
         )}
 
@@ -221,4 +282,5 @@ export default function UnifiedProCineFlow() {
       </div>
     </div>
   );
-}
+      }
+                  
