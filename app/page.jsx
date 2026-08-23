@@ -24,15 +24,15 @@ export default function CineFlowApp() {
   const [isPlayingCompleted, setIsPlayingCompleted] = useState(false);
   const [isPlayingDashboard, setIsPlayingDashboard] = useState(false);
 
-  // Complete 7 Settings States
+  // 7 Settings States
   const [storyPrompt, setStoryPrompt] = useState("");
-  const [visualStyle, setVisualStyle] = useState("Cinematic");
-  const [customStyle, setCustomStyle] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
-  const [voiceLang, setVoiceLang] = useState("Hindi (Pure Shuddh)");
+  const [visualStyle, setVisualStyle] = useState("Cinematic");
+  const [customStyle, setCustomStyle] = useState("");
   const [videoModel, setVideoModel] = useState("Veo");
   const [storyModel, setStoryModel] = useState("Gemini");
+  const [voiceLang, setVoiceLang] = useState("Hindi (Pure Shuddh)");
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const styleCatalog = [
@@ -297,4 +297,4 @@ export default function CineFlowApp() {
             {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Arabic"].map((l) => (
               <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs cursor-pointer ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}</button>
             ))}
-     
+          </di
