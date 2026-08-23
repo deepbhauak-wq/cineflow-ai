@@ -13,10 +13,6 @@ export default function CineFlowApp() {
   const [instaUser, setInstaUser] = useState("");
   const [instaPass, setInstaPass] = useState("");
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
-  
-  const [showSubscriptionPlan, setShowSubscriptionPlan] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState("Pro Director");
-  const [billingCycle, setBillingCycle] = useState("Monthly");
 
   const [storyPrompt, setStoryPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
@@ -105,9 +101,9 @@ export default function CineFlowApp() {
           <p className="text-xs text-slate-400 text-center mb-5">Autonomous Cinema Engine</p>
 
           <div className="w-full grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 mb-5">
-            <button onClick={() => setLoginMethod("google")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "google" ? "bg-cyan-500 text-black" : "text-slate-400"}`}>Gmail</button>
-            <button onClick={() => setLoginMethod("facebook")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "facebook" ? "bg-[#1877F2] text-white" : "text-slate-400"}`}>Facebook</button>
-            <button onClick={() => setLoginMethod("instagram")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "instagram" ? "bg-gradient-to-r from-amber-500 to-purple-600 text-white" : "text-slate-400"}`}>Instagram</button>
+            <button type="button" onClick={() => setLoginMethod("google")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "google" ? "bg-cyan-500 text-black" : "text-slate-400"}`}>Gmail</button>
+            <button type="button" onClick={() => setLoginMethod("facebook")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "facebook" ? "bg-[#1877F2] text-white" : "text-slate-400"}`}>Facebook</button>
+            <button type="button" onClick={() => setLoginMethod("instagram")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "instagram" ? "bg-gradient-to-r from-amber-500 to-purple-600 text-white" : "text-slate-400"}`}>Instagram</button>
           </div>
 
           {loginMethod === "google" && (
@@ -169,9 +165,9 @@ export default function CineFlowApp() {
         </div>
 
         <div className="flex items-center gap-3">
-          <button onClick={() => setShowSubscriptionPlan(true)} className="px-3 py-1.5 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-xs font-mono text-cyan-300 cursor-pointer">
-            ⚡ 55 Cr (Upgrade)
-          </button>
+          <div className="px-3 py-1.5 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-xs font-mono text-cyan-300">
+            ⚡ 55 Cr
+          </div>
           <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold text-white uppercase" title={activeEmail}>
               {activeEmail ? activeEmail.charAt(0) : "U"}
@@ -181,65 +177,13 @@ export default function CineFlowApp() {
         </div>
       </div>
 
-      {showSubscriptionPlan && (
-        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative space-y-6">
-            <button onClick={() => setShowSubscriptionPlan(false)} className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-sm font-bold text-slate-400 hover:text-white">✕</button>
-            
-            <div className="text-center space-y-1">
-              <span className="px-3 py-1 rounded-full bg-cyan-950 border border-cyan-500/40 text-[10px] text-cyan-300 font-semibold uppercase tracking-widest">PRO PLANS & CREDITS</span>
-              <h2 className="text-xl sm:text-2xl font-bold text-white">Choose Your CineFlow AI Plan</h2>
-              <p className="text-xs text-slate-400">Unlock Unlimited Veo / Kling generation, 4K export & Character Vault.</p>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="bg-slate-950 p-1 rounded-xl border border-slate-800 flex items-center gap-1">
-                <button onClick={() => setBillingCycle("Monthly")} className={`px-4 py-1.5 rounded-lg text-xs font-medium transition ${billingCycle === "Monthly" ? "bg-cyan-500 text-black font-bold" : "text-slate-400"}`}>Monthly Billing</button>
-                <button onClick={() => setBillingCycle("Yearly")} className={`px-4 py-1.5 rounded-lg text-xs font-medium transition ${billingCycle === "Yearly" ? "bg-cyan-500 text-black font-bold" : "text-slate-400"}`}>Yearly (Save 40%)</button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-              {[
-                { name: "Starter Creator", price: billingCycle === "Monthly" ? "$19" : "$12", credits: "300 Cr/mo", desc: "For individual social creators." },
-                { name: "Pro Director", price: billingCycle === "Monthly" ? "$49" : "$29", credits: "1,200 Cr/mo", desc: "Full Veo/Kling access & 4K export." },
-                { name: "Studio Enterprise", price: billingCycle === "Monthly" ? "$149" : "$99", credits: "5,000 Cr/mo", desc: "For professional film production." },
-                { name: "Mega Cinematic Ultra", price: billingCycle === "Monthly" ? "$299" : "$199", credits: "Unlimited Cr", desc: "Dedicated GPU clusters & VIP support." }
-              ].map((plan) => (
-                <div 
-                  key={plan.name}
-                  onClick={() => setSelectedPlan(plan.name)}
-                  className={`rounded-2xl p-4 border cursor-pointer transition flex flex-col justify-between ${
-                    selectedPlan === plan.name ? "bg-cyan-950/40 border-cyan-500 ring-2 ring-cyan-500/30" : "bg-slate-950 border-slate-800 hover:border-slate-700"
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <h3 className="text-xs font-bold text-white">{plan.name}</h3>
-                      {selectedPlan === plan.name && <span className="text-[9px] bg-cyan-500 text-black px-1.5 py-0.5 rounded font-bold">Active</span>}
-                    </div>
-                    <div className="text-lg font-extrabold text-cyan-400">{plan.price}<span className="text-[10px] text-slate-400 font-normal">/mo</span></div>
-                    <p className="text-[10px] text-cyan-300 font-semibold">{plan.credits}</p>
-                    <p className="text-[10px] text-slate-400">{plan.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button onClick={() => { setShowSubscriptionPlan(false); alert(`Successfully subscribed to ${selectedPlan}!`); }} className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-xs text-black shadow-lg cursor-pointer">
-              UNLOCK {selectedPlan.toUpperCase()} NOW 🚀
-            </button>
-          </div>
-        </div>
-      )}
-
       <div className="max-w-4xl mx-auto space-y-5">
         
         {/* Full-Size Cinematic Player View */}
         <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-6 space-y-3 shadow-2xl">
           <div className="flex items-center justify-between">
             <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Full-Size Cinematic Player View</label>
-            <button onClick={() => setShowSubscriptionPlan(true)} className="text-[10px] text-cyan-300 underline cursor-pointer">View Subscription Plans</button>
+            <span className="text-[10px] text-slate-400">Live 4K HDR Preview</span>
           </div>
 
           <div className="w-full aspect-video rounded-2xl overflow-hidden border border-slate-700 bg-black relative flex items-center justify-center shadow-inner group">
@@ -285,4 +229,88 @@ export default function CineFlowApp() {
             {styleCatalog.map((s) => (
               <div
                 key={s.name}
-        
+                onClick={() => setVisualStyle(s.name)}
+                className={`relative rounded-xl overflow-hidden border cursor-pointer group transition ${
+                  visualStyle === s.name ? "border-cyan-400 ring-2 ring-cyan-500/30" : "border-slate-800 opacity-75 hover:opacity-100"
+                }`}
+              >
+                <img src={s.img} alt={s.name} className="w-full h-16 object-cover group-hover:scale-105 transition duration-300" />
+                <div className="absolute inset-x-0 bottom-0 bg-black/80 p-1 text-center">
+                  <p className="text-[10px] font-medium text-white truncate">{s.name}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white mt-2 focus:outline-none"/>
+        </div>
+
+        {/* 3 & 4. Aspect Ratio & Duration */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">3. Aspect Ratio</label>
+            <div className="grid grid-cols-3 gap-2">
+              {["16:9", "9:16", "21:9", "4:3", "1:1", "Auto"].map((ratio) => (
+                <button key={ratio} onClick={() => setAspectRatio(ratio)} className={`py-2 rounded-xl border text-xs font-semibold transition ${aspectRatio === ratio ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{ratio}</button>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">4. Timeline Tier</label>
+            <div className="grid grid-cols-2 gap-2">
+              {["3 Min (18 Scenes)", "15 Min (90 Scenes)", "30 Min (180 Scenes)", "60 Min (360 Scenes)"].map((tier) => (
+                <button key={tier} onClick={() => setDuration(tier)} className={`py-2 px-1 rounded-xl border text-[11px] font-semibold transition ${duration === tier ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{tier}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 5. Voiceover & Languages */}
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">5. Voiceover & Languages</label>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Indonesian", "French", "German", "Arabic", "All Languages"].map((lang) => (
+              <button key={lang} onClick={() => setVoiceLang(lang)} className={`py-2 px-2 rounded-xl border text-xs transition ${voiceLang === lang ? "bg-cyan-500/20 border-cyan-500 text-white font-semibold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{lang}</button>
+            ))}
+          </div>
+        </div>
+
+        {/* 6 & 7. Video & Story Engines */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">6. Video Engine Model</label>
+            <div className="grid grid-cols-3 gap-2">
+              {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
+                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs font-semibold transition ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">7. Story Engine Model</label>
+            <div className="grid grid-cols-3 gap-2">
+              {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
+                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Generate CTA Button */}
+        <button onClick={handleGenerate} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm tracking-wide shadow-xl shadow-cyan-500/25 hover:opacity-95 transition flex items-center justify-center gap-2 cursor-pointer">
+          {loading ? "Generating Film..." : "🚀 GENERATE AUTONOMOUS CINEMA FILM"}
+        </button>
+      </div>
+
+      {/* Floating Bottom Navigation (Right Side Only) */}
+      <div className="fixed bottom-4 inset-x-0 flex justify-end z-50 px-6 pointer-events-none">
+        <div className="bg-slate-900/95 border border-slate-700 rounded-full px-4 py-2 shadow-2xl flex items-center gap-3 pointer-events-auto">
+          <span className="text-[11px] text-slate-400 font-medium tracking-wide">Next Step</span>
+          <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm flex items-center justify-center shadow-lg shadow-cyan-500/30 transition active:scale-95 cursor-pointer" title="Timeline Editor">
+            →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
