@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function CineFlowApp() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginMethod, setLoginMethod] = useState("google");
-  
+
   const [gEmail, setGEmail] = useState("");
   const [gPass, setGPass] = useState("");
   const [showGP, setShowGP] = useState(false);
@@ -21,16 +21,14 @@ export default function CineFlowApp() {
 
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
 
-  // All 7 Settings States Fully Restored
   const [storyPrompt, setStoryPrompt] = useState("");
-  const [visualStyle, setVisualStyle] = useState("Cinematic");
-  const [customStyle, setCustomStyle] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
-  const [voiceLang, setVoiceLang] = useState("Hindi (Pure Shuddh)");
+  const [visualStyle, setVisualStyle] = useState("Cinematic");
+  const [customStyle, setCustomStyle] = useState("");
   const [videoModel, setVideoModel] = useState("Veo");
   const [storyModel, setStoryModel] = useState("Gemini");
-
+  const [voiceLang, setVoiceLang] = useState("Hindi (Pure Shuddh)");
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const styleCatalog = [
@@ -86,8 +84,11 @@ export default function CineFlowApp() {
       <div className="min-h-screen w-full bg-[#0a0d14] flex flex-col items-center justify-center p-4 text-white font-sans">
         <div className="w-full max-w-sm rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl flex flex-col items-center">
           
-          <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-xl shadow-cyan-500/20 mb-4 border border-cyan-500/40">
-            <img src="https://i.ibb.co/3w513qJ7/32938.jpg" alt="Logo" className="w-full h-full object-cover" />
+          {/* Exact CineFlow AI Circular Play Logo */}
+          <div className="w-20 h-20 rounded-2xl bg-black border border-cyan-500/40 p-2 flex items-center justify-center shadow-xl shadow-cyan-500/20 mb-4">
+            <div className="w-full h-full rounded-full bg-gradient-to-tr from-cyan-400 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg">
+              <span className="text-2xl text-white font-black pl-1">▶</span>
+            </div>
           </div>
 
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-1 text-center">CineFlow AI Pro</h1>
@@ -173,8 +174,10 @@ export default function CineFlowApp() {
       {/* Top Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl overflow-hidden border border-cyan-500/40 shadow-md">
-            <img src="https://i.ibb.co/3w513qJ7/32938.jpg" alt="Logo" className="w-full h-full object-cover"/>
+          <div className="w-9 h-9 rounded-xl bg-black border border-cyan-500/40 p-1 flex items-center justify-center shadow-md">
+            <div className="w-full h-full rounded-full bg-gradient-to-tr from-cyan-400 via-indigo-500 to-purple-500 flex items-center justify-center">
+              <span className="text-xs text-white font-black pl-0.5">▶</span>
+            </div>
           </div>
           <h1 className="text-base sm:text-lg font-bold tracking-tight text-white">CineFlow AI</h1>
         </div>
@@ -200,17 +203,17 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* SETTING 1: Master Story & Reference Image */}
+        {/* 1. Master Story & Reference Image */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
-          <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here... AI will auto-decompose into scenes." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none"/>
+          <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none"/>
           <label className="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-cyan-300 cursor-pointer inline-flex items-center gap-2">
             <span>🖼️ Upload Reference Photo</span>
             <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files[0]; if (f) setUploadedImage(URL.createObjectURL(f)); }} className="hidden"/>
           </label>
         </div>
 
-        {/* SETTING 2: Visual Art Style */}
+        {/* 2. Visual Art Style */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-64 overflow-y-auto">
@@ -224,7 +227,7 @@ export default function CineFlowApp() {
           <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
         </div>
 
-        {/* SETTING 3 & 4: Aspect Ratio & Timeline Tier */}
+        {/* 3 & 4. Aspect Ratio & Duration */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
             <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
@@ -239,13 +242,13 @@ export default function CineFlowApp() {
             <label className="text-xs font-semibold text-cyan-400 uppercase">4. Timeline Tier</label>
             <div className="grid grid-cols-2 gap-2">
               {["3 Min (18 Scenes)", "15 Min (90 Scenes)", "30 Min (180 Scenes)", "60 Min (360 Scenes)"].map((t) => (
-                <button key={t} onClick={() => setDuration(t)} className={`py-2 rounded-xl border text-[11px] ${duration === t ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{t}</button>
+                <button key={t} onClick={() => setDuration(t)} className={`py-2 px-1 rounded-xl border text-[11px] ${duration === t ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{t}</button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* SETTING 5: Voiceover & Languages */}
+        {/* 5. Voiceover & Languages */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
           <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -255,13 +258,13 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        {/* SETTING 6 & 7: Video Engine & Story Engine Models */}
+        {/* 6 & 7. Video Engine & Story Engine Models */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
             <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Engine Model</label>
             <div className="grid grid-cols-3 gap-2">
               {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
-                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
+                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs font-semibold transition ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
               ))}
             </div>
           </div>
@@ -270,17 +273,10 @@ export default function CineFlowApp() {
             <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Engine Model</label>
             <div className="grid grid-cols-3 gap-2">
               {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
-                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
+                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
               ))}
             </div>
           </div>
         </div>
 
-        <button onClick={() => window.location.href = "/studio/editor"} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm text-black cursor-pointer shadow-xl">
-          🚀 GENERATE AUTONOMOUS CINEMA FILM
-        </button>
-      </div>
-
-      <div className="fixed bottom-4 inset-x-0 flex justify-end z-50 px-6">
-        <div className="bg-slate-900 border border-slate-700 rounded-full px-4 py-2 shadow-2xl flex items-center gap-3">
-  
+        <button onClick={() => window.location.href = "/studio/editor"} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-b
