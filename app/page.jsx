@@ -123,7 +123,6 @@ export default function CineFlowApp() {
 
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans overflow-x-hidden pb-28">
-      
       {/* Top Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
@@ -147,7 +146,6 @@ export default function CineFlowApp() {
 
       {/* Main Stacked Content Form */}
       <div className="max-w-4xl mx-auto space-y-5">
-        
         {/* 1. Master Story Input & Reference Image */}
         <div className="bg-[#0f1422] border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-4">
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">1. Master Story & Reference Image</label>
@@ -251,4 +249,4 @@ export default function CineFlowApp() {
 
       {/* Floating Bottom Navigation Bar */}
       <div className="fixed bottom-4 inset-x-0 flex justify-center z-50 px-4 pointer-events-none">
-        <div className="bg-[#0f1422]/90 backdrop-blur-lg border border-slate-700/80 rounded-full px-5 py-2.5 
+        <div className="bg-[#0f1422]/90 backdrop-blur-lg border border-slate-700/80 rounded-full px-5 py-2.5 shadow-2xl flex 
