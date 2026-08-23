@@ -8,9 +8,10 @@ export default function CineFlowApp() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // Studio Settings States
   const [storyPrompt, setStoryPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
-  const [duration, setDuration] = useState("3 Min");
+  const [duration, setDuration] = useState("3 Min (18 Scenes)");
   const [visualStyle, setVisualStyle] = useState("Cinematic");
   const [customStyle, setCustomStyle] = useState("");
   const [videoModel, setVideoModel] = useState("Veo");
@@ -19,7 +20,7 @@ export default function CineFlowApp() {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const styles = [
+  const styleCatalog = [
     { name: "Realistic", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=60" },
     { name: "Cinematic", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=200&auto=format&fit=crop&q=60" },
     { name: "Epic", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200&auto=format&fit=crop&q=60" },
@@ -31,9 +32,14 @@ export default function CineFlowApp() {
     { name: "Pixar-like", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200&auto=format&fit=crop&q=60" },
     { name: "Illustration", img: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=200&auto=format&fit=crop&q=60" },
     { name: "Comic Book", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=200&auto=format&fit=crop&q=60" },
+    { name: "Picture Book", img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=200&auto=format&fit=crop&q=60" },
+    { name: "Classical", img: "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=200&auto=format&fit=crop&q=60" },
+    { name: "Handcrafted", img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=200&auto=format&fit=crop&q=60" },
+    { name: "Flat Art", img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=200&auto=format&fit=crop&q=60" },
+    { name: "Simple Sketch", img: "https://images.unsplash.com/photo-1580196969807-cc6de06c05be?w=200&auto=format&fit=crop&q=60" },
     { name: "Anime", img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=200&auto=format&fit=crop&q=60" },
     { name: "Fantasy", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200&auto=format&fit=crop&q=60" },
-    { name: "Dark Cinema", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=200&auto=format&fit=crop&q=60" }
+    { name: "Dark Cinematic", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=200&auto=format&fit=crop&q=60" }
   ];
 
   useEffect(() => {
@@ -58,38 +64,48 @@ export default function CineFlowApp() {
     setIsLoggedIn(false);
   };
 
-  const handleUpload = (e) => {
-    const f = e.target.files[0];
-    if (f) setUploadedImage(URL.createObjectURL(f));
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setUploadedImage(URL.createObjectURL(file));
+    }
   };
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-[#0a0d14] flex flex-col items-center justify-center p-4 text-white">
-        <div className="w-full max-w-sm rounded-3xl bg-slate-900 border border-slate-800 p-6 flex flex-col items-center">
-          <div className="w-12 h-12 rounded-2xl bg-cyan-500 flex items-center justify-center text-2xl mb-3">🎬</div>
-          <h1 className="text-xl font-bold mb-1">CineFlow AI</h1>
-          <p className="text-xs text-slate-400 mb-6">Autonomous Cinema Studio</p>
+      <div className="min-h-screen w-full bg-[#0a0d14] flex flex-col items-center justify-center p-4 text-white font-sans">
+        <div className="w-full max-w-sm rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl flex flex-col items-center">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 mb-4">
+            <span className="text-2xl">🎬</span>
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-1 text-center">CineFlow AI Pro Studio</h1>
+          <p className="text-xs text-slate-400 text-center mb-6">Autonomous Cinema Engine</p>
 
-          <div className="w-full space-y-2 mb-4">
-            <button onClick={() => handleLogin("google.user@gmail.com")} className="w-full py-2.5 px-4 rounded-xl bg-slate-800 border border-slate-700 text-xs font-semibold">
+          <div className="w-full flex flex-col gap-3">
+            <button type="button" onClick={() => handleLogin("google.user@gmail.com")} className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center gap-3 text-sm font-medium">
               Continue with Google / Gmail
             </button>
-            <button onClick={() => handleLogin("facebook.user@fb.com")} className="w-full py-2.5 px-4 rounded-xl bg-slate-800 border border-slate-700 text-xs font-semibold">
+            <button type="button" onClick={() => handleLogin("facebook.user@fb.com")} className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center gap-3 text-sm font-medium">
               Continue with Facebook
             </button>
-            <button onClick={() => handleLogin("instagram.user@insta.com")} className="w-full py-2.5 px-4 rounded-xl bg-slate-800 border border-slate-700 text-xs font-semibold">
+            <button type="button" onClick={() => handleLogin("instagram.user@insta.com")} className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center gap-3 text-sm font-medium">
               Continue with Instagram
             </button>
           </div>
 
-          <form onSubmit={(e) => { e.preventDefault(); handleLogin(email); }} className="w-full space-y-3">
-            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@email.com" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"/>
+          <div className="w-full flex items-center my-5">
+            <div className="flex-1 h-px bg-slate-800"></div>
+            <span className="px-3 text-[10px] tracking-widest text-slate-500 font-semibold uppercase">OR CREDENTIALS</span>
+            <div className="flex-1 h-px bg-slate-800"></div>
+          </div>
+
+          <form onSubmit={(e) => { e.preventDefault(); handleLogin(email); }} className="w-full space-y-3.5">
+            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@email.com" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"/>
             <div className="relative">
-              <input type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"/>
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-2 text-[10px] text-slate-400">{showPassword ? "Hide" : "Show"}</button>
+              <input type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"/>
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-2.5 text-xs text-slate-400">{showPassword ? "Hide" : "Show"}</button>
             </div>
-            <button type="submit" className="w-full py-2.5 rounded-xl bg-cyan-500 font-bold text-xs text-black">SIGN IN</button>
+            <button type="submit" className="w-full mt-2 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold text-sm shadow-lg text-white">SIGN IN</button>
           </form>
         </div>
       </div>
@@ -97,80 +113,140 @@ export default function CineFlowApp() {
   }
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 pb-28">
+    <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28">
       {/* Top Header */}
-      <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-3 mb-5">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-cyan-500 flex items-center justify-center text-sm">🎬</div>
-          <h1 className="text-base font-bold">CineFlow AI</h1>
+      <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-base">🎬</div>
+          <h1 className="text-base sm:text-lg font-bold tracking-tight text-white">CineFlow AI</h1>
         </div>
+
         <div className="flex items-center gap-3">
-          <span className="px-2.5 py-1 rounded-lg bg-cyan-950 border border-cyan-500/40 text-xs font-mono text-cyan-300">⚡ 55 Cr</span>
-          <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold uppercase">{email.charAt(0)}</div>
-          <button onClick={handleLogout} className="text-xs text-red-400">Logout</button>
+          <div className="px-3 py-1.5 rounded-xl bg-cyan-950/40 border border-cyan-500/40 text-xs font-mono text-cyan-300">
+            ⚡ 55 Cr
+          </div>
+          <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-xs font-bold text-white uppercase" title={email}>
+              {email ? email.charAt(0) : "U"}
+            </div>
+            <button onClick={handleLogout} className="text-xs text-red-400 hover:underline">Logout</button>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto space-y-4">
-        {/* Story Input & Reference Upload */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
-          <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
-          <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Story topic..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none"/>
-          <div className="flex items-center gap-3">
-            <label className="px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-cyan-300 cursor-pointer">
-              <span>🖼️ Upload Gallery Photo</span>
-              <input type="file" accept="image/*" onChange={handleUpload} className="hidden"/>
+      <div className="max-w-4xl mx-auto space-y-5">
+        {/* 1. Master Story & Image Upload */}
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
+          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">1. Master Story & Reference Image</label>
+          <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here... AI will auto-decompose into scenes." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs sm:text-sm text-white focus:outline-none"/>
+          
+          <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 border-t border-slate-800">
+            <label className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-medium text-cyan-300 cursor-pointer flex items-center justify-center gap-2">
+              <span>🖼️ Upload Reference Photo from Gallery</span>
+              <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden"/>
             </label>
-            {uploadedImage && <span className="text-xs text-green-400">Attached ✓</span>}
+            {uploadedImage ? (
+              <div className="flex items-center gap-3 bg-slate-950 border border-slate-800 p-2 rounded-xl w-full sm:w-auto">
+                <img src={uploadedImage} alt="Preview" className="w-10 h-10 rounded-lg object-cover border border-cyan-500/40"/>
+                <div className="text-xs">
+                  <p className="font-semibold text-cyan-300">Reference Photo Attached ✓</p>
+                  <button onClick={() => setUploadedImage(null)} className="text-[10px] text-red-400 hover:underline">Remove</button>
+                </div>
+              </div>
+            ) : <span className="text-[11px] text-slate-500">No reference image selected</span>}
           </div>
         </div>
 
-        {/* Visual Styles */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
-          <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Style ({visualStyle})</label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
-            {styles.map((s) => (
-              <div key={s.name} onClick={() => setVisualStyle(s.name)} className={`rounded-xl overflow-hidden border cursor-pointer ${visualStyle === s.name ? "border-cyan-400" : "border-slate-800"}`}>
-                <img src={s.img} alt={s.name} className="w-full h-14 object-cover"/>
-                <p className="text-[10px] text-center p-1 bg-black truncate">{s.name}</p>
+        {/* 2. Visual Style Selection */}
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">2. Visual Art Style ({visualStyle})</label>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-72 overflow-y-auto pr-1">
+            {styleCatalog.map((s) => (
+              <div
+                key={s.name}
+                onClick={() => setVisualStyle(s.name)}
+                className={`relative rounded-xl overflow-hidden border cursor-pointer group transition ${
+                  visualStyle === s.name ? "border-cyan-400 ring-2 ring-cyan-500/30" : "border-slate-800 opacity-75 hover:opacity-100"
+                }`}
+              >
+                <img src={s.img} alt={s.name} className="w-full h-16 object-cover group-hover:scale-105 transition duration-300" />
+                <div className="absolute inset-x-0 bottom-0 bg-black/80 p-1 text-center">
+                  <p className="text-[10px] font-medium text-white truncate">{s.name}</p>
+                </div>
               </div>
             ))}
           </div>
-          <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Custom Style..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"/>
+          <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white mt-2 focus:outline-none"/>
         </div>
 
-        {/* Settings Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4">
-            <label className="text-xs font-semibold text-cyan-400 uppercase block mb-2">3. Aspect Ratio</label>
+        {/* 3 & 4. Aspect Ratio & Duration Tiers */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">3. Aspect Ratio</label>
             <div className="grid grid-cols-3 gap-2">
-              {["16:9", "9:16", "21:9"].map((r) => (
-                <button key={r} onClick={() => setAspectRatio(r)} className={`py-2 text-xs rounded-xl border ${aspectRatio === r ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{r}</button>
+              {["16:9", "9:16", "21:9", "4:3", "1:1", "Auto"].map((ratio) => (
+                <button key={ratio} onClick={() => setAspectRatio(ratio)} className={`py-2 rounded-xl border text-xs font-semibold transition ${aspectRatio === ratio ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{ratio}</button>
               ))}
             </div>
           </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4">
-            <label className="text-xs font-semibold text-cyan-400 uppercase block mb-2">4. Duration</label>
-            <div className="grid grid-cols-3 gap-2">
-              {["3 Min", "15 Min", "30 Min"].map((d) => (
-                <button key={d} onClick={() => setDuration(d)} className={`py-2 text-xs rounded-xl border ${duration === d ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{d}</button>
+
+          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">4. Timeline Tier</label>
+            <div className="grid grid-cols-2 gap-2">
+              {["3 Min (18 Scenes)", "15 Min (90 Scenes)", "30 Min (180 Scenes)", "60 Min (360 Scenes)"].map((tier) => (
+                <button key={tier} onClick={() => setDuration(tier)} className={`py-2 px-1 rounded-xl border text-[11px] font-semibold transition ${duration === tier ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{tier}</button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Generate Button */}
-        <button onClick={() => { setLoading(true); setTimeout(() => { setLoading(false); window.location.href = "/studio/editor"; }, 1000); }} className="w-full py-3.5 rounded-2xl bg-cyan-500 font-bold text-xs text-black">
-          {loading ? "Processing..." : "🚀 GENERATE CINEMA FILM"}
+        {/* 5. Voiceover & Languages */}
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+          <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">5. Voiceover & Languages</label>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Indonesian", "French", "German", "Arabic", "All Languages"].map((lang) => (
+              <button key={lang} onClick={() => setVoiceLang(lang)} className={`py-2 px-2 rounded-xl border text-xs transition ${voiceLang === lang ? "bg-cyan-500/20 border-cyan-500 text-white font-semibold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{lang}</button>
+            ))}
+          </div>
+        </div>
+
+        {/* 6. AI Video & Story Engines */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">6. Video Engine Model</label>
+            <div className="grid grid-cols-3 gap-2">
+              {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
+                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs font-semibold transition ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">7. Story Engine Model</label>
+            <div className="grid grid-cols-3 gap-2">
+              {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
+                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Generate CTA Button */}
+        <button onClick={() => { setLoading(true); setTimeout(() => { setLoading(false); window.location.href = "/studio/editor"; }, 1200); }} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm tracking-wide shadow-xl shadow-cyan-500/25 hover:opacity-95 transition flex items-center justify-center gap-2 cursor-pointer">
+          {loading ? "Generating Film Tracks..." : "🚀 GENERATE AUTONOMOUS CINEMA FILM"}
         </button>
       </div>
 
-      {/* Floating Bottom Nav */}
-      <div className="fixed bottom-4 inset-x-0 flex justify-center z-50">
-        <div className="bg-slate-900 border border-slate-700 rounded-full px-5 py-2 shadow-2xl flex items-center gap-6">
-          <Link href="/character-vault" className="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-slate-300 text-xs">←</Link>
-          <span className="text-xs text-slate-400">Flow</span>
-          <Link href="/studio/editor" className="w-8 h-8 rounded-full bg-cyan-500 text-black flex items-center justify-center text-xs font-bold">→</Link>
+      {/* Floating Bottom Reels-Style Flow Navigation */}
+      <div className="fixed bottom-4 inset-x-0 flex justify-center z-50 px-4 pointer-events-none">
+        <div className="bg-slate-900/95 border border-slate-700 rounded-full px-5 py-2.5 shadow-2xl flex items-center gap-6 pointer-events-auto">
+          <Link href="/character-vault" className="w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-600 flex items-center justify-center text-slate-300 font-bold text-sm transition active:scale-95" title="Character Vault">
+            ←
+          </Link>
+          <span className="text-xs font-medium text-slate-400 tracking-wide">Flow Navigation</span>
+          <Link href="/studio/editor" className="w-10 h-10 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm flex items-center justify-center shadow-lg shadow-cyan-500/30 transition active:scale-95" title="Timeline Editor">
+            →
+          </Link>
         </div>
       </div>
     </div>
