@@ -41,13 +41,6 @@ export default function CineFlowApp() {
     { name: "3D Cartoon", img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=200&auto=format&fit=crop&q=60" },
     { name: "Disney-like", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=200&auto=format&fit=crop&q=60" },
     { name: "Pixar-like", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=200&auto=format&fit=crop&q=60" },
-    { name: "Illustration", img: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=200&auto=format&fit=crop&q=60" },
-    { name: "Comic Book", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=200&auto=format&fit=crop&q=60" },
-    { name: "Picture Book", img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=200&auto=format&fit=crop&q=60" },
-    { name: "Classical", img: "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=200&auto=format&fit=crop&q=60" },
-    { name: "Handcrafted", img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=200&auto=format&fit=crop&q=60" },
-    { name: "Flat Art", img: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=200&auto=format&fit=crop&q=60" },
-    { name: "Simple Sketch", img: "https://images.unsplash.com/photo-1580196969807-cc6de06c05be?w=200&auto=format&fit=crop&q=60" },
     { name: "Anime", img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=200&auto=format&fit=crop&q=60" },
     { name: "Fantasy", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200&auto=format&fit=crop&q=60" },
     { name: "Dark Cinematic", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=200&auto=format&fit=crop&q=60" }
@@ -84,7 +77,6 @@ export default function CineFlowApp() {
       <div className="min-h-screen w-full bg-[#0a0d14] flex flex-col items-center justify-center p-4 text-white font-sans">
         <div className="w-full max-w-sm rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl flex flex-col items-center">
           
-          {/* Exact CineFlow AI Circular Play Logo */}
           <div className="w-20 h-20 rounded-2xl bg-black border border-cyan-500/40 p-2 flex items-center justify-center shadow-xl shadow-cyan-500/20 mb-4">
             <div className="w-full h-full rounded-full bg-gradient-to-tr from-cyan-400 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg">
               <span className="text-2xl text-white font-black pl-1">▶</span>
@@ -216,7 +208,7 @@ export default function CineFlowApp() {
         {/* 2. Visual Art Style */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-64 overflow-y-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5 max-h-64 overflow-y-auto">
             {styleCatalog.map((s) => (
               <div key={s.name} onClick={() => setVisualStyle(s.name)} className={`relative rounded-xl overflow-hidden border cursor-pointer ${visualStyle === s.name ? "border-cyan-400 ring-2 ring-cyan-500/30" : "border-slate-800"}`}>
                 <img src={s.img} alt={s.name} className="w-full h-16 object-cover"/>
@@ -224,7 +216,7 @@ export default function CineFlowApp() {
               </div>
             ))}
           </div>
-          <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
+          <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white mt-2 focus:outline-none"/>
         </div>
 
         {/* 3 & 4. Aspect Ratio & Duration */}
@@ -279,4 +271,17 @@ export default function CineFlowApp() {
           </div>
         </div>
 
-        <button onClick={() => window.location.href = "/studio/editor"} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-b
+        <button onClick={() => window.location.href = "/studio/editor"} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm text-black cursor-pointer shadow-xl">
+          🚀 GENERATE AUTONOMOUS CINEMA FILM
+        </button>
+      </div>
+
+      <div className="fixed bottom-4 inset-x-0 flex justify-end z-50 px-6">
+        <div className="bg-slate-900 border border-slate-700 rounded-full px-4 py-2 shadow-2xl flex items-center gap-3">
+          <span className="text-[11px] text-slate-400">Next</span>
+          <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 text-black flex items-center justify-center font-bold">→</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
