@@ -9,7 +9,6 @@ export default function CineFlowApp() {
   const [gEmail, setGEmail] = useState("");
   const [gPass, setGPass] = useState("");
   const [showGP, setShowGP] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
 
   const [fbU, setFbU] = useState("");
   const [fbP, setFbP] = useState("");
@@ -20,9 +19,13 @@ export default function CineFlowApp() {
   const [showInstaP, setShowInstaP] = useState(false);
 
   const [activeEmail, setActiveEmail] = useState("user@gmail.com");
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isGeneratingPlaying, setIsGeneratingPlaying] = useState(true);
+  
+  // States for generation and final completed video player
+  const [loading, setLoading] = useState(false);
+  const [isCompletedModalOpen, setIsCompletedModalOpen] = useState(false);
+  const [isPlayingFinal, setIsPlayingFinal] = useState(false);
 
+  // All 7 Studio Settings States
   const [storyPrompt, setStoryPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [duration, setDuration] = useState("3 Min (18 Scenes)");
@@ -32,7 +35,6 @@ export default function CineFlowApp() {
   const [storyModel, setStoryModel] = useState("Gemini");
   const [voiceLang, setVoiceLang] = useState("Hindi (Pure Shuddh)");
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const styleCatalog = [
     { name: "Realistic", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=60" },
@@ -49,6 +51,7 @@ export default function CineFlowApp() {
     { name: "Dark Cinematic", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=200&auto=format&fit=crop&q=60" }
   ];
 
+  // Permanent Login Session Check on Load
   useEffect(() => {
     const saved = localStorage.getItem("cineflow_logged_in");
     const savedEmail = localStorage.getItem("cineflow_user_email");
@@ -65,10 +68,10 @@ export default function CineFlowApp() {
     if (m === "facebook") email = fbU ? fbU + "@fb.com" : "fb@user.com";
     if (m === "instagram") email = instaU ? instaU + "@insta.com" : "insta@user.com";
 
-    if (rememberMe) {
-      localStorage.setItem("cineflow_logged_in", "true");
-      localStorage.setItem("cineflow_user_email", email);
-    }
+    // Permanently save to localStorage
+    localStorage.setItem("cineflow_logged_in", "true");
+    localStorage.setItem("cineflow_user_email", email);
+    
     setActiveEmail(email);
     setIsLoggedIn(true);
   };
@@ -83,8 +86,8 @@ export default function CineFlowApp() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      window.location.href = "/studio/editor";
-    }, 3000);
+      setIsCompletedModalOpen(true); // Open final completed video modal
+    }, 3500);
   };
 
   if (!isLoggedIn) {
@@ -120,11 +123,7 @@ export default function CineFlowApp() {
                   <button type="button" onClick={() => setShowGP(!showGP)} className="absolute right-3 top-2 text-[10px] text-cyan-400 font-semibold cursor-pointer">{showGP ? "Hide" : "Show"}</button>
                 </div>
               </div>
-              <div className="flex items-center gap-2 pt-1">
-                <input type="checkbox" id="remG" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} className="w-4 h-4 accent-cyan-500 cursor-pointer"/>
-                <label htmlFor="remG" className="text-[11px] text-slate-300 cursor-pointer">Remember me (Auto-Login)</label>
-              </div>
-              <button type="submit" className="w-full py-3 rounded-xl bg-cyan-500 font-bold text-xs text-black cursor-pointer">SIGN IN WITH GMAIL</button>
+              <button type="submit" className="w-full py-3 rounded-xl bg-cyan-500 font-bold text-xs text-black cursor-pointer mt-2">PERMANENT SIGN IN</button>
             </form>
           )}
 
@@ -141,11 +140,7 @@ export default function CineFlowApp() {
                   <button type="button" onClick={() => setShowFbP(!showFbP)} className="absolute right-3 top-2 text-[10px] text-cyan-400 font-semibold cursor-pointer">{showFbP ? "Hide" : "Show"}</button>
                 </div>
               </div>
-              <div className="flex items-center gap-2 pt-1">
-                <input type="checkbox" id="remFb" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} className="w-4 h-4 accent-cyan-500 cursor-pointer"/>
-                <label htmlFor="remFb" className="text-[11px] text-slate-300 cursor-pointer">Remember me (Auto-Login)</label>
-              </div>
-              <button type="submit" className="w-full py-3 rounded-xl bg-[#1877F2] font-bold text-xs text-white cursor-pointer">SIGN IN WITH FACEBOOK</button>
+              <button type="submit" className="w-full py-3 rounded-xl bg-[#1877F2] font-bold text-xs text-white cursor-pointer mt-2">PERMANENT SIGN IN</button>
             </form>
           )}
 
@@ -162,11 +157,7 @@ export default function CineFlowApp() {
                   <button type="button" onClick={() => setShowInstaP(!showInstaP)} className="absolute right-3 top-2 text-[10px] text-cyan-400 font-semibold cursor-pointer">{showInstaP ? "Hide" : "Show"}</button>
                 </div>
               </div>
-              <div className="flex items-center gap-2 pt-1">
-                <input type="checkbox" id="remInsta" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} className="w-4 h-4 accent-cyan-500 cursor-pointer"/>
-                <label htmlFor="remInsta" className="text-[11px] text-slate-300 cursor-pointer">Remember me (Auto-Login)</label>
-              </div>
-              <button type="submit" className="w-full py-3 rounded-xl bg-purple-600 font-bold text-xs text-white cursor-pointer">SIGN IN WITH INSTAGRAM</button>
+              <button type="submit" className="w-full py-3 rounded-xl bg-purple-600 font-bold text-xs text-white cursor-pointer mt-2">PERMANENT SIGN IN</button>
             </form>
           )}
 
@@ -178,29 +169,49 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28 relative">
       
+      {/* LOADING SPINNER OVERLAY */}
       {loading && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-6 space-y-4">
-          <div className="w-full max-w-lg aspect-video rounded-3xl overflow-hidden border border-cyan-500/50 bg-black relative flex items-center justify-center shadow-2xl">
-            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1000&auto=format&fit=crop&q=80" alt="" className={`w-full h-full object-cover transition duration-500 ${isGeneratingPlaying ? "scale-105 opacity-100 animate-pulse" : "opacity-60"}`}/>
-            
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4">
-              <span className="text-xs font-bold text-cyan-300">⚡ Generating Autonomous AI Film...</span>
-              <p className="text-[10px] text-slate-300">Decomposing Scenes • Applying {visualStyle} Style</p>
-            </div>
-
-            <button onClick={() => setIsGeneratingPlaying(!isGeneratingPlaying)} className="absolute inset-0 flex items-center justify-center cursor-pointer">
-              <div className="w-16 h-16 rounded-full bg-cyan-500/90 backdrop-blur-md flex items-center justify-center text-black text-2xl shadow-xl shadow-cyan-500/40 hover:scale-110 transition">
-                {isGeneratingPlaying ? "❚❚" : "▶"}
-              </div>
-            </button>
-          </div>
+          <div className="w-16 h-16 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"></div>
           <div className="text-center space-y-1">
-            <p className="text-sm font-bold text-cyan-400">Rendering Tracks in Progress...</p>
-            <p className="text-xs text-slate-400">Please wait while Veo & Gemini compile your masterwork.</p>
+            <p className="text-sm font-bold text-cyan-400">Rendering Autonomous AI Film...</p>
+            <p className="text-xs text-slate-400">Compiling Veo video tracks & Hindi voiceover...</p>
           </div>
         </div>
       )}
 
+      {/* FINAL COMPLETED VIDEO PLAYER MODAL */}
+      {isCompletedModalOpen && (
+        <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex flex-col items-center justify-center p-4">
+          <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="px-3 py-1 rounded-full bg-green-500/20 border border-green-500/40 text-[10px] text-green-300 font-bold uppercase">🎉 Generation Completed Successfully</span>
+              <button onClick={() => setIsCompletedModalOpen(false)} className="text-slate-400 hover:text-white text-sm font-bold">✕ Close</button>
+            </div>
+
+            <div className="w-full aspect-video rounded-2xl overflow-hidden border border-slate-700 bg-black relative flex items-center justify-center shadow-2xl">
+              <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1000&auto=format&fit=crop&q=80" alt="Completed Film" className={`w-full h-full object-cover transition duration-500 ${isPlayingFinal ? "scale-105" : "opacity-90"}`}/>
+              <button onClick={() => setIsPlayingFinal(!isPlayingFinal)} className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/30 hover:bg-black/10 transition">
+                <div className="w-16 h-16 rounded-full bg-cyan-500 flex items-center justify-center text-black text-2xl shadow-xl hover:scale-110 transition">
+                  {isPlayingFinal ? "❚❚" : "▶"}
+                </div>
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between pt-2">
+              <div>
+                <h3 className="text-sm font-bold text-white">CineFlow Master Production (4K HDR)</h3>
+                <p className="text-[10px] text-slate-400">Generated using {videoModel} & {storyModel}</p>
+              </div>
+              <Link href="/studio/editor" className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs shadow-lg">
+                Open in Timeline Editor ✏️
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Top Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-black border border-cyan-500/40 p-1 flex items-center justify-center shadow-md">
@@ -221,28 +232,7 @@ export default function CineFlowApp() {
 
       <div className="max-w-4xl mx-auto space-y-5">
         
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-6 space-y-3 shadow-2xl">
-          <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Full-Size Cinematic Player View</label>
-            <span className="text-[10px] text-cyan-300 font-mono">{isPlaying ? "🟢 Playing..." : "⏸️ Paused"}</span>
-          </div>
-
-          <div className="w-full aspect-video rounded-2xl overflow-hidden border border-slate-700 bg-black relative flex items-center justify-center shadow-inner group">
-            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1000&auto=format&fit=crop&q=80" alt="" className={`w-full h-full object-cover transition duration-500 ${isPlaying ? "scale-105 opacity-100" : "opacity-80"}`}/>
-            
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4">
-              <span className="text-xs font-bold text-cyan-300">CineFlow AI Production - Scene 01 (4K HDR)</span>
-              <p className="text-[10px] text-slate-300">Autonomous Render • Shuddh Hindi Voiceover Active</p>
-            </div>
-
-            <button onClick={() => setIsPlaying(!isPlaying)} className="absolute inset-0 flex items-center justify-center cursor-pointer">
-              <div className="w-16 h-16 rounded-full bg-cyan-500/90 backdrop-blur-md flex items-center justify-center text-black text-2xl shadow-xl shadow-cyan-500/40 hover:scale-110 transition">
-                {isPlaying ? "❚❚" : "▶"}
-              </div>
-            </button>
-          </div>
-        </div>
-
+        {/* 1. Master Story & Reference Image */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">1. Master Story & Reference Image</label>
           <textarea rows={3} value={storyPrompt} onChange={(e) => setStoryPrompt(e.target.value)} placeholder="Enter storyline here..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none"/>
@@ -252,6 +242,7 @@ export default function CineFlowApp() {
           </label>
         </div>
 
+        {/* 2. Visual Art Style */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
           <label className="text-xs font-semibold text-cyan-400 uppercase">2. Visual Art Style ({visualStyle})</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5 max-h-64 overflow-y-auto">
@@ -265,6 +256,7 @@ export default function CineFlowApp() {
           <input type="text" value={customStyle} onChange={(e) => setCustomStyle(e.target.value)} placeholder="Or write Custom Art Style prompt..." className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"/>
         </div>
 
+        {/* 3 & 4. Aspect Ratio & Duration */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
             <label className="text-xs font-semibold text-cyan-400 uppercase">3. Aspect Ratio</label>
@@ -285,8 +277,29 @@ export default function CineFlowApp() {
           </div>
         </div>
 
+        {/* 5. Voiceover & Languages */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
           <label className="text-xs font-semibold text-cyan-400 uppercase">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Arabic"].map((l) => (
-              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-c
+              <button key={l} onClick={() => setVoiceLang(l)} className={`py-2 rounded-xl border text-xs ${voiceLang === l ? "bg-cyan-500/20 border-cyan-500 text-white font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{l}</button>
+            ))}
+          </div>
+        </div>
+
+        {/* 6 & 7. Video Engine & Story Engine Models */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+            <label className="text-xs font-semibold text-cyan-400 uppercase">6. Video Engine Model</label>
+            <div className="grid grid-cols-3 gap-2">
+              {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
+                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs font-semibold transition ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+            <label className="text-xs font-semibold text-cyan-400 uppercase">7. Story Engine Model</label>
+            <div className="grid grid-cols-3 gap-2">
+              {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
+                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "b
