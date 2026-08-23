@@ -10,13 +10,13 @@ export default function ProStudioEditor() {
   const [proc, setProc] = useState(false);
   const [modal, setModal] = useState(false);
 
-  // Watermark System (Gallery Logo Support)
+  // Watermark System
   const [pos, setPos] = useState("top-right");
   const [style, setStyle] = useState("gold");
   const [wmOn, setWmOn] = useState(true);
   const [customLogo, setCustomLogo] = useState("");
 
-  // Audio Engine (-22dB Ducking)
+  // Audio Engine
   const [audioName, setAudioName] = useState("");
   const [vVol, setVVol] = useState(100);
   const [mVol, setMVol] = useState(10);
@@ -29,7 +29,7 @@ export default function ProStudioEditor() {
     setTimeout(() => {
       setProc(false);
       setModal(false);
-      alert("Master Video (" + q + ") downloaded successfully with permanent watermark at [" + pos.toUpperCase() + "]!");
+      alert("Master Video (" + q + ") downloaded successfully!");
     }, 1500);
   };
 
@@ -39,7 +39,7 @@ export default function ProStudioEditor() {
       {proc && (
         <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4 gap-2">
           <div className="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin"></div>
-          <p className="text-[11px] text-cyan-400 font-bold">Rendering 4K Video File & Watermark...</p>
+          <p className="text-[11px] text-cyan-400 font-bold">Rendering Master Video File...</p>
         </div>
       )}
 
@@ -97,10 +97,10 @@ export default function ProStudioEditor() {
           <button onClick={() => { setProc(true); setTimeout(() => { setProc(false); alert("AI adjustments applied!"); setPrompt(""); }, 1200); }} className="px-2.5 py-1 rounded bg-cyan-500 text-black font-bold text-[10px] whitespace-nowrap cursor-pointer">Run ✨</button>
         </div>
 
-        {/* Cinematic Preset Bar */}
+        {/* Master Preset */}
         <div className="bg-slate-900 border border-purple-500/30 rounded-lg p-2 flex items-center justify-between">
           <div>
-            <p className="text-[10px] font-bold text-purple-300">⭐ Cinematic Master Preset</p>
+            <p className="text-[10px] font-bold text-purple-300">⭐ Master Cinema Preset</p>
             <p className="text-[8px] text-slate-400">Locked Character • 1.5s Pause • Deep Narration • BGM -22dB</p>
           </div>
           <button onClick={() => setPreset(!preset)} className={`px-2 py-0.5 rounded text-[9px] font-bold cursor-pointer ${preset ? "bg-purple-600 text-white" : "bg-slate-800 text-slate-400"}`}>
@@ -122,7 +122,7 @@ export default function ProStudioEditor() {
           ))}
         </div>
 
-        {/* TAB 1: LOGO / WATERMARK */}
+        {/* TAB 1: WATERMARK */}
         {tab === "watermark" && (
           <div className="bg-slate-900 border border-amber-500/20 rounded-lg p-2.5 space-y-2 text-xs">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1">
@@ -134,7 +134,7 @@ export default function ProStudioEditor() {
                 🖼️ Gallery Logo Upload
                 <input type="file" accept="image/*" onChange={(e) => { if (e.target.files[0]) setCustomLogo(URL.createObjectURL(e.target.files[0])); }} className="hidden"/>
               </label>
-              <span className="text-[9px] text-slate-400 font-mono">{customLogo ? "✅ Custom Logo Set" : "Using Default"}</span>
+              <span className="text-[9px] text-slate-400 font-mono">{customLogo ? "✅ Custom Logo Set" : "Default"}</span>
             </div>
             <div>
               <span className="text-[8px] text-slate-400 block mb-1">Corner:</span>
@@ -229,7 +229,7 @@ export default function ProStudioEditor() {
               </div>
               <div className="bg-slate-950 p-2 rounded border border-slate-800 space-y-1">
                 <span className="font-bold text-purple-300 block text-[10px]">Audio WAV</span>
-                <button onClick={() => runExport("Audio WAV")} className="w-full py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500 font-bold text-[10px] cursor-pointer">⬇ Download</button>
+                <button onClick={() => runExport("Audio WAV")} className="w-full py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500 font-bold text-[9px] cursor-pointer">⬇ Download</button>
               </div>
             </div>
           </div>
@@ -237,7 +237,7 @@ export default function ProStudioEditor() {
 
       </div>
 
-      {/* Floating Bottom Dock */}
+      {/* Floating Dock */}
       <div className="fixed bottom-2.5 right-3 z-50 flex items-center gap-1.5 bg-slate-900/95 border border-slate-700 p-1 rounded-full shadow-2xl backdrop-blur-lg">
         <Link href="/" className="w-7 h-7 rounded-full bg-slate-800 text-cyan-400 flex items-center justify-center text-[10px] border border-slate-700">🏠</Link>
         <Link href="/character-vault" className="w-7 h-7 rounded-full bg-slate-800 text-purple-400 flex items-center justify-center text-[10px] border border-slate-700">👤</Link>
