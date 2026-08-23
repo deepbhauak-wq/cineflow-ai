@@ -3,19 +3,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 export default function ProStudioEditor() {
-  const [tab, setTab] = useState("logo");
+  const [tab, setTab] = useState("movie");
   const [scene, setScene] = useState(1);
   const [prompt, setPrompt] = useState("");
   const [proc, setProc] = useState(false);
   const [modal, setModal] = useState(false);
 
-  // Permanent Google-Style Watermark Engine
-  const [brandText, setBrandText] = useState("CineFlow AI");
-  const [pos, setPos] = useState("bottom-right");
-  const [style, setStyle] = useState("google-badge"); // google-badge, gold, neon
-  const [customLogo, setCustomLogo] = useState("");
-
-  // Thumbnail & Multilingual Topics
+  // Movie & Thumbnail Assets
   const [customThumb, setCustomThumb] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("");
 
@@ -39,15 +33,12 @@ export default function ProStudioEditor() {
     setTimeout(() => {
       setProc(false);
       setModal(false);
-      alert("Master Video (" + q + ") downloaded successfully with Permanent Google-Style Watermark [" + brandText + "] locked at [" + pos.toUpperCase() + "]!");
+      alert("Pure Cinema Movie (" + q + ") downloaded successfully!");
     }, 1500);
   };
 
   const handleAutoGallery = (type) => {
-    if (type === "logo") {
-      setCustomLogo("https://images.unsplash.com/photo-1534447677768-be436bb09401?w=200");
-      alert("⚡ AUTO: Gallery logo applied!");
-    } else if (type === "audio") {
+    if (type === "audio") {
       setAudioName("⚡ AUTO_Gallery_Cinematic_Score.wav");
       alert("⚡ AUTO: Gallery audio track synced!");
     } else if (type === "thumb") {
@@ -62,7 +53,7 @@ export default function ProStudioEditor() {
       {proc && (
         <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4 gap-2">
           <div className="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin"></div>
-          <p className="text-[11px] text-cyan-400 font-bold">Embedding Permanent Google-Style Watermark & Rendering...</p>
+          <p className="text-[11px] text-cyan-400 font-bold">Rendering Clean Cinema Movie Master...</p>
         </div>
       )}
 
@@ -70,7 +61,7 @@ export default function ProStudioEditor() {
         <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-3">
           <div className="w-full max-w-xs bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 shadow-2xl">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1.5">
-              <span className="text-[11px] font-bold text-cyan-400 uppercase">Direct Master Exporter</span>
+              <span className="text-[11px] font-bold text-cyan-400 uppercase">Direct Movie Exporter</span>
               <button onClick={() => setModal(false)} className="text-xs text-slate-400 cursor-pointer">✕</button>
             </div>
             <div className="space-y-1.5 text-xs">
@@ -86,7 +77,7 @@ export default function ProStudioEditor() {
       <div className="max-w-2xl mx-auto flex items-center justify-between border-b border-slate-800/80 pb-2 mb-2.5">
         <div>
           <h1 className="text-xs font-bold text-white tracking-tight flex items-center gap-1"><span>🎬</span> PRO CINEMA STUDIO</h1>
-          <p className="text-[8px] text-slate-400">Permanent Google-Style Watermark • Direct Download</p>
+          <p className="text-[8px] text-slate-400">Pure Clean Movie • Direct Download</p>
         </div>
         <div className="flex items-center gap-1.5">
           <Link href="/" className="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-cyan-300 border border-slate-700">← Hub</Link>
@@ -96,29 +87,14 @@ export default function ProStudioEditor() {
 
       <div className="max-w-2xl mx-auto space-y-2.5">
         
-        {/* Cinema Preview Player with Permanent Google-Style Watermark Badge */}
+        {/* Clean Cinema Movie Preview Player (No Watermark) */}
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-2 space-y-1.5 shadow-xl">
           <div className="flex justify-between items-center px-0.5">
-            <span className="text-[8px] font-bold text-cyan-400 uppercase tracking-wider">Preview (Scene {scene})</span>
-            <span className="text-[8px] text-green-400 font-mono">🔒 Permanent Watermark Locked</span>
+            <span className="text-[8px] font-bold text-cyan-400 uppercase tracking-wider">Clean Movie Preview (Scene {scene})</span>
+            <span className="text-[8px] text-green-400 font-mono">🔒 Master Ready</span>
           </div>
           <div className="w-full aspect-video rounded-lg bg-black border border-slate-800 relative flex items-center justify-center overflow-hidden">
             <img src={activeThumb} alt="" className="w-full h-full object-cover opacity-80"/>
-            
-            {/* Google-Style Permanent Floating Badge */}
-            <div className={`absolute ${
-              pos === "top-left" ? "top-3 left-3" :
-              pos === "top-right" ? "top-3 right-3" :
-              pos === "bottom-left" ? "bottom-3 left-3" : "bottom-3 right-3"
-            } px-3 py-1 rounded-full border text-[9px] font-bold backdrop-blur-md flex items-center gap-1.5 shadow-2xl z-20 pointer-events-none ${
-              style === "google-badge" ? "bg-white/90 border-slate-300 text-slate-900 shadow-black/50" :
-              style === "gold" ? "bg-amber-950/90 border-amber-500 text-amber-300" :
-              "bg-cyan-950/90 border-cyan-500 text-cyan-300"
-            }`}>
-              {customLogo ? <img src={customLogo} alt="" className="w-3.5 h-3.5 rounded-full object-cover"/> : <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>}
-              <span className="tracking-wider">{brandText || "CineFlow"}</span>
-            </div>
-
             <div className="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-black font-bold text-xs shadow-lg cursor-pointer">▶</div>
           </div>
         </div>
@@ -132,7 +108,7 @@ export default function ProStudioEditor() {
         {/* Navigation Tabs */}
         <div className="flex gap-1 overflow-x-auto bg-slate-950 p-1 rounded-lg border border-slate-800">
           {[
-            { id: "logo", label: "🔒 Permanent Watermark" },
+            { id: "movie", label: "🎬 Movie Details" },
             { id: "thumb", label: "🖼️ Thumbnail & Topics" },
             { id: "audio", label: "🎵 Gallery Audio" },
             { id: "download", label: "💾 Direct Download" }
@@ -143,62 +119,19 @@ export default function ProStudioEditor() {
           ))}
         </div>
 
-        {/* TAB 1: PERMANENT GOOGLE-STYLE WATERMARK CONFIG */}
-        {tab === "logo" && (
-          <div className="bg-slate-900 border border-cyan-500/30 rounded-lg p-2.5 space-y-2.5 text-xs">
+        {/* TAB 1: MOVIE DETAILS */}
+        {tab === "movie" && (
+          <div className="bg-slate-900 border border-slate-800 rounded-lg p-2.5 space-y-2 text-xs">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1">
-              <span className="font-bold text-cyan-400 text-[9px] uppercase">Google-Style Permanent Watermark</span>
-              <span className="text-[8px] text-green-400 font-mono">🔒 Non-Removable Lock</span>
+              <span className="font-bold text-cyan-400 text-[9px] uppercase">Movie Pipeline & Scene Index</span>
+              <span className="text-[8px] text-green-400 font-mono">Clean Output (No Watermark)</span>
             </div>
-
-            {/* Brand Text Input */}
-            <div className="space-y-1">
-              <span className="text-[8px] text-slate-400 block font-semibold uppercase">Watermark Name / Brand Text:</span>
-              <input
-                type="text"
-                value={brandText}
-                onChange={(e) => setBrandText(e.target.value)}
-                placeholder="Enter your name or brand (e.g. Google Flow)..."
-                className="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-xs text-white font-mono"
-              />
-            </div>
-
-            {/* Gallery Logo Upload */}
-            <div className="flex items-center gap-1.5">
-              <label className="flex-1 py-1 px-2 rounded bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-[9px] font-bold cursor-pointer text-center">
-                📁 Upload Custom Logo from Gallery
-                <input type="file" accept="image/*" onChange={(e) => { if (e.target.files[0]) setCustomLogo(URL.createObjectURL(e.target.files[0])); }} className="hidden"/>
-              </label>
-              {customLogo && <button onClick={() => setCustomLogo("")} className="px-2 py-1 rounded bg-red-500/20 text-red-400 text-[9px] font-bold">Remove</button>}
-            </div>
-
-            {/* Corner Position */}
-            <div>
-              <span className="text-[8px] text-slate-400 block mb-1">Fixed Position (Corner):</span>
-              <div className="grid grid-cols-4 gap-1">
-                {[
-                  { id: "top-left", l: "Top-Left ↖" },
-                  { id: "top-right", l: "Top-Right ↗" },
-                  { id: "bottom-left", l: "Bottom-Left ↙" },
-                  { id: "bottom-right", l: "Bottom-Right ↘" }
-                ].map((p) => (
-                  <button key={p.id} onClick={() => setPos(p.id)} className={`py-1 rounded border text-[9px] font-bold cursor-pointer ${pos === p.id ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{p.l}</button>
-                ))}
-              </div>
-            </div>
-
-            {/* Style Finish */}
-            <div>
-              <span className="text-[8px] text-slate-400 block mb-1">Badge Style:</span>
-              <div className="grid grid-cols-3 gap-1">
-                {[
-                  { id: "google-badge", l: "⚪ Clean Light" },
-                  { id: "gold", l: "👑 Gold Mode" },
-                  { id: "neon", l: "⚡ Neon Cyan" }
-                ].map((s) => (
-                  <button key={s.id} onClick={() => setStyle(s.id)} className={`py-1 rounded border text-[9px] font-bold cursor-pointer ${style === s.id ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s.l}</button>
-                ))}
-              </div>
+            <div className="grid grid-cols-4 gap-1">
+              {[1, 2, 3, 4].map((s) => (
+                <button key={s} onClick={() => setScene(s)} className={`py-1.5 rounded-lg border text-center font-bold text-[10px] cursor-pointer ${scene === s ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-950 border-slate-800 text-slate-400"}`}>
+                  Scene {s}
+                </button>
+              ))}
             </div>
           </div>
         )}
@@ -255,7 +188,7 @@ export default function ProStudioEditor() {
         {/* TAB 4: DIRECT DOWNLOAD */}
         {tab === "download" && (
           <div className="bg-slate-900 border border-slate-800 rounded-lg p-2.5 space-y-1.5 text-xs">
-            <span className="font-bold text-cyan-400 uppercase text-[9px] block border-b border-slate-800 pb-1">One-Click File Exporters</span>
+            <span className="font-bold text-cyan-400 uppercase text-[9px] block border-b border-slate-800 pb-1">One-Click Clean Movie Exporters</span>
             <div className="grid grid-cols-3 gap-1.5">
               <div className="bg-slate-950 p-2 rounded border border-slate-800 space-y-1">
                 <span className="font-bold text-cyan-300 block text-[10px]">4K UHD</span>
@@ -267,7 +200,7 @@ export default function ProStudioEditor() {
               </div>
               <div className="bg-slate-950 p-2 rounded border border-slate-800 space-y-1">
                 <span className="font-bold text-purple-300 block text-[10px]">Audio WAV</span>
-                <button onClick={() => runExport("Audio WAV")} className="w-full py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500 font-bold text-[9px] cursor-pointer">⬇ Download</button>
+                <button onClick={() => runExport("Audio WAV")} className="w-full py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500 font-bold text-[10px] cursor-pointer">⬇ Download</button>
               </div>
             </div>
           </div>
