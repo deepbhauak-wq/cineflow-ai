@@ -4,22 +4,28 @@ import Link from "next/link";
 
 export default function CharacterVault() {
   const [characters, setCharacters] = useState([
-    { id: 1, name: "Aarav (Lead)", role: "Hero / Protagonist", gender: "Male", age: 24, top: "Ivory Silk Kurta", bottom: "Slim Denim", voice: "Deep Calm Hindi", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300" },
-    { id: 2, name: "Sunita (Mother)", role: "Supporting Lead", gender: "Female", age: 50, top: "Red Banarasi Saree", bottom: "Matching Petticoat", voice: "Warm Mature Tone", img: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=300" },
-    { id: 3, name: "Rohan (Friend)", role: "Sidekick / Comic", gender: "Male", age: 22, top: "Casual Hoodie", bottom: "Cargo Pants", voice: "Energetic Youth", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300" }
+    { id: 1, name: "Aarav (Lead)", role: "Hero / Protagonist", gender: "Male", top: "Ivory Silk Kurta", bottom: "Slim Denim", voice: "Deep Calm Hindi (Male)", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300" },
+    { id: 2, name: "Sunita (Mother)", role: "Supporting Lead", gender: "Female", top: "Red Banarasi Saree", bottom: "Matching Petticoat", voice: "Warm Mature Tone (Female)", img: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=300" },
+    { id: 3, name: "Rohan (Friend)", role: "Comic Sidekick", gender: "Male", top: "Casual Hoodie", bottom: "Cargo Pants", voice: "Energetic Youth (Male)", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300" }
   ]);
 
   const [activeId, setActiveId] = useState(1);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [newName, setNewName] = useState("");
-  const [newRole, setNewRole] = useState("");
-  const [newVoice, setNewVoice] = useState("Hindi (Pure Shuddh)");
+  const [showFolderModal, setShowFolderModal] = useState(false);
+
+  // Pre-made Character Library Folder (Cartoon, Pixar, Real PNGs)
+  const characterFolder = [
+    { name: "Pixar Hero Boy", type: "Cartoon / 3D Animation", gender: "Male", voice: "Energetic Youth (Male)", top: "Blue Denim Jacket", bottom: "Joggers", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300" },
+    { name: "Disney Princess", type: "Animation / Fantasy", gender: "Female", voice: "Soft Melodic (Female)", top: "Royal Gown", bottom: "Silk Skirt", img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=300" },
+    { name: "Anime Warrior", type: "Anime Style", gender: "Male", voice: "Aggressive Hero (Male)", top: "Black Combat Vest", bottom: "Tactical Pants", img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=300" },
+    { name: "Cyberpunk Detective", type: "Realistic Cinematic", gender: "Male", voice: "Deep Calm Hindi (Male)", top: "Leather Trench Coat", bottom: "Dark Trousers", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300" },
+    { name: "Elegant Lady", type: "Realistic Cinematic", gender: "Female", voice: "Warm Mature Tone (Female)", top: "Designer Blazer", bottom: "Formal Pants", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300" }
+  ];
 
   const activeChar = characters.find(c => c.id === activeId) || characters[0];
 
   const handleDelete = (id) => {
     if (characters.length <= 1) {
-      alert("At least one character is required in the cast pipeline.");
+      alert("At least one character must remain in the active pipeline.");
       return;
     }
     const updated = characters.filter(c => c.id !== id);
@@ -27,25 +33,24 @@ export default function CharacterVault() {
     setActiveId(updated[0].id);
   };
 
-  const handleAddCustomCharacter = (e) => {
-    e.preventDefault();
-    if (!newName) return;
+  const handleSelectFromFolder = (item) => {
     const newChar = {
       id: Date.now(),
-      name: newName,
-      role: newRole || "Custom Character",
-      gender: "Neutral",
-      age: 25,
-      top: "Custom Outfit",
-      bottom: "Custom Pants",
-      voice: newVoice,
-      img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300"
+      name: item.name,
+      role: item.type,
+      gender: item.gender,
+      top: item.top,
+      bottom: item.bottom,
+      voice: item.voice,
+      img: item.img
     };
     setCharacters([...characters, newChar]);
     setActiveId(newChar.id);
-    setNewName("");
-    setNewRole("");
-    setShowAddModal(false);
+    setShowFolderModal(false);
+  };
+
+  const updateActiveChar = (field, value) => {
+    setCharacters(characters.map(c => c.id === activeId ? { ...c, [field]: value } : c));
   };
 
   return (
@@ -54,60 +59,54 @@ export default function CharacterVault() {
       {/* Top Header */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
         <div>
-          <h1 className="text-sm font-bold tracking-tight">Multi-Character Cast Studio</h1>
-          <p className="text-[10px] text-slate-400">Manage characters, voiceovers & wardrobe pipeline</p>
+          <h1 className="text-sm font-bold tracking-tight">Multi-Character Cast Studio & Folder</h1>
+          <p className="text-[10px] text-slate-400">Select, customize, assign voices & manage wardrobe</p>
         </div>
         <Link href="/" className="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 font-semibold border border-slate-700">
           ← Studio Hub
         </Link>
       </div>
 
-      {/* Add Custom Character Modal */}
-      {showAddModal && (
-        <div className="fixed inset-0 bg-black/9oz-50 flex items-center justify-center p-4 z-50 bg-black/80 backdrop-blur-md">
-          <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-xs font-bold text-cyan-400 uppercase">➕ Add Custom Animated Character</h3>
-              <button onClick={() => setShowAddModal(false)} className="text-xs text-slate-400">✕</button>
+      {/* CHARACTER FOLDER MODAL (Cartoon, Pixar, Real PNG Library) */}
+      {showFolderModal && (
+        <div className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4 backdrop-blur-md">
+          <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+              <div>
+                <h3 className="text-xs font-bold text-cyan-400 uppercase">📁 Master Character Folder (Cartoon, Pixar, Real PNGs)</h3>
+                <p className="text-[10px] text-slate-400">Click any character to add to your story pipeline</p>
+              </div>
+              <button onClick={() => setShowFolderModal(false)} className="text-xs text-slate-400 hover:text-white">✕ Close</button>
             </div>
-            <form onSubmit={handleAddCustomCharacter} className="space-y-3">
-              <div>
-                <label className="text-[10px] text-slate-400 block mb-1">Character Name</label>
-                <input type="text" required value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="e.g. Kabir (Lead)" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"/>
-              </div>
-              <div>
-                <label className="text-[10px] text-slate-400 block mb-1">Role / Persona</label>
-                <input type="text" value={newRole} onChange={(e) => setNewRole(e.target.value)} placeholder="e.g. Mentor / Villain" className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"/>
-              </div>
-              <div>
-                <label className="text-[10px] text-slate-400 block mb-1">Assign Voiceover Profile</label>
-                <select value={newVoice} onChange={(e) => setNewVoice(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-                  <option>Hindi (Pure Shuddh - Deep Calm)</option>
-                  <option>English (Cinematic Narrator)</option>
-                  <option>Spanish (Dynamic Expressive)</option>
-                  <option>Arabic (Rich Tone)</option>
-                </select>
-              </div>
-              <button type="submit" className="w-full py-2.5 rounded-xl bg-cyan-500 text-black font-bold text-xs cursor-pointer">Save to Character Folder 📁</button>
-            </form>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-96 overflow-y-auto pr-1">
+              {characterFolder.map((item, idx) => (
+                <div key={idx} onClick={() => handleSelectFromFolder(item)} className="bg-slate-950 border border-slate-800 hover:border-cyan-500 rounded-2xl p-2.5 cursor-pointer group transition">
+                  <img src={item.img} alt={item.name} className="w-full h-28 object-cover rounded-xl mb-2 group-hover:scale-105 transition"/>
+                  <p className="text-xs font-bold text-white truncate">{item.name}</p>
+                  <p className="text-[9px] text-cyan-300">{item.type}</p>
+                  <p className="text-[9px] text-slate-400">🎙️ {item.voice}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
       <div className="max-w-4xl mx-auto space-y-4">
         
-        {/* Active Cast Carousel & Add Button */}
+        {/* Active Story Cast Pipeline */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3 shadow-xl">
           <div className="flex items-center justify-between">
             <label className="text-xs font-semibold text-cyan-400 uppercase">Active Story Cast ({characters.length} Characters)</label>
-            <button onClick={() => setShowAddModal(true)} className="px-3 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs cursor-pointer shadow-md">
-              + Add Character 📁
+            <button onClick={() => setShowFolderModal(true)} className="px-3.5 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs cursor-pointer shadow-lg shadow-cyan-500/20">
+              📁 Open Character Folder (+ Add)
             </button>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {characters.map((c) => (
-              <div key={c.id} onClick={() => setActiveId(c.id)} className={`rounded-2xl p-2.5 border cursor-pointer relative group transition ${activeId === c.id ? "bg-slate-800 border-cyan-400 ring-2 ring-cyan-500/30" : "bg-slate-950 border-slate-800 opacity-70"}`}>
+              <div key={c.id} onClick={() => setActiveId(c.id)} className={`rounded-2xl p-2.5 border cursor-pointer relative transition ${activeId === c.id ? "bg-slate-800 border-cyan-400 ring-2 ring-cyan-500/30" : "bg-slate-950 border-slate-800 opacity-70 hover:opacity-100"}`}>
                 <img src={c.img} alt={c.name} className="w-full h-24 object-cover rounded-xl mb-2"/>
                 <p className="text-xs font-bold text-white truncate">{c.name}</p>
                 <p className="text-[10px] text-slate-400 truncate">{c.role}</p>
@@ -116,12 +115,12 @@ export default function CharacterVault() {
           </div>
         </div>
 
-        {/* Selected Character Inspector & Delete Option */}
+        {/* Selected Character Customizer & Delete Option */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-4 shadow-xl">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h2 className="text-xs font-bold text-cyan-400 uppercase">Inspector: {activeChar.name}</h2>
-              <p className="text-[10px] text-slate-400">Configure Identity, Voiceover & Wardrobe</p>
+              <p className="text-[10px] text-slate-400">Customize Voiceover, Wardrobe & Settings</p>
             </div>
             <button onClick={() => handleDelete(activeChar.id)} className="px-3 py-1.5 rounded-xl bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500/30 text-xs font-bold cursor-pointer transition">
               🗑️ Delete Character
@@ -129,13 +128,26 @@ export default function CharacterVault() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="bg-slate-800 border border-slate-700 rounded-xl p-3 space-y-1">
-              <span className="text-[10px] text-slate-400 uppercase">Assigned Voiceover</span>
-              <p className="text-xs font-bold text-cyan-300">🎙️ {activeChar.voice}</p>
+            {/* Voiceover Selection */}
+            <div className="bg-slate-800 border border-slate-700 rounded-xl p-3 space-y-1.5">
+              <label className="text-[10px] text-cyan-400 uppercase font-semibold">🎙️ Voiceover Profile (Male / Female)</label>
+              <select value={activeChar.voice} onChange={(e) => updateActiveChar("voice", e.target.value)} className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                <option>Deep Calm Hindi (Male)</option>
+                <option>Warm Mature Tone (Female)</option>
+                <option>Energetic Youth (Male)</option>
+                <option>Soft Melodic (Female)</option>
+                <option>Aggressive Hero (Male)</option>
+                <option>Cinematic Narrator (Neutral)</option>
+              </select>
             </div>
-            <div className="bg-slate-800 border border-slate-700 rounded-xl p-3 space-y-1">
-              <span className="text-[10px] text-slate-400 uppercase">Wardrobe Setup</span>
-              <p className="text-xs font-bold text-purple-300">👕 {activeChar.top} / {activeChar.bottom}</p>
+
+            {/* Wardrobe Setup */}
+            <div className="bg-slate-800 border border-slate-700 rounded-xl p-3 space-y-1.5">
+              <label className="text-[10px] text-purple-400 uppercase font-semibold">👕 Wardrobe & Outfit Settings</label>
+              <div className="grid grid-cols-2 gap-2">
+                <input type="text" value={activeChar.top} onChange={(e) => updateActiveChar("top", e.target.value)} placeholder="Top wear" className="bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-white"/>
+                <input type="text" value={activeChar.bottom} onChange={(e) => updateActiveChar("bottom", e.target.value)} placeholder="Bottom wear" className="bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-white"/>
+              </div>
             </div>
           </div>
         </div>
@@ -150,4 +162,4 @@ export default function CharacterVault() {
       </div>
     </div>
   );
-          }
+}
