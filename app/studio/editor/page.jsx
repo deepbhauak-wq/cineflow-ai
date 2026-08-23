@@ -10,13 +10,13 @@ export default function ProStudioEditor() {
   const [proc, setProc] = useState(false);
   const [modal, setModal] = useState(false);
 
-  // Watermark System
+  // Watermark System & Gallery Auto Support
   const [pos, setPos] = useState("top-right");
   const [style, setStyle] = useState("gold");
   const [wmOn, setWmOn] = useState(true);
-  const [customLogo, setCustomLogo] = useState("");
+  const [galleryLogo, setGalleryLogo] = useState("");
 
-  // Audio Engine
+  // Audio Engine & Auto Gallery Music
   const [audioName, setAudioName] = useState("");
   const [vVol, setVVol] = useState(100);
   const [mVol, setMVol] = useState(10);
@@ -29,8 +29,18 @@ export default function ProStudioEditor() {
     setTimeout(() => {
       setProc(false);
       setModal(false);
-      alert("Master Video (" + q + ") downloaded successfully!");
+      alert("Master Video (" + q + ") downloaded successfully with active gallery assets!");
     }, 1500);
+  };
+
+  const handleAutoGallery = (type) => {
+    if (type === "logo") {
+      setGalleryLogo("https://images.unsplash.com/photo-1534447677768-be436bb09401?w=200");
+      alert("⚡ AUTO: Gallery logo successfully applied to watermark!");
+    } else if (type === "audio") {
+      setAudioName("⚡ AUTO_Gallery_Cinematic_Score.wav");
+      alert("⚡ AUTO: Gallery audio track automatically synced & -22dB ducked!");
+    }
   };
 
   return (
@@ -63,7 +73,7 @@ export default function ProStudioEditor() {
       <div className="max-w-2xl mx-auto flex items-center justify-between border-b border-slate-800/80 pb-2 mb-2.5">
         <div>
           <h1 className="text-xs font-bold text-white tracking-tight flex items-center gap-1"><span>🎬</span> PRO CINEMA STUDIO</h1>
-          <p className="text-[8px] text-slate-400">Direct Download • Permanent Logo • Audio Ducking</p>
+          <p className="text-[8px] text-slate-400">Direct Download • Gallery Auto Integration • Audio Ducking</p>
         </div>
         <div className="flex items-center gap-1.5">
           <Link href="/" className="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-cyan-300 border border-slate-700">← Hub</Link>
@@ -83,7 +93,7 @@ export default function ProStudioEditor() {
             <img src={previewImg} alt="" className="w-full h-full object-cover opacity-80"/>
             {wmOn && (
               <div className={`absolute ${pos === "top-left" ? "top-2 left-2" : pos === "top-right" ? "top-2 right-2" : pos === "bottom-left" ? "bottom-2 left-2" : "bottom-2 right-2"} px-2 py-0.5 rounded border text-[8px] font-bold backdrop-blur-md flex items-center gap-1 ${style === "gold" ? "bg-amber-950/90 border-amber-500 text-amber-300" : style === "neon-cyan" ? "bg-cyan-950/90 border-cyan-500 text-cyan-300" : "bg-black/90 border-slate-600 text-white"}`}>
-                {customLogo ? <img src={customLogo} alt="" className="w-3 h-3 rounded-full object-cover"/> : <span>👑</span>}
+                {galleryLogo ? <img src={galleryLogo} alt="" className="w-3 h-3 rounded-full object-cover"/> : <span>👑</span>}
                 <span>PRO CINEMA</span>
               </div>
             )}
@@ -112,8 +122,8 @@ export default function ProStudioEditor() {
         <div className="flex gap-1 overflow-x-auto bg-slate-950 p-1 rounded-lg border border-slate-800">
           {[
             { id: "timeline", label: "🎞️ Timeline" },
-            { id: "watermark", label: "👑 Permanent Logo" },
-            { id: "audio", label: "🎵 Audio & Ducking" },
+            { id: "watermark", label: "👑 Gallery Logo" },
+            { id: "audio", label: "🎵 Gallery Audio" },
             { id: "download", label: "💾 Direct Download" }
           ].map((t) => (
             <button key={t.id} onClick={() => setTab(t.id)} className={`px-2.5 py-1 rounded text-[10px] font-bold whitespace-nowrap transition cursor-pointer ${tab === t.id ? "bg-cyan-500 text-black" : "text-slate-400 hover:text-white"}`}>
@@ -122,20 +132,23 @@ export default function ProStudioEditor() {
           ))}
         </div>
 
-        {/* TAB 1: WATERMARK */}
+        {/* TAB 1: GALLERY LOGO WATERMARK */}
         {tab === "watermark" && (
           <div className="bg-slate-900 border border-amber-500/20 rounded-lg p-2.5 space-y-2 text-xs">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1">
-              <span className="font-bold text-amber-400 text-[9px] uppercase">Permanent Watermark Engine</span>
+              <span className="font-bold text-amber-400 text-[9px] uppercase">Permanent Watermark & Gallery Integration</span>
               <button onClick={() => setWmOn(!wmOn)} className={`px-1.5 py-0.5 rounded text-[8px] font-bold cursor-pointer ${wmOn ? "bg-green-500/20 text-green-300 border border-green-500" : "bg-slate-800 text-slate-400"}`}>{wmOn ? "ON" : "OFF"}</button>
             </div>
-            <div className="bg-slate-950 p-1.5 rounded border border-slate-800 flex items-center justify-between">
-              <label className="px-2 py-0.5 rounded bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[9px] font-bold cursor-pointer">
-                🖼️ Gallery Logo Upload
-                <input type="file" accept="image/*" onChange={(e) => { if (e.target.files[0]) setCustomLogo(URL.createObjectURL(e.target.files[0])); }} className="hidden"/>
+            
+            <div className="flex items-center gap-1.5">
+              <label className="flex-1 py-1.5 px-2 rounded bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] font-bold cursor-pointer text-center">
+                📁 Pick Logo From Gallery
+                <input type="file" accept="image/*" onChange={(e) => { if (e.target.files[0]) setGalleryLogo(URL.createObjectURL(e.target.files[0])); }} className="hidden"/>
               </label>
-              <span className="text-[9px] text-slate-400 font-mono">{customLogo ? "✅ Custom Logo Set" : "Default"}</span>
+              <button onClick={() => handleAutoGallery("logo")} className="py-1.5 px-3 rounded bg-cyan-600 text-white font-bold text-[10px] cursor-pointer">⚡ AUTO</button>
             </div>
+            {galleryLogo && <span className="text-[9px] text-green-400 block font-mono">✅ Gallery Logo Active</span>}
+
             <div>
               <span className="text-[8px] text-slate-400 block mb-1">Corner:</span>
               <div className="grid grid-cols-4 gap-1">
@@ -149,36 +162,27 @@ export default function ProStudioEditor() {
                 ))}
               </div>
             </div>
-            <div>
-              <span className="text-[8px] text-slate-400 block mb-1">Color Style:</span>
-              <div className="grid grid-cols-3 gap-1">
-                {[
-                  { id: "gold", l: "👑 Gold Emboss" },
-                  { id: "neon-cyan", l: "⚡ Neon Cyan" },
-                  { id: "classic-white", l: "⚪ Classic White" }
-                ].map((s) => (
-                  <button key={s.id} onClick={() => setStyle(s.id)} className={`py-1 rounded border text-[9px] font-bold cursor-pointer ${style === s.id ? "bg-amber-500/20 border-amber-500 text-amber-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s.l}</button>
-                ))}
-              </div>
-            </div>
           </div>
         )}
 
-        {/* TAB 2: AUDIO ENGINE */}
+        {/* TAB 2: GALLERY AUDIO ENGINE */}
         {tab === "audio" && (
           <div className="bg-slate-900 border border-slate-800 rounded-lg p-2.5 space-y-2 text-xs">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1">
-              <span className="font-bold text-cyan-400 text-[9px] uppercase">Audio Mix & Auto Ducking</span>
+              <span className="font-bold text-cyan-400 text-[9px] uppercase">Audio Mix & Gallery Music</span>
               <span className="text-[8px] text-green-400 font-mono">BGM: -22dB</span>
             </div>
-            <div className="bg-slate-950 p-1.5 rounded border border-slate-800 flex items-center justify-between">
-              <label className="px-2 py-0.5 rounded bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-[9px] font-bold cursor-pointer">
-                🎵 Upload Custom Music
+
+            <div className="flex items-center gap-1.5">
+              <label className="flex-1 py-1.5 px-2 rounded bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-[10px] font-bold cursor-pointer text-center">
+                🎵 Pick Audio From Gallery
                 <input type="file" accept="audio/*" onChange={(e) => { if (e.target.files[0]) setAudioName(e.target.files[0].name); }} className="hidden"/>
               </label>
-              <span className="text-[9px] text-slate-400 font-mono truncate max-w-[140px]">{audioName || "Cinematic Pad"}</span>
+              <button onClick={() => handleAutoGallery("audio")} className="py-1.5 px-3 rounded bg-cyan-600 text-white font-bold text-[10px] cursor-pointer">⚡ AUTO</button>
             </div>
-            <div className="grid grid-cols-3 gap-1.5 text-[9px]">
+            {audioName && <span className="text-[9px] text-green-400 block font-mono truncate">✅ {audioName}</span>}
+
+            <div className="grid grid-cols-3 gap-1.5 text-[9px] pt-1">
               <div className="bg-slate-950 p-1.5 rounded border border-slate-800">
                 <span className="text-slate-400 block mb-0.5">Voice ({vVol}%)</span>
                 <input type="range" min="0" max="100" value={vVol} onChange={(e) => setVVol(e.target.value)} className="w-full accent-cyan-500"/>
