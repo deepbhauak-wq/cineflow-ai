@@ -14,18 +14,18 @@ export default function ProStudioEditor() {
   const [wmOn, setWmOn] = useState(true);
   const [customLogo, setCustomLogo] = useState("");
 
-  // Video Analysis & Thumbnail Editor (Gallery, Custom Text in English, Hindi, Tamil)
+  // Video Analysis & Thumbnail Editor
   const [analyzing, setAnalyzing] = useState(false);
   const [thumbImage, setThumbImage] = useState("https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600");
   const [thumbText, setThumbText] = useState("Life Changing Turn | जीवन बदलाव | வாழ்வை மாற்றுங்கள்");
-  const [textPos, setTextPos] = useState("bottom"); // top, center, bottom
+  const [textPos, setTextPos] = useState("bottom");
 
   const runExport = (q) => {
     setProc(true);
     setTimeout(() => {
       setProc(false);
       setModal(false);
-      alert("Master file (" + q + ") downloaded successfully with Analyzed Custom Thumbnail!");
+      alert("Master file (" + q + ") downloaded successfully!");
     }, 1500);
   };
 
@@ -35,7 +35,7 @@ export default function ProStudioEditor() {
       setAnalyzing(false);
       setThumbImage("https://images.unsplash.com/photo-1544717305-2782549b5136?w=600");
       setThumbText("Emotional Turning Point | भावुक पल | உணர்ச்சிப்பூர்வமான தருணம்");
-      alert("⚡ AI Video Analysis Complete: Keyframe extracted & Multi-language high-CTR thumbnail generated!");
+      alert("⚡ AI Video Analysis Complete: Keyframe extracted & Thumbnail generated!");
     }, 2000);
   };
 
@@ -45,7 +45,7 @@ export default function ProStudioEditor() {
       {proc && (
         <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4 gap-2">
           <div className="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin"></div>
-          <p className="text-[11px] text-cyan-400 font-bold">Rendering Master Video & Embedding Custom Thumbnail...</p>
+          <p className="text-[11px] text-cyan-400 font-bold">Rendering Master Video & Embedding Assets...</p>
         </div>
       )}
 
@@ -56,16 +56,39 @@ export default function ProStudioEditor() {
         </div>
       )}
 
+      {/* 4 Download Options Modal */}
       {modal && (
         <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-3">
-          <div className="w-full max-w-xs bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-2 shadow-2xl">
+          <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-3.5 space-y-2.5 shadow-2xl">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1.5">
-              <span className="text-[11px] font-bold text-cyan-400 uppercase">Direct File Exporter</span>
+              <span className="text-[11px] font-bold text-cyan-400 uppercase">Select Master Export Option</span>
               <button onClick={() => setModal(false)} className="text-xs text-slate-400 cursor-pointer">✕</button>
             </div>
-            <div className="space-y-1.5 text-xs">
-              <button onClick={() => runExport("4K UHD")} className="w-full py-2 rounded-lg bg-cyan-500 text-black font-bold text-[11px] cursor-pointer">⬇ Direct Download 4K UHD</button>
-              <button onClick={() => runExport("1080p FHD")} className="w-full py-2 rounded-lg bg-slate-800 border border-slate-700 text-cyan-300 font-bold text-[11px] cursor-pointer">⬇ Direct Download 1080p FHD</button>
+            
+            <div className="grid grid-cols-1 gap-2 text-xs">
+              {/* Option 1: 4K Ultra HD */}
+              <button onClick={() => runExport("4K Cinema UHD (60 FPS)")} className="w-full py-2.5 px-3 rounded-xl bg-cyan-500 text-black font-bold flex items-center justify-between shadow cursor-pointer">
+                <span>⬇ 1. 4K Cinema UHD (60 FPS)</span>
+                <span className="text-[9px] bg-black/20 px-1.5 py-0.5 rounded font-mono">Master Video</span>
+              </button>
+
+              {/* Option 2: 1080p Full HD */}
+              <button onClick={() => runExport("1080p Full HD (MP4)")} className="w-full py-2.5 px-3 rounded-xl bg-slate-800 border border-slate-700 text-cyan-300 font-bold flex items-center justify-between cursor-pointer">
+                <span>⬇ 2. 1080p Full HD (Web Ready)</span>
+                <span className="text-[9px] bg-cyan-950 px-1.5 py-0.5 rounded font-mono">Fast Render</span>
+              </button>
+
+              {/* Option 3: 4K Thumbnail Image */}
+              <button onClick={() => runExport("4K Ultra HD Thumbnail Image")} className="w-full py-2.5 px-3 rounded-xl bg-yellow-500/20 border border-yellow-500/40 text-yellow-300 font-bold flex items-center justify-between cursor-pointer">
+                <span>⬇ 3. 4K Thumbnail Image</span>
+                <span className="text-[9px] bg-yellow-950 px-1.5 py-0.5 rounded font-mono">High CTR JPG</span>
+              </button>
+
+              {/* Option 4: Master Audio Only */}
+              <button onClick={() => runExport("Master Audio Track (WAV)")} className="w-full py-2.5 px-3 rounded-xl bg-purple-500/20 border border-purple-500/40 text-purple-300 font-bold flex items-center justify-between cursor-pointer">
+                <span>⬇ 4. Audio Only Master (WAV)</span>
+                <span className="text-[9px] bg-purple-950 px-1.5 py-0.5 rounded font-mono">Lossless Audio</span>
+              </button>
             </div>
           </div>
         </div>
@@ -75,7 +98,7 @@ export default function ProStudioEditor() {
       <div className="max-w-2xl mx-auto flex items-center justify-between border-b border-slate-800/80 pb-2 mb-2.5">
         <div>
           <h1 className="text-xs font-bold text-white tracking-tight flex items-center gap-1"><span>🎬</span> PRO STUDIO EDITOR</h1>
-          <p className="text-[8px] text-slate-400">AI Video Analysis • Custom Thumbnail Editor • Direct Download</p>
+          <p className="text-[8px] text-slate-400">AI Video Analysis • 4 Export Modes • Direct Download</p>
         </div>
         <div className="flex items-center gap-1.5">
           <Link href="/" className="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-cyan-300 border border-slate-700">← Hub</Link>
@@ -85,11 +108,11 @@ export default function ProStudioEditor() {
 
       <div className="max-w-2xl mx-auto space-y-2.5">
         
-        {/* Preview Player with Thumbnail & Watermark */}
+        {/* Preview Player */}
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-2 space-y-1.5 shadow-xl">
           <div className="flex justify-between items-center px-0.5">
             <span className="text-[8px] font-bold text-cyan-400 uppercase tracking-wider">Thumbnail & Video Live Preview</span>
-            <span className="text-[8px] text-yellow-300 font-mono">Multi-Language Ready</span>
+            <span className="text-[8px] text-green-400 font-mono">4 Export Formats Ready</span>
           </div>
           <div className="w-full aspect-video rounded-lg bg-black border border-slate-800 relative flex items-center justify-center overflow-hidden">
             <img src={thumbImage} alt="" className="w-full h-full object-cover opacity-90"/>
@@ -110,7 +133,7 @@ export default function ProStudioEditor() {
               </div>
             )}
 
-            {/* Thumbnail Heading Text Overlay (English / Hindi / Tamil) */}
+            {/* Thumbnail Heading Text Overlay */}
             {thumbText && (
               <div className={`absolute left-0 right-0 px-4 text-center z-10 pointer-events-none ${
                 textPos === "top" ? "top-6" : textPos === "center" ? "inset-y-0 flex items-center justify-center" : "bottom-4"
@@ -135,7 +158,8 @@ export default function ProStudioEditor() {
         <div className="flex gap-1 overflow-x-auto bg-slate-950 p-1 rounded-lg border border-slate-800">
           {[
             { id: "thumb", label: "🖼️ AI Video Analysis & Thumbnail" },
-            { id: "logo", label: "👑 4-Corner Logo" }
+            { id: "logo", label: "👑 4-Corner Logo" },
+            { id: "download", label: "💾 4 Download Options" }
           ].map((t) => (
             <button key={t.id} onClick={() => setTab(t.id)} className={`px-3 py-1 rounded text-[10px] font-bold whitespace-nowrap transition cursor-pointer ${tab === t.id ? "bg-cyan-500 text-black" : "text-slate-400 hover:text-white"}`}>
               {t.label}
@@ -143,7 +167,7 @@ export default function ProStudioEditor() {
           ))}
         </div>
 
-        {/* TAB 1: AI VIDEO ANALYSIS & THUMBNAIL EDITOR */}
+        {/* TAB 1: AI VIDEO ANALYSIS & THUMBNAIL */}
         {tab === "thumb" && (
           <div className="bg-slate-900 border border-yellow-500/30 rounded-lg p-2.5 space-y-2.5 text-xs">
             <div className="flex justify-between items-center border-b border-slate-800 pb-1">
@@ -155,21 +179,19 @@ export default function ProStudioEditor() {
 
             {/* Gallery Upload Option */}
             <div className="space-y-1">
-              <span className="text-[8px] text-slate-400 block font-semibold uppercase">📁 Upload Thumbnail from Gallery:</span>
               <label className="block w-full py-2 px-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-[10px] font-bold cursor-pointer text-center">
-                📷 Choose Image File from Device Gallery
+                📁 Choose Image File from Device Gallery
                 <input type="file" accept="image/*" onChange={(e) => { if (e.target.files[0]) setThumbImage(URL.createObjectURL(e.target.files[0])); }} className="hidden"/>
               </label>
             </div>
 
-            {/* Custom Editable Heading (English, Hindi, Tamil) */}
+            {/* Custom Heading Input */}
             <div className="space-y-1">
-              <span className="text-[8px] text-slate-400 block font-semibold uppercase">✏️ Edit Thumbnail Heading (English / हिन्दी / தமிழ்):</span>
               <input
                 type="text"
                 value={thumbText}
                 onChange={(e) => setThumbText(e.target.value)}
-                placeholder="Type in English, Hindi or Tamil..."
+                placeholder="Type heading text..."
                 className="w-full bg-slate-950 border border-slate-700 rounded p-2 text-xs text-yellow-300 font-bold"
               />
             </div>
@@ -217,6 +239,38 @@ export default function ProStudioEditor() {
                 ].map((p) => (
                   <button key={p.id} onClick={() => setWmPos(p.id)} className={`py-1 rounded border text-[9px] font-bold cursor-pointer ${wmPos === p.id ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{p.l}</button>
                 ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 3: 4 DOWNLOAD OPTIONS GRID */}
+        {tab === "download" && (
+          <div className="bg-slate-900 border border-slate-800 rounded-lg p-2.5 space-y-2 text-xs">
+            <span className="font-bold text-cyan-400 uppercase text-[9px] block border-b border-slate-800 pb-1">4 Master Export Options</span>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 space-y-1">
+                <span className="font-bold text-cyan-300 block text-[11px]">1. 4K Cinema UHD</span>
+                <p className="text-[8px] text-slate-400">3840x2160 • 60 FPS • Max Bitrate</p>
+                <button onClick={() => runExport("4K Cinema UHD (60 FPS)")} className="w-full py-1.5 rounded-lg bg-cyan-500 text-black font-bold text-[10px] cursor-pointer">⬇ Download 4K</button>
+              </div>
+
+              <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 space-y-1">
+                <span className="font-bold text-slate-200 block text-[11px]">2. 1080p FHD</span>
+                <p className="text-[8px] text-slate-400">1920x1080 • Fast Rendering MP4</p>
+                <button onClick={() => runExport("1080p Full HD (MP4)")} className="w-full py-1.5 rounded-lg bg-slate-800 text-cyan-300 border border-slate-700 font-bold text-[10px] cursor-pointer">⬇ Download 1080p</button>
+              </div>
+
+              <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 space-y-1">
+                <span className="font-bold text-yellow-300 block text-[11px]">3. 4K Thumbnail</span>
+                <p className="text-[8px] text-slate-400">Ultra High-Res Poster Image (JPG)</p>
+                <button onClick={() => runExport("4K Ultra HD Thumbnail Image")} className="w-full py-1.5 rounded-lg bg-yellow-500/20 text-yellow-300 border border-yellow-500/40 font-bold text-[10px] cursor-pointer">⬇ Download Poster</button>
+              </div>
+
+              <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 space-y-1">
+                <span className="font-bold text-purple-300 block text-[11px]">4. Audio Track (WAV)</span>
+                <p className="text-[8px] text-slate-400">Lossless Sound & Mixed Master</p>
+                <button onClick={() => runExport("Master Audio Track (WAV)")} className="w-full py-1.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/40 font-bold text-[10px] cursor-pointer">⬇ Download WAV</button>
               </div>
             </div>
           </div>
