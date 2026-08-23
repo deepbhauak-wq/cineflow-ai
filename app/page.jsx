@@ -112,7 +112,6 @@ export default function CineFlowApp() {
             <button type="button" onClick={() => setLoginMethod("instagram")} className={`py-1.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${loginMethod === "instagram" ? "bg-gradient-to-r from-amber-500 to-purple-600 text-white" : "text-slate-400"}`}>Instagram</button>
           </div>
 
-          {/* GMAIL LOGIN */}
           {loginMethod === "google" && (
             <form onSubmit={(e) => handleAuthSubmit(e, "google")} className="w-full space-y-3.5">
               <div>
@@ -130,7 +129,6 @@ export default function CineFlowApp() {
             </form>
           )}
 
-          {/* FACEBOOK LOGIN */}
           {loginMethod === "facebook" && (
             <form onSubmit={(e) => handleAuthSubmit(e, "facebook")} className="w-full space-y-3.5">
               <div>
@@ -148,7 +146,6 @@ export default function CineFlowApp() {
             </form>
           )}
 
-          {/* INSTAGRAM LOGIN */}
           {loginMethod === "instagram" && (
             <form onSubmit={(e) => handleAuthSubmit(e, "instagram")} className="w-full space-y-3.5">
               <div>
@@ -174,7 +171,6 @@ export default function CineFlowApp() {
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28">
       
-      {/* Top Header with Exact Official Logo */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl overflow-hidden border border-cyan-500/40 shadow-md">
@@ -289,4 +285,4 @@ export default function CineFlowApp() {
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">5. Voiceover & Languages</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {["Hindi (Pure Shuddh)", "English", "Spanish", "Portuguese", "Korean", "Japanese", "Chinese", "Indonesian", "French", "German", "Arabic", "All Languages"].map((lang) => (
-              <button key={lang} onClick={() => setVoiceLang(lang)} className={`py-2 px-2 round
+              <button key={lang} onClick={() => setVoiceLang(lang)} className={`py-2 px-2 rounded-xl border text-xs transition ${voiceLang === lang ? "bg-cyan-500/20 border-cyan-500 text-white font-semibold" : "bg-slate-800 border-slate-700 t
