@@ -19,6 +19,12 @@ export default function CineFlowApp() {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Generated Outputs Gallery State (Restored Screen)
+  const [generatedVault, setGeneratedVault] = useState([
+    { id: 1, title: "Epic Cinematic Trailer - Scene 01", url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500&auto=format&fit=crop&q=60", duration: "0:30s", date: "Today" },
+    { id: 2, title: "Shuddh Hindi Drama Masterpiece", url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60", duration: "3:00s", date: "Yesterday" }
+  ]);
+
   const styleCatalog = [
     { name: "Realistic", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=60" },
     { name: "Cinematic", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=200&auto=format&fit=crop&q=60" },
@@ -68,31 +74,48 @@ export default function CineFlowApp() {
     if (file) setUploadedImage(URL.createObjectURL(file));
   };
 
-  // 1. PROFESSIONAL LOGIN SCREEN WITH SOCIAL LOGOS
+  const handleGenerate = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      // Add newly generated output to vault
+      const newOutput = {
+        id: Date.now(),
+        title: storyPrompt ? storyPrompt.slice(0, 30) + "..." : "AI Cinematic Production",
+        url: uploadedImage || "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500&auto=format&fit=crop&q=60",
+        duration: "0:30s",
+        date: "Just Now"
+      };
+      setGeneratedVault([newOutput, ...generatedVault]);
+      window.location.href = "/studio/editor";
+    }, 1500);
+  };
+
+  // 1. PROFESSIONAL LOGIN SCREEN WITH LOGO
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen w-full bg-[#0a0d14] flex flex-col items-center justify-center p-4 text-white font-sans">
         <div className="w-full max-w-sm rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl flex flex-col items-center">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 mb-4">
-            <span className="text-2xl">🎬</span>
+          
+          {/* Official Logo Image */}
+          <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-xl shadow-cyan-500/20 mb-4 border border-cyan-500/40">
+            <img src="https://i.ibb.co/3w513qJ7/32938.jpg" alt="CineFlow AI Logo" className="w-full h-full object-cover" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-1 text-center">CineFlow AI Pro Studio</h1>
+
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-1 text-center">CineFlow AI Pro</h1>
           <p className="text-xs text-slate-400 text-center mb-6">Autonomous Cinema Engine</p>
 
           <div className="w-full flex flex-col gap-3">
-            {/* Google Login */}
             <button onClick={() => handleLogin("google.user@gmail.com")} className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center gap-3 text-sm font-medium transition cursor-pointer">
               <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
               <span>Continue with Google</span>
             </button>
-            {/* Facebook Login */}
             <button onClick={() => handleLogin("facebook.user@fb.com")} className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center gap-3 text-sm font-medium transition cursor-pointer">
               <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               <span>Continue with Facebook</span>
             </button>
-            {/* Instagram Login */}
             <button onClick={() => handleLogin("instagram.user@insta.com")} className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center gap-3 text-sm font-medium transition cursor-pointer">
-              <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24"><defs><linearGradient id="igG2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stopColor="#fdf497"/><stop offset="45%" stopColor="#fd5949"/><stop offset="90%" stopColor="#285AEB"/></linearGradient></defs><path fill="url(#igG2)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24"><defs><linearGradient id="igG3" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stopColor="#fdf497"/><stop offset="45%" stopColor="#fd5949"/><stop offset="90%" stopColor="#285AEB"/></linearGradient></defs><path fill="url(#igG3)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               <span>Continue with Instagram</span>
             </button>
           </div>
@@ -118,10 +141,12 @@ export default function CineFlowApp() {
 
   return (
     <div className="min-h-screen bg-[#07090e] text-white p-4 sm:p-6 md:p-8 font-sans pb-28">
-      {/* Top Header */}
+      {/* Top Header with Official Logo */}
       <div className="max-w-4xl mx-auto flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-base shadow-md">🎬</div>
+          <div className="w-9 h-9 rounded-xl overflow-hidden border border-cyan-500/40 shadow-md">
+            <img src="https://i.ibb.co/3w513qJ7/32938.jpg" alt="Logo" className="w-full h-full object-cover"/>
+          </div>
           <h1 className="text-base sm:text-lg font-bold tracking-tight text-white">CineFlow AI</h1>
         </div>
 
@@ -139,6 +164,29 @@ export default function CineFlowApp() {
       </div>
 
       <div className="max-w-4xl mx-auto space-y-5">
+        
+        {/* RESTORED SCREEN: Generated Cinematic Outputs & Video Gallery */}
+        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">🎬 Generated Cinematic Vault & Outputs</label>
+            <span className="text-[10px] text-slate-400">Your Rendered Videos</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {generatedVault.map((item) => (
+              <div key={item.id} className="bg-slate-950 border border-slate-800 rounded-xl p-3 flex items-center gap-3 group">
+                <img src={item.url} alt={item.title} className="w-16 h-12 rounded-lg object-cover border border-cyan-500/30"/>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold text-white truncate">{item.title}</p>
+                  <p className="text-[10px] text-slate-400">Duration: {item.duration} • {item.date}</p>
+                </div>
+                <Link href="/studio/editor" className="px-3 py-1.5 rounded-lg bg-cyan-500 text-black font-bold text-[11px] shrink-0">
+                  Edit 🎞️
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* 1. Master Story & Reference Image */}
         <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
           <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">1. Master Story & Reference Image</label>
@@ -218,39 +266,4 @@ export default function CineFlowApp() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
             <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">6. Video Engine Model</label>
-            <div className="grid grid-cols-3 gap-2">
-              {["Veo", "Kling", "Runway", "Hailuo", "Luma", "Sora"].map((m) => (
-                <button key={m} onClick={() => setVideoModel(m)} className={`py-2 rounded-xl border text-xs font-semibold transition ${videoModel === m ? "bg-cyan-500/20 border-cyan-500 text-cyan-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{m}</button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-            <label className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">7. Story Engine Model</label>
-            <div className="grid grid-cols-3 gap-2">
-              {["Gemini", "Claude", "AutoGPT", "Fast AI", "Pro AI", "Auto"].map((s) => (
-                <button key={s} onClick={() => setStoryModel(s)} className={`py-2 rounded-xl border text-xs font-semibold transition ${storyModel === s ? "bg-purple-500/20 border-purple-500 text-purple-300" : "bg-slate-800 border-slate-700 text-slate-400"}`}>{s}</button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Generate CTA Button */}
-        <button onClick={() => { setLoading(true); setTimeout(() => { setLoading(false); window.location.href = "/studio/editor"; }, 1200); }} className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-bold text-sm tracking-wide shadow-xl shadow-cyan-500/25 hover:opacity-95 transition flex items-center justify-center gap-2 cursor-pointer">
-          {loading ? "Generating Film Tracks..." : "🚀 GENERATE AUTONOMOUS CINEMA FILM"}
-        </button>
-      </div>
-
-      {/* Floating Bottom Navigation (Only Right Arrow Shifted as requested) */}
-      <div className="fixed bottom-4 inset-x-0 flex justify-end z-50 px-6 pointer-events-none">
-        <div className="bg-slate-900/95 border border-slate-700 rounded-full px-4 py-2 shadow-2xl flex items-center gap-3 pointer-events-auto">
-          <span className="text-[11px] text-slate-400 font-medium tracking-wide">Next Step</span>
-          <Link href="/studio/editor" className="w-9 h-9 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm flex items-center justify-center shadow-lg shadow-cyan-500/30 transition active:scale-95" title="Timeline Editor">
-            →
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-              }
-                
+            <d
